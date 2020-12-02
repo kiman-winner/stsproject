@@ -76,16 +76,8 @@
 			text-align: center;
 		}
 	
-	#information .guide{
-		
-	}
-	
 	#information .guide .margin-top{
 		margin-top: 20px;
-	}
-	
-	#information .notice{
-		
 	}
 	
 		#information .notice .title{
@@ -159,10 +151,6 @@
 	text-align:center;
 	height: inherit;
 	
-}
-
-.item-answerer>div:nth-child(2){
-		
 }
 
 	.item-answerer>div:nth-child(2)>span{

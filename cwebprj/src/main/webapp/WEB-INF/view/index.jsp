@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 <!-- content 부분 -->
 
-<div id="visual" class="">
-	<img src="images/bgimg.PNG" alt="백그라운드 이미지" />
-	<div id="visualtext">여러분도 할 수 있습니다.</div>
+<div id="visual">
+	<div id="bg">
+		<img src="images/bgimg.PNG" alt="배경사진">
+	</div>
 </div>
 
 <div id="notice">

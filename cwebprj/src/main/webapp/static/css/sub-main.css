@@ -39,7 +39,7 @@ main .border-bottom {
 }
 
 main .border-hard{	    
-    border: 5px solid #8CBA34;    
+    border: 5px solid #8977ad;    
     text-align: center;
 }
 
@@ -143,13 +143,13 @@ main .search-form form fieldset>* {
 
 main .search-form select {
 	height: 20px;
-	border: 1px solid #8CBA34;
+	border: 1px solid #8977ad;
 }
 
 main .search-form input[type="text"] {
 	width: 150px;
 	height: 20px;
-	border: 1px solid #8CBA34;
+	border: 1px solid #8977ad;
 }
 
 /*---< pager style >-----------------------------------------------------------------------------*/
@@ -212,7 +212,7 @@ main .table {
 	display: table;
 	table-layout: fixed;
 	width: 100%;
-	border-top: 2px solid #8cba35;
+	border-top: 2px solid #8977ad;
 }
 
 main .table input[type=text],
