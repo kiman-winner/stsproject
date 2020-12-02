@@ -15,9 +15,9 @@
 														<!--  메인메뉴   -->
 				<h1>메인메뉴</h1>
 				<ul>
-					<li><a href="/intro">홈페이지 소개</a></li>
-					<li><a href="/study">강좌선택</a></li>
-					<li><a href="/qna">QnA</a></li>
+					<li><a href="/main/intro">홈페이지 소개</a></li>
+					<li><a href="/main/study">강좌선택</a></li>
+					<li><a href="/main/qna">QnA</a></li>
 				</ul>
 			</nav>
 
