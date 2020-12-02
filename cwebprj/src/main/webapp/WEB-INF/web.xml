@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+                      http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
+	version="4.0" metadata-complete="true">
+
+ <!-- 나머지 2개 지정 위해, 스프링이 제공하는 리스너, 톰캣이 시작될때 끝날때 등 뭔가 이벤트를 처리할때 사용 -->
+	 <listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param> <!-- 리스너가 가진 파라미터를 context param이란 이름으로 가질 수 있다. -->
+		<param-name>contextConfigLocation</param-name> <!-- 이 컨텍스트 로더라는것을 디스패처 서블릿이 이용할 수 있다. -->
+		<param-value>
+			/WEB-INF/spring/service-context.xml
+		</param-value>
+	</context-param>
+	
+	<servlet>
+		<servlet-name>dispatcher</servlet-name><!-- 이름자기마음 -->
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/servlet-context.xml</param-value><!-- 여긴 하나만 추가가능 -->
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+		<async-supported>true</async-supported>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+	<display-name>Welcome to Tomcat</display-name>
+	<description>
+     Welcome to Tomcat
+  </description>
+
+</web-app>
