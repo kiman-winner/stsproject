@@ -27,8 +27,8 @@
 					
 					<ul>
 						<li><a href="/index">HOME</a></li>
-						<li><a href="/member/login.html">로그인</a></li>
-						<li><a href="/member/agree.html">회원가입</a></li>
+						<li><a href="/member/login">로그인</a></li>
+						<li><a href="/member/join">회원가입</a></li>
 					</ul>
 				</nav>
 

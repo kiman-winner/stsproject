@@ -35,45 +35,6 @@ table{
 	height: 60px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*--- common style -----------------------------------------------------------*/
 * {
 	box-sizing: border-box;
@@ -211,12 +172,12 @@ body {
 }
 
 .color-bright,
-.text-green,
-.color-green{
+.text-purple,
+.color-purple{
 	color: #8cba34;
 }
 
-.color-light-green{
+.color-light-purple{
 	color:#b6ff00;
 }
 
@@ -582,7 +543,7 @@ img.vertical-center{
 	/* border: 1px double #cfcfcf; */
 }
 
-.-border-.all.green{
+.-border-.all.purple{
 	border: 2px solid #8cba35;
 }
 
@@ -598,10 +559,10 @@ img.vertical-center{
 	border-top: 1px double #cfcfcf;
 }
 
-.-border-.top.green,
-.-border-.top.t-green
+.-border-.top.purple,
+.-border-.top.t-purple
 {
-	border-top: 2px solid #8cba35;
+	border-top: 2px solid #8977ad;
 }
 
 .-border-.top.orange,
@@ -613,9 +574,9 @@ img.vertical-center{
 	border-bottom: 1px double #cfcfcf;
 }
 
-.-border-.bottom.green
-.-border-.bottom.b-green{
-	border-bottom: 2px solid #8cba35;
+.-border-.bottom.purple
+.-border-.bottom.b-purple{
+	border-bottom: 2px solid #8977ad;
 }
 
 .-border-.bottom.orange
@@ -627,9 +588,9 @@ img.vertical-center{
 	border-right: 1px double #cfcfcf;
 }
 
-.-border-.right.green
-.-border-.right.b-green{
-	border-right: 2px solid #8cba35;
+.-border-.right.purple
+.-border-.right.b-purple{
+	border-right: 2px solid #8977ad;
 }
 
 .-border-.right.orange
@@ -710,8 +671,8 @@ img.vertical-center{
 	color: #0000ff;	
 }
 
-.-text-.green{
-	color: #8cba34;	
+.-text-.purple{
+	color: #8977ad;	
 }
 
 .-text-.dark-gray{
@@ -739,8 +700,8 @@ img.vertical-center{
 	background: beige;
 }
 
-.-bg-.green{
-	background: #8cba34;
+.-bg-.purple{
+	background: #8977ad;
 }
 
 .-bg-.orange{
@@ -849,13 +810,13 @@ img.vertical-center{
 	min-width:71px;
     padding: 3px 8px;
     color: #fff;
-    background-color: #759d2a;
-    border-color: #608618;
+    background-color: #8977ad;
+    border-color: #6b5892;
 }
 
 .btn-default:hover{
-    background-color: #449d44;
-    border-color: #398439;
+    background-color: #5a4e70;
+    border-color: #443b53;
 
 }
 

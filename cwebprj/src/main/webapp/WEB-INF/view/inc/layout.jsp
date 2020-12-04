@@ -10,6 +10,7 @@
 
 <link href="/css/layout.css" type="text/css" rel="stylesheet" />
 <link href="/css/index.css" type="text/css" rel="stylesheet" />
+<link href="/css/intro.css" type="text/css" rel="stylesheet" />	<!-- css임포트 -->
 
 </head>
 

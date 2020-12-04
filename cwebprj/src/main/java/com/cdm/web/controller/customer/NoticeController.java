@@ -8,8 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cdm.web.entity.Notice;
 import com.cdm.web.service.NoticeService;
+import com.cdm.web.vo.NoticeVO;
 
 @Controller
 @RequestMapping("/customer/notice/")
@@ -21,7 +21,7 @@ public class NoticeController {
 	@RequestMapping("list")
 	public ModelAndView list() throws ClassNotFoundException, SQLException {
 		ModelAndView mv = new ModelAndView();
-		List<Notice> list = noticeService.getList(1, "TITLE", "");
+		List<NoticeVO> list = noticeService.getList(1, "TITLE", "");
 		mv.setViewName("notice.list"); //list뷰 
 		mv.addObject("list", list); //뷰로 보낼 데이터
 

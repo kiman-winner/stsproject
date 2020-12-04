@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//ibatis.apache.org//DTD config 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-config.dtd">
+
+<configuration>
+	<typeAliases>
+		<typeAlias alias="Member" type="com.cdm.web.vo.MemberVO"/>
+	</typeAliases>
+</configuration>

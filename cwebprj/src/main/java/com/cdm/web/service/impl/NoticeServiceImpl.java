@@ -1,4 +1,4 @@
-package com.cdm.web.service.jdbc;
+package com.cdm.web.service.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,11 +14,11 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cdm.web.entity.Notice;
 import com.cdm.web.service.NoticeService;
+import com.cdm.web.vo.NoticeVO;
 
 @Service //@Controller, @Service,@Repository
-public class JDBCNoticeService implements NoticeService {
+public class NoticeServiceImpl implements NoticeService {
 	// private String url = "jdbc:oracle:thin:@localhost:1521/xe";
 //	private String uid = "c##spring";
 //	private String pwd = "1111";
@@ -26,7 +26,7 @@ public class JDBCNoticeService implements NoticeService {
 	@Autowired
 	private DataSource dataSource;
 
-	public List<Notice> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
+	public List<NoticeVO> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
 
 		int start = 1 + (page - 1) * 10; // 1, 11, 21, 31, ..
 		int end = 10 * page; // 10, 20, 30, 40...
@@ -36,7 +36,7 @@ public class JDBCNoticeService implements NoticeService {
 		// Class.forName(driver);
 		// Connection con = DriverManager.getConnection(url, uid, pwd);
 
-		Connection con = dataSource.getConnection(); // �뜲�씠�꽣 �냼�뒪 而ㅻ꽖�뀡 �젙蹂닿��졇�샂
+		Connection con = dataSource.getConnection(); // 데이터 소스 객체를 통해 커넥션 객체 생성
 
 		PreparedStatement st = con.prepareStatement(sql);
 
@@ -46,7 +46,7 @@ public class JDBCNoticeService implements NoticeService {
 
 		ResultSet rs = st.executeQuery();
 
-		List<Notice> list = new ArrayList<Notice>();
+		List<NoticeVO> list = new ArrayList<NoticeVO>();
 
 		while (rs.next()) {
 			int id = rs.getInt("ID");
@@ -57,7 +57,7 @@ public class JDBCNoticeService implements NoticeService {
 			int hit = rs.getInt("hit");
 			String files = rs.getString("FILES");
 
-			Notice notice = new Notice(id, title, writerId, regDate, content, hit, files);
+			NoticeVO notice = new NoticeVO(id, title, writerId, regDate, content, hit, files);
 
 			list.add(notice);
 
@@ -95,7 +95,7 @@ public class JDBCNoticeService implements NoticeService {
 		return count;
 	}
 
-	public int insert(Notice notice) throws SQLException, ClassNotFoundException {
+	public int insert(NoticeVO notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
 		String writerId = notice.getWriterId();
 		String content = notice.getContent();
@@ -125,7 +125,7 @@ public class JDBCNoticeService implements NoticeService {
 		return result;
 	}
 
-	public int update(Notice notice) throws SQLException, ClassNotFoundException {
+	public int update(NoticeVO notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
 		String content = notice.getContent();
 		String files = notice.getFiles();

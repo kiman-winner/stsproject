@@ -11,8 +11,31 @@
         http://www.springframework.org/schema/context
         https://www.springframework.org/schema/context/spring-context.xsd">
 
-	<context:component-scan base-package="com.cdm.web.service"/>
+	<context:component-scan
+		base-package="com.cdm.web.service" />
+	<context:component-scan
+		base-package="com.cdm.web.dao" />
 
+	<!-- SqlSessionFactoryBean 설정 -->
+	<bean id="sqlSessionFactory"
+		class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="configLocation"
+			value="/WEB-INF/mybatis/sqlMapConfig.xml" />
+		<property name="mapperLocations">
+			<list>
+				<value>/WEB-INF/mybatis/memberMapper.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- SqlSessionTemplate 설정 -->
+	<bean id="sqlSession"
+		class="org.mybatis.spring.SqlSessionTemplate">
+		<constructor-arg ref="sqlSessionFactory" />
+	</bean>
+
+	<!-- 데이터 소스 -->
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName"
