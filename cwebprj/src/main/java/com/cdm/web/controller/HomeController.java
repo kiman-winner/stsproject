@@ -9,7 +9,6 @@ public class HomeController {
 	@RequestMapping("index")
 	public String index() {
 		
-		System.out.println("sdfasadfsdafsdf");
-		return "root.index";
+		return "index";
 	}
 }

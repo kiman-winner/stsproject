@@ -5,7 +5,7 @@
 <mapper namespace="memberNS">
 
 	<select id="login" resultType="com.cdm.web.vo.MemberVO">	<!-- 로그인 sql -->
-		select member_id,password
+		select member_id,password,member_name
 		from member
 		where member_id=#{member_id}
 		and password=#{password}
