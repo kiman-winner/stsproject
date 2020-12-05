@@ -26,58 +26,52 @@
 
 <script>
 	//아이디 유효성 검사(1 = 중복 / 0 != 중복)
-	$('#member_id')
-			.blur(
-					function() {
-						alert("idCheck");
+	var id_checkBtn = false;
 
-						// id = "id_reg" / name = "userId"
-						var member_id = $('#member_id').val();
-						$
-								.ajax({
+	function idCheck() {
 
-									url : '${pageContext.request.contextPath}/member/idCheck?member_id='
-											+ member_id,
-									type : 'get',
-									success : function(data) {
-										console.log("1 = 중복o / 0 = 중복x : "
-												+ data);
+		var member_id = $('#member_id').val(); //member controller 에 요청 /member/idCheck
 
-										if (data == 1) {
-											// 1 : 아이디가 중복되는 문구
-											$("#id_check").text(
-													"사용중인 아이디입니다 :p");
-											$("#id_check").css("color", "red");
-										} else {
+		if (member_id.length<6||member_id.length>20
+				|| /[ㄱ-ㅎ|ㅏ-ㅣ|가-힝]/.test(member_id)
+				|| /[~!@\#$%<>^&*\()\-=+_\’]/.test(member_id)) //DB조회가 필요없는 유효성 검사 
+		{
+			alert("아이디 형식을 다시 확인해주세요");
+			$('#member_id').val("");
+			return;
+		}
 
-											if (idJ.test(user_id)) {
-												// 0 : 아이디 길이 / 문자열 검사
-												$("#id_check").text("");
+		$
+				.ajax({
 
-											} else if (user_id == "") {
+					url : '${pageContext.request.contextPath}/member/idCheck?member_id='
+							+ member_id,
+					type : 'get',
+					success : function(data) {
+						console.log("1 = 중복o / 0 = 중복x : " + data);
 
-												$('#id_check').text(
-														'아이디를 입력해주세요 :)');
-												$('#id_check').css('color',
-														'red');
+						if (data == 1) {
+							$('#member_id').val("");
+							$('#member_id').focus();
+							alert("아이디가 이미 있습니다.");
+							id_checkBtn = false;
+						} else {
+							if (confirm("아이디 사용가능합니다. 사용하시겠습니까?")) {
+								$("#member_id").attr("readonly", true);
+								$("#member_id").css("background-color", "gray");
+								$('#id-check-button').attr("disabled", "true");
+								id_checkBtn = true;
+							} else
+								id_checkBtn = false;
+						}
+					},
+					error : function() {
+						console.log("실패");
+					}
+				});
+	}
 
-											} else {
-
-												$('#id_check')
-														.text(
-																"아이디는 소문자와 숫자 4~12자리만 가능합니다 :) :)");
-												$('#id_check').css('color',
-														'red');
-											}
-										}
-									},
-									error : function() {
-										console.log("실패");
-									}
-								});
-					});
-
-	// 비밀번호 유효성 검사
+	// 비밀번호 유효성 검사 및 아이디 체크 버튼 누른지 확인 
 	function pwdcheck() {
 
 		if (form.password.value != form.passwordcheck.value) {
@@ -86,6 +80,11 @@
 			form.passwordcheck.value = "";
 			form.password.focus();
 
+			return false;
+		}
+
+		if (id_checkBtn == false) {
+			alert("아이디 중복검사를 해주세요");
 			return false;
 		}
 	}
@@ -156,8 +155,12 @@
 									<th><label>아이디</label></th>
 									<td colspan="3" class="text-align-left indent"><input
 										id="member_id" type="text" name="member_id" class="width-half"
-										required="required" value="" placeholder="영문과 숫자 6~20자 이내"
-										pattern="^\w{6,20}$" /></td>
+										required="required" value="" placeholder="영문, 숫자 6~20자 이내 조합" />
+										<button type="button" class="btn-text btn-default"
+											id="id-check-button" onclick="idCheck()">중복검사</button> <!-- <input class="btn-text btn-default" type="button" id="id-check-button" value="중복확인" />	 -->
+
+									</td>
+
 								</tr>
 								<tr>
 									<th><label>비밀번호</label></th>
