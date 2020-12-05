@@ -9,14 +9,14 @@ public class MainController {
 
 	@RequestMapping("intro")
 	public String intro() {
-		return "main.intro";
+		return "main/intro";
 	}
 	@RequestMapping("study")
 	public String study() {
-		return "main.study";
+		return "main/study";
 	}
 	@RequestMapping("qna")
 	public String qna() {
-		return "main.qna";
+		return "main/qna";
 	}
 }

@@ -14,9 +14,9 @@ public class MemberDAOImpl implements MemberDAO{
 	private SqlSession session;
 	
 	@Override
-	public void register(MemberVO vo) throws Exception {	//회원가입 처리
+	public void join(MemberVO vo) throws Exception {	//회원가입 처리
 		// TODO Auto-generated method stub
-		
+		session.insert("memberNS.join", vo);	
 	}
 
 	@Override
@@ -26,5 +26,15 @@ public class MemberDAOImpl implements MemberDAO{
 		
 		MemberVO member = session.selectOne("memberNS.login",vo);
 		return member;
+	}
+
+	@Override
+	public int idCheck(String member_id) {
+		// TODO Auto-generated method stub
+		int count;
+		
+		count = session.selectOne("memberNS.idcheck",member_id);
+		
+		return count;
 	}
 }

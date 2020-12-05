@@ -7,26 +7,35 @@
 	<select id="login" resultType="com.cdm.web.vo.MemberVO">	<!-- 로그인 sql -->
 		select member_id,password,member_name
 		from member
-		where member_id=#{member_id}
+		where
+		member_id=#{member_id}
 		and password=#{password}
 	</select>
 
-	
-	<insert id="register">						<!-- 회원가입 -->
-	    INSERT INTO MP_MEMBER(   member_id 
-	   					       , password 
-	   					       , member_name
-	   					       ,email
-	   					       ,birth
-	   					       ,phone 	)
-	                  VALUES(    #{member_id} 
-	                 		   , #{password}
-	                 		   , #{member_name}
-	                 		    , #{email}
-	                 		    , #{birth}
-	                 		    , #{phone}
-	                 		   )
-   
-    </insert>
+	<select id="idcheck" resultType="int">	<!-- 로그인 아이디 체크 -->
+		select count(*)
+		from member
+		where
+		member_id=#{member_id}
+	</select>
+
+	<insert id="join">						<!-- 회원가입 -->
+		INSERT INTO member(member_id
+		, password
+		, member_name
+		,email
+		,birth
+		,phone
+		)
+		VALUES( #{member_id}
+		, #{password}
+		, #{member_name}
+		, #{email}
+		, #{birth}
+		, #{phone}
+		)
+
+	</insert>
+
 
 </mapper>

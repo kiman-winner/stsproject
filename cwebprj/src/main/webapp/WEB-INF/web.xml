@@ -6,8 +6,8 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0" metadata-complete="true">
 
- <!-- 나머지 2개 지정 위해, 스프링이 제공하는 리스너, 톰캣이 시작될때 끝날때 등 뭔가 이벤트를 처리할때 사용 -->
-	 <listener>
+	<!-- 나머지 2개 지정 위해, 스프링이 제공하는 리스너, 톰캣이 시작될때 끝날때 등 뭔가 이벤트를 처리할때 사용 -->
+	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
 	<context-param> <!-- 리스너가 가진 파라미터를 context param이란 이름으로 가질 수 있다. -->
@@ -16,13 +16,14 @@
 			/WEB-INF/spring/service-context.xml
 		</param-value>
 	</context-param>
-	
+
 	<servlet>
 		<servlet-name>dispatcher</servlet-name><!-- 이름자기마음 -->
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/servlet-context.xml</param-value><!-- 여긴 하나만 추가가능 -->
+			<param-value>/WEB-INF/spring/servlet-context.xml</param-value><!-- 여긴 
+				하나만 추가가능 -->
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
@@ -37,5 +38,19 @@
 	<description>
      Welcome to Tomcat
   </description>
+
+<!-- post 요청 시 한글깨짐 방지 -->
+	<filter>
+		<filter-name>encodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
 
 </web-app>

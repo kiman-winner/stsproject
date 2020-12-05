@@ -22,7 +22,7 @@ public class NoticeController {
 	public ModelAndView list() throws ClassNotFoundException, SQLException {
 		ModelAndView mv = new ModelAndView();
 		List<NoticeVO> list = noticeService.getList(1, "TITLE", "");
-		mv.setViewName("notice.list"); //list뷰 
+		mv.setViewName("/customer/notice/list"); //list뷰 
 		mv.addObject("list", list); //뷰로 보낼 데이터
 
 		return mv;
@@ -30,6 +30,6 @@ public class NoticeController {
 
 	@RequestMapping("detail")
 	public String detail() {
-		return "notice.detail";
+		return "/customer/notice/detail";
 	}
 }

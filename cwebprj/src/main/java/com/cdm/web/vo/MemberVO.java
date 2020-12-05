@@ -2,13 +2,17 @@ package com.cdm.web.vo;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 
 public class MemberVO { //user vo 클레스 
 	private String member_id;
 	private String member_name;
 	private String password;
-	private Date email;
-	private String birth;
+	private String email;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date birth;
 	private String phone;
 	public String getMember_id() {
 		return member_id;
@@ -28,16 +32,16 @@ public class MemberVO { //user vo 클레스
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public Date getEmail() {
+	public String getEmail() {
 		return email;
 	}
-	public void setEmail(Date email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getBirth() {
+	public Date getBirth() {
 		return birth;
 	}
-	public void setBirth(String birth) {
+	public void setBirth(Date birth) {
 		this.birth = birth;
 	}
 	public String getPhone() {
@@ -47,7 +51,6 @@ public class MemberVO { //user vo 클레스
 		this.phone = phone;
 	}
 	
-
 	
 	
 }

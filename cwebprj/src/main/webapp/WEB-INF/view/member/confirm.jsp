@@ -1,14 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 
 <head>
-
+<title>환영합니다.</title>
 <meta charset="UTF-8">
-<title>비밀번호 초기화</title>
-
 <link href="/css/member/layout.css" type="text/css" rel="stylesheet" />
 <style>
 #visual .content-container {
@@ -22,9 +19,7 @@
 
 <body>
 	<!-- header 부분 -->
-	
-<%@include file="/WEB-INF/view/include/header.jsp"%>
-
+	<%@include file="/WEB-INF/view/include/header.jsp"%>
 
 	<!-- --------------------------- <visual> --------------------------------------- -->
 	<!-- visual 부분 -->
@@ -63,19 +58,38 @@
 				</nav>
 
 			</aside>
-
 			<!-- --------------------------- main --------------------------------------- -->
 
+			<!-- content 부분 -->
 
 
-			비밀번호 리셋
+
+			<main>
+				<!-- 로그인 완료 시  -->
+				<h2 class="main title">가입확인</h2>
+
+				
+					<div class="margin-top first"
+						style="background: url('../images/member/bg-login.png') no-repeat center; height: 300px;">
+						<div class="text-align-center">
+							<img style="margin-left: 170px; margin-top: 70px;"
+								alt="시디엠렉처의 회원가입이 완료되었습니다."
+								src="../images/member/txt-join-welcome.png">
+						</div>
+						<div id="confirmloginBtn">
+							<button class="btn login-btn" onclick="location.href='/member/login'"></button>
+						</div>
+					</div>
+				
+			</main>
+
 
 		</div>
 	</div>
-
 	<!-- ------------------- <footer> --------------------------------------- -->
+
+
 
 	<%@include file="/WEB-INF/view/include/footer.jsp"%>
 </body>
-
 </html>

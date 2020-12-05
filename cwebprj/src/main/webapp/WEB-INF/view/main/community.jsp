@@ -4,7 +4,7 @@
 <html>
 
 <head>
-<title>강좌선택</title>
+<title>커뮤니티</title>
 <meta charset="UTF-8">
 
 <link href="/css/layout.css" type="text/css" rel="stylesheet" />
@@ -22,7 +22,7 @@
 
 	<!-- --------------------------- <body> --------------------------------------- -->
 
-	강좌
+	qna 메뉴입니다.
 
 	<!-- ------------------- <footer> --------------------------------------- -->
 	<%@include file="/WEB-INF/view/include/footer.jsp"%>

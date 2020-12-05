@@ -102,7 +102,7 @@ main .padding-bottom {
 }
 
 main .margin-top.first {
-	margin-top: 49px;
+	margin-top: 40px;
 }
 
 /* --- border style------------------------------------------------------------------------- */
@@ -545,6 +545,11 @@ main .login-option{
 	text-align: right;
 }
 
+#confirmloginBtn{
+	 margin-top: 50px;
+    margin-left: 400px;
+	
+}
 
 
 /* --- pager style -------------------------------------- */
