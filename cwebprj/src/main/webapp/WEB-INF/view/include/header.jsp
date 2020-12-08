@@ -20,7 +20,7 @@
 					<ul>
 						<li><a href="/main/intro">홈페이지 소개</a></li>
 						<li><a href="/main/study">강좌선택</a></li>
-						<li><a href="/main/community">커뮤니티</a></li>
+						<li><a href="/main/community/list">커뮤니티</a></li>
 					</ul>
 				</nav>
 

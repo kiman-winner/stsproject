@@ -69,18 +69,9 @@
 			<main>
 				<h2 class="main title">로그인</h2>
 
-				<div class="breadcrumb">
-					<h3 class="hidden">breadlet</h3>
-					<ul>
-						<li>home</li>
-						<li>회원</li>
-						<li>로그인</li>
-					</ul>
-				</div>
-
 				<div class="margin-top first">
 					<h3 class="hidden">로그인 정보 입력</h3>
-					<form action="/member/login/loginPost" class="login-form" method="post">
+					<form action="login/loginPost" class="login-form" method="post">
 						<fieldset>
 							<legend class="hidden">로그인 폼</legend>
 							<!-- 로그인을 안했을 시 -->

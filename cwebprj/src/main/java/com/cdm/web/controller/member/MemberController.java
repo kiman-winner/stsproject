@@ -86,11 +86,6 @@ public class MemberController { // 멤버 관련 컨트롤러
 	@RequestMapping(value="join/joinPost",method=RequestMethod.POST) // 회원가입 페이지
 	public String joinPost(MemberVO vo) throws Exception {
 		
-		System.out.println(vo.getMember_id());
-		System.out.println("회원가입"+ vo.getMember_name());
-		System.out.println("회원가입"+ vo.getPhone());
-
-		
 		memberservice.join(vo);
 		return "redirect:/member/confirm";	//회원가입 완료 페이지 
 	}
