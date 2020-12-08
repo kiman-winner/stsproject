@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="communityNS">
+
+
+	
+	<insert id="write"> <!-- 게시글 등록 -->
+		INSERT INTO community(community_num, title, content, writer_id) 
+		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id}) 
+	</insert>
+	<select id="read" resultType="Community">
+	 select community_num,title,content,writer_id,regdate,viewcount from community
+	</select>
+	<select id="detail" resultType="Community">
+	 select community_num,title,content,writer_id,regdate,viewcount from community where community_num=#{community_num}
+	</select>
+
+</mapper>

@@ -14,8 +14,8 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cdm.web.dto.NoticeDTO;
 import com.cdm.web.service.NoticeService;
-import com.cdm.web.vo.NoticeVO;
 
 @Service //@Controller, @Service,@Repository
 public class NoticeServiceImpl implements NoticeService {
@@ -26,7 +26,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private DataSource dataSource;
 
-	public List<NoticeVO> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
+	public List<NoticeDTO> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
 
 		int start = 1 + (page - 1) * 10; // 1, 11, 21, 31, ..
 		int end = 10 * page; // 10, 20, 30, 40...
@@ -46,7 +46,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 		ResultSet rs = st.executeQuery();
 
-		List<NoticeVO> list = new ArrayList<NoticeVO>();
+		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
 
 		while (rs.next()) {
 			int id = rs.getInt("ID");
@@ -57,7 +57,7 @@ public class NoticeServiceImpl implements NoticeService {
 			int hit = rs.getInt("hit");
 			String files = rs.getString("FILES");
 
-			NoticeVO notice = new NoticeVO(id, title, writerId, regDate, content, hit, files);
+			NoticeDTO notice = new NoticeDTO(id, title, writerId, regDate, content, hit, files);
 
 			list.add(notice);
 
@@ -95,7 +95,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return count;
 	}
 
-	public int insert(NoticeVO notice) throws SQLException, ClassNotFoundException {
+	public int insert(NoticeDTO notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
 		String writerId = notice.getWriterId();
 		String content = notice.getContent();
@@ -125,7 +125,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return result;
 	}
 
-	public int update(NoticeVO notice) throws SQLException, ClassNotFoundException {
+	public int update(NoticeDTO notice) throws SQLException, ClassNotFoundException {
 		String title = notice.getTitle();
 		String content = notice.getContent();
 		String files = notice.getFiles();

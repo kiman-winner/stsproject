@@ -109,20 +109,23 @@ background-color: #8b00ff;
 								<th class="w60">번호</th>
 								<th class="expand">제목</th>
 								<th class="w100">작성자</th>
-								<th class="w100">작성일</th>
+								<th class="w60">작성일</th>
 								<th class="w60">조회수</th>
 							</tr>
 						</thead>
 						<tbody>
 
-							<c:forEach var="n" items="${list}">
+							<c:forEach var="communityDTO" items="${list}">
 								<tr>
-									<td>${n.id }</td>
-									<td class="title indent text-align-left"><a href="detail">${n.title}
-											커뮤니티게시글</a></td>
-									<td>${n.writerId}</td>
-									<td>${n.regDate}</td>
-									<td>${n.hit }</td>
+									<td>${communityDTO.community_num }</td>
+									<td class="title indent text-align-left">
+									<a href="detail?community_num=${communityDTO.community_num}">${communityDTO.title}
+											</a></td>
+									<td>${communityDTO.writer_id}</td>
+									<td>
+									<fmt:formatDate value="${communityDTO.regdate}" pattern="yyyy-MM-dd"/></td>
+									
+									<td>${communityDTO.viewcount}</td>
 								</tr>
 							</c:forEach>
 

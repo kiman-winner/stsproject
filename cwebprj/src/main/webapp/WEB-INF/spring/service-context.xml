@@ -25,7 +25,7 @@
 		<property name="mapperLocations">
 			<list>
 				<value>/WEB-INF/mybatis/memberMapper.xml</value>	<!-- 멤버 맵퍼 -->
-				<!-- <value>/WEB-INF/mybatis/communityMapper.xml</value> --> <!-- 커뮤니티 맵퍼 -->
+				<value>/WEB-INF/mybatis/communityMapper.xml</value>  <!-- 커뮤니티 맵퍼 -->
 			</list>
 		</property>
 	</bean>

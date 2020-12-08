@@ -1,9 +1,12 @@
 package com.cdm.web.dao;
 
-import com.cdm.web.vo.CommunityVO;
+import java.util.List;
+
+import com.cdm.web.dto.CommunityDTO;
 
 public interface CommunityDAO {
 	
-	public void write(CommunityVO vo) throws Exception ;
-
+	public void write(CommunityDTO vo) throws Exception ;
+	public List<CommunityDTO> read() throws Exception ;
+	public CommunityDTO detail(int community_num);
 }

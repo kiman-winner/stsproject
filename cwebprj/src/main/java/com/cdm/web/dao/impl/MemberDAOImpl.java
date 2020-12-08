@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cdm.web.dao.MemberDAO;
-import com.cdm.web.vo.MemberVO;
+import com.cdm.web.dto.MemberDTO;
 
 @Repository
 public class MemberDAOImpl implements MemberDAO{
@@ -14,17 +14,17 @@ public class MemberDAOImpl implements MemberDAO{
 	private SqlSession session;
 	
 	@Override
-	public void join(MemberVO vo) throws Exception {	//회원가입 처리
+	public void join(MemberDTO vo) throws Exception {	//회원가입 처리
 		// TODO Auto-generated method stub
 		session.insert("memberNS.join", vo);	
 	}
 
 	@Override
-	public MemberVO login(MemberVO vo) throws Exception {		//로그인 처리 
+	public MemberDTO login(MemberDTO vo) throws Exception {		//로그인 처리 
 		// TODO Auto-generated method stub
 	
 		
-		MemberVO member = session.selectOne("memberNS.login",vo);
+		MemberDTO member = session.selectOne("memberNS.login",vo);
 		return member;
 	}
 

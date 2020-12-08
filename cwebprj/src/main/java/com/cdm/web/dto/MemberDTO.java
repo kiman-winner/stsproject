@@ -1,11 +1,11 @@
-package com.cdm.web.vo;
+package com.cdm.web.dto;
 
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 
-public class MemberVO { //user vo 클레스 
+public class MemberDTO { //user vo 클레스 
 	private String member_id;
 	private String member_name;
 	private String password;

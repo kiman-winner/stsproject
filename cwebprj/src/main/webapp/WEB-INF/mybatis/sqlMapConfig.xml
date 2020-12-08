@@ -4,6 +4,8 @@
 
 <configuration>
 	<typeAliases>
-		<typeAlias alias="Member" type="com.cdm.web.vo.MemberVO"/>
+		<typeAlias alias="Member" type="com.cdm.web.dto.MemberDTO" />
+		<typeAlias alias="Community"
+			type="com.cdm.web.dto.CommunityDTO" />
 	</typeAliases>
 </configuration>

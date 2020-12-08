@@ -1,8 +1,8 @@
-package com.cdm.web.vo;
+package com.cdm.web.dto;
 
 import java.util.Date;
 
-public class NoticeVO {
+public class NoticeDTO {
 	private int id;
 	private String title;
 	private String writerId;
@@ -11,7 +11,7 @@ public class NoticeVO {
 	private int hit;
 	private String files;
 	
-	public NoticeVO() {
+	public NoticeDTO() {
 		
 	}
 	
@@ -19,7 +19,7 @@ public class NoticeVO {
 
 
 
-	public NoticeVO(int id, String title, String writerId, Date regDate, String content, int hit, String files) {
+	public NoticeDTO(int id, String title, String writerId, Date regDate, String content, int hit, String files) {
 		super();
 		this.id = id;
 		this.title = title;

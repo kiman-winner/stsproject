@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.cdm.web.dto.MemberDTO;
 import com.cdm.web.service.MemberService;
-import com.cdm.web.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member/")
@@ -33,7 +33,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 	}
 
 	@RequestMapping(value = "login/loginPost", method = RequestMethod.POST) // 로그인 처리
-	public ModelAndView loginPost(MemberVO vo, HttpServletRequest req, HttpServletResponse response) throws Exception {
+	public ModelAndView loginPost(MemberDTO vo, HttpServletRequest req, HttpServletResponse response) throws Exception {
 
 		
 		response.setCharacterEncoding("UTF-8");
@@ -45,7 +45,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 		ModelAndView mav = new ModelAndView();
 
 		HttpSession session = req.getSession();
-		MemberVO login = memberservice.login(vo);
+		MemberDTO login = memberservice.login(vo);
 
 		if (login == null) { // 로그인 실패
 			session.setAttribute("member", null);
@@ -84,7 +84,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 	}
 	
 	@RequestMapping(value="join/joinPost",method=RequestMethod.POST) // 회원가입 페이지
-	public String joinPost(MemberVO vo) throws Exception {
+	public String joinPost(MemberDTO vo) throws Exception {
 		
 		memberservice.join(vo);
 		return "redirect:/member/confirm";	//회원가입 완료 페이지 

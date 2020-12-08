@@ -1,11 +1,15 @@
-package com.cdm.web.vo;
+package com.cdm.web.dto;
 
 import java.util.Date;
 
-public class CommunityVO {
+import org.springframework.format.annotation.DateTimeFormat;
+
+public class CommunityDTO {
 	private int community_num;
 	private String title;
 	private String writer_id;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date regdate;
 	private String content;
 	private int viewcount;
