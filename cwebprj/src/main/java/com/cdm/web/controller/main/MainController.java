@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.NoticeDTO;
+import com.cdm.web.dto.Criteria;
+import com.cdm.web.dto.PageMaker;
 import com.cdm.web.service.CommunityService;
 
 @Controller
@@ -33,15 +34,20 @@ public class MainController {
 		return "main/study";
 	}
 
-	@RequestMapping(value = "community/list", method = RequestMethod.GET) // 커뮤니티 게시판
-	public ModelAndView communitylist() throws Exception {
+	@RequestMapping(value = "community/list", method = RequestMethod.GET) // 커뮤니티 게시판 리스트 불러오기
+	public ModelAndView communitylist(Criteria criteria) throws Exception {
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCriteria(criteria);
+		pageMaker.setTotalCount(communityService.listCount());// 전체 게시글
 
 		ModelAndView mv = new ModelAndView();
 
-		List<CommunityDTO> list = communityService.read();
-
+		List<CommunityDTO> list = communityService.read(criteria);
+		
 		mv.setViewName("/main/community/list"); // list뷰
 		mv.addObject("list", list); // 뷰로 보낼 데이터
+		mv.addObject("pageMaker", pageMaker);
 
 		return mv;
 	}
@@ -68,7 +74,9 @@ public class MainController {
 	public ModelAndView detail(@RequestParam("community_num") int community_num) throws Exception {
 		ModelAndView mv = new ModelAndView();
 
+		communityService.updateViewCount(community_num); // 조회수 증가
 		mv.addObject("detail", communityService.detail(community_num)); // 상세보기 서비스를 통해 해당 게시글 불러오기
+
 		mv.setViewName("main/community/detail");
 		return mv;
 	}
@@ -86,7 +94,8 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
-	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,@RequestParam("community_num") int community_num) {
+	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,
+			@RequestParam("community_num") int community_num) {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.

@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.cdm.web.dao.CommunityDAO;
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.NoticeDTO;
+import com.cdm.web.dto.Criteria;
 import com.cdm.web.service.CommunityService;
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -19,24 +19,35 @@ public class CommunityServiceImpl implements CommunityService{
 		communityDAO.write(vo);
 	}
 	@Override
-	public List<CommunityDTO> read() throws Exception {	//불러오기
+	public List<CommunityDTO> read(Criteria criteria) throws Exception {	//불러오기
 		// TODO Auto-generated method stub
-		return communityDAO.read();
+		return communityDAO.read(criteria);
 	}
+	@Override
+	public int listCount() throws Exception {			//게시물 총 개수 
+		return communityDAO.listCount();
+	}
+	
 	@Override
 	public CommunityDTO detail(int community_num) throws Exception {	//상세보기
 		// TODO Auto-generated method stub
 		return communityDAO.detail(community_num);
 	}
 	@Override
-	public void delete(int community_num) throws Exception {
+	public void delete(int community_num) throws Exception {	//게시글 삭제
 		communityDAO.delete(community_num);
 		
 	}
 	@Override
-	public void modify(CommunityDTO vo) throws Exception {
+	public void modify(CommunityDTO vo) throws Exception {	//게시글 수정 
 		communityDAO.modify(vo);
 		
 	}
+	@Override
+	public void updateViewCount(int community_num) throws Exception {	//조회수 증가
+		// TODO Auto-generated method stub
+		communityDAO.updateViewCount(community_num);
+	}
+
 
 }

@@ -1,20 +1,23 @@
 package com.cdm.web.service;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.NoticeDTO;
+import com.cdm.web.dto.Criteria;
 
 public interface CommunityService {
 
 	public void write(CommunityDTO vo) throws Exception;
-
-	List<CommunityDTO> read() throws Exception;
 
 	CommunityDTO detail(int community_num) throws Exception;
 
 	public void delete(int community_num) throws Exception;
 
 	void modify(CommunityDTO vo) throws Exception;
+
+	public void updateViewCount(int community_num)throws Exception;
+	
+	public int listCount() throws Exception;	//게시물 총 개수 
+
+	List<CommunityDTO> read(Criteria criteria) throws Exception; //게시물 목록 조회 
 }

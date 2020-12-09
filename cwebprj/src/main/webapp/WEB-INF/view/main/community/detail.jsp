@@ -47,9 +47,7 @@
 	align-items: center;
 	background: url("../../images/main/visual.png") no-repeat center;
 }
-#writer_id{
-background-color : gray;
-}
+
 </style>
 
 </head>

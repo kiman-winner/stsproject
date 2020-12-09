@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 
 import com.cdm.web.dao.CommunityDAO;
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.MemberDTO;
+import com.cdm.web.dto.Criteria;
 
 @Repository
 public class CommunityDAOImpl implements CommunityDAO{
@@ -21,9 +21,9 @@ public class CommunityDAOImpl implements CommunityDAO{
 		session.insert("communityNS.write", vo);	
 	}
 	
-	public List<CommunityDTO> read() throws Exception {	//게시물 등록 
+	public List<CommunityDTO> read(Criteria criteria) throws Exception {	//게시물 등록 
 		
-		return session.selectList("communityNS.read");	
+		return session.selectList("communityNS.read",criteria);	
 	}
 
 	@Override
@@ -42,4 +42,17 @@ public class CommunityDAOImpl implements CommunityDAO{
 	public void modify(CommunityDTO vo) throws Exception {
 		session.update("communityNS.modify", vo);
 	}
+
+	@Override
+	public void updateViewCount(int community_num) throws Exception {
+		session.update("communityNS.updateViewCount", community_num);
+		
+	}
+
+	@Override
+	public int listCount() throws Exception {	//게시물 총 개수 구하기 
+		// TODO Auto-generated method stub
+		return session.selectOne("communityNS.listCount");	
+	}
+
 }

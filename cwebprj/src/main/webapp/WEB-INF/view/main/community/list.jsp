@@ -40,11 +40,10 @@
 	background: url("../../images/main/visual.png") no-repeat center;
 }
 
-
-
 .main:not(h2) {
 	margin-left: 100px;
 }
+
 </style>
 
 
@@ -106,13 +105,13 @@
 							<c:forEach var="communityDTO" items="${list}">
 								<tr>
 									<td>${communityDTO.community_num }</td>
-									<td class="title indent text-align-left">
-									<a href="detail?community_num=${communityDTO.community_num}">${communityDTO.title}
-											</a></td>
+									<td class="title indent text-align-left"><a
+										href="detail?community_num=${communityDTO.community_num}">${communityDTO.title}
+									</a></td>
 									<td>${communityDTO.writer_id}</td>
-									<td>
-									<fmt:formatDate value="${communityDTO.regdate}" pattern="yyyy-MM-dd"/></td>
-									
+									<td><fmt:formatDate value="${communityDTO.regdate}"
+											pattern="yyyy-MM-dd" /></td>
+
 									<td>${communityDTO.viewcount}</td>
 								</tr>
 							</c:forEach>
@@ -124,28 +123,35 @@
 				<div class="indexer margin-top align-right">
 					<h3 class="hidden">현재 페이지</h3>
 					<div>
-						<span class="text-orange text-strong">1</span> / 1 pages
+						<span class="text-orange text-strong">${pageMaker.criteria.page}/${pageMaker.totalCount}</span>
 					</div>
 				</div>
 
 
 
 				<button id="newBtn"></button>
-				
-				
-				
-				
+
 				<div class="margin-top align-center pager">
 
-					<div>
-						<span class="btn btn-prev" onclick="alert('이전 페이지가 없습니다.');">이전</span>
-					</div>
-					<ul class="-list- center">
-						<li><a class="-text- orange bold" href="?p=1&t=&q=">1</a></li>
+					<ul class="-list- center">	<!-- 페이징 -->
+						<c:if test="${pageMaker.prev}">
+							<span id="btn-prev" 
+									OnClick="location.href='list?page=${pageMaker.startPage - 1}'"></span>
+						</c:if>
+						<c:forEach begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}" var="idx">
+							<li
+								<c:out value="${pageMaker.criteria.page == idx ? 'class=text-orange text-strong' : ''}"/>>
+								<a href="list?page=${idx}">${idx}</a>
+							</li>
+						</c:forEach>
+						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
+							<span  id="btn-next"
+								OnClick="location.href='list?page=${pageMaker.endPage + 1}'"></span>
+						</c:if>
 					</ul>
-					<div>
-						<span class="btn btn-next" onclick="alert('다음 페이지가 없습니다.');">다음</span>
-					</div>
+
+
 				</div>
 
 
