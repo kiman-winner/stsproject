@@ -33,18 +33,16 @@ public class MainController {
 		return "main/study";
 	}
 
-	
-	@RequestMapping(value="community/list",method=RequestMethod.GET) // 커뮤니티 게시판
+	@RequestMapping(value = "community/list", method = RequestMethod.GET) // 커뮤니티 게시판
 	public ModelAndView communitylist() throws Exception {
-		
+
 		ModelAndView mv = new ModelAndView();
-		
+
 		List<CommunityDTO> list = communityService.read();
-		
-		
-		mv.setViewName("/main/community/list"); //list뷰 
-		mv.addObject("list", list); //뷰로 보낼 데이터
-		
+
+		mv.setViewName("/main/community/list"); // list뷰
+		mv.addObject("list", list); // 뷰로 보낼 데이터
+
 		return mv;
 	}
 
@@ -65,13 +63,49 @@ public class MainController {
 
 		// 임시
 	}
-	
-	@RequestMapping(value="community/detail",method =RequestMethod.GET) //커뮤니티 게시판 디테일
+
+	@RequestMapping(value = "community/detail", method = RequestMethod.GET) // 커뮤니티 게시판 디테일
 	public ModelAndView detail(@RequestParam("community_num") int community_num) throws Exception {
-		ModelAndView mv= new ModelAndView();
-		
-		mv.addObject("detail",communityService.detail(community_num));	//상세보기 서비스를 통해 해당 게시글 불러오기 
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("detail", communityService.detail(community_num)); // 상세보기 서비스를 통해 해당 게시글 불러오기
 		mv.setViewName("main/community/detail");
-		return  mv;
+		return mv;
 	}
+
+	@RequestMapping(value = "community/delete", method = RequestMethod.GET) // 커뮤니티 게시판 삭제 클릭 시
+	public void delete(@RequestParam("community_num") int community_num, HttpServletResponse response)
+			throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
+		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+
+		communityService.delete(community_num);
+
+		out.println("<script>alert('삭제 되었습니다.'); " + "location.href = '/main/community/list'</script>");
+	}
+
+	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
+	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,@RequestParam("community_num") int community_num) {
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.
+		mv.addObject("content", content);
+		mv.addObject("community_num", community_num);
+		mv.setViewName("main/community/modify");
+
+		return mv;
+	}
+
+	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
+	public void modify(CommunityDTO vo, HttpServletResponse response) throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
+		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+
+		communityService.modify(vo);
+
+		out.println("<script>alert('수정 되었습니다.'); " + "location.href = '/main/community/list'</script>");
+	}
+
 }

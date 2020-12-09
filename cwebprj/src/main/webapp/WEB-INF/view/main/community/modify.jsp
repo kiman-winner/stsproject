@@ -44,10 +44,13 @@ function goBack(){
 #td3{
 padding-left:300px;
 }
+
+#community_num{
+background-color : gray;
+}
 #writer_id{
 background-color : gray;
 }
-
 </style>
 
 </head>
@@ -73,13 +76,22 @@ background-color : gray;
 			<!-- --------------------------- main --------------------------------------- -->
 
 			<main class="main">
-				<h2 class="main title">게시글 작성</h2>
+				<h2 class="main title">게시글 수정</h2>
 
-				<form name="form" action="write" id="form1" method="post">
+				<form name="form" action="modify/modifyPost" id="form1" method="post">
 					<fieldset>
-						<legend class="hidden">게시글 작성</legend>
+						<legend class="hidden">게시글 수정</legend>
 						<table class="table margin-top first">
 							<tbody>
+								<tr>
+									<th><label>글 번호</label></th>
+									<td colspan="3" class="text-align-left indent">
+	
+									<input
+										id="community_num" type="text" name=community_num class="width-half"
+										required="required" value="${community_num}" readonly/>
+									</td>
+								</tr>
 								<tr>
 									<th><label>작성자 아이디</label></th>
 									<td colspan="3" class="text-align-left indent">
@@ -93,18 +105,18 @@ background-color : gray;
 									<th><label>제목</label></th>
 									<td colspan="3" class="text-align-left indent"><input
 										id="title" type="text" name="title" class="width-half"
-										required="required" value="" placeholder="제목을 입력하세요" /></td>
+										required="required" value="${title}" placeholder="제목을 입력하세요" /></td>
 								</tr>
 								<tr>
 									<th><label>내용</label></th>
 									<td colspan="3" class="text-align-left indent"><textarea
 											class="form-control" id="exampleFormControlTextarea1"
-											name="content" rows="10" placeholder="내용을 입력하세요"></textarea></td>
+											name="content" rows="10" placeholder="내용을 입력하세요">${content}</textarea></td>
 								</tr>
 								<tr>
 									<td id="td3" colspan="3"><input type="hidden" name="" value="" />
 										<input id="submit-Button" type="submit" name="btn"
-										value="게시물 작성" style="height: 30px; margin: 20px;"
+										value="게시물 수정" style="height: 30px; margin: 20px;"
 										class="btn-text btn-default" /></td>
 									<td colspan="1"><input id="cancelBtn" name="cancelbtn" type="button"
 										value="돌아가기" style="height: 30px;"

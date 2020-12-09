@@ -13,4 +13,8 @@ public interface CommunityService {
 	List<CommunityDTO> read() throws Exception;
 
 	CommunityDTO detail(int community_num) throws Exception;
+
+	public void delete(int community_num) throws Exception;
+
+	void modify(CommunityDTO vo) throws Exception;
 }

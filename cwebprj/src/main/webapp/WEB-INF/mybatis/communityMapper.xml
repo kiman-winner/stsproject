@@ -5,16 +5,27 @@
 <mapper namespace="communityNS">
 
 
-	
+
 	<insert id="write"> <!-- 게시글 등록 -->
-		INSERT INTO community(community_num, title, content, writer_id) 
-		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id}) 
+		INSERT INTO community(community_num, title, content, writer_id)
+		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id})
 	</insert>
-	<select id="read" resultType="Community">
-	 select community_num,title,content,writer_id,regdate,viewcount from community
+	<select id="read" resultType="Community"> <!-- 불러오기 -->
+		select community_num,title,content,writer_id,regdate,viewcount from
+		community
 	</select>
-	<select id="detail" resultType="Community">
-	 select community_num,title,content,writer_id,regdate,viewcount from community where community_num=#{community_num}
+
+	<select id="detail" resultType="Community"><!-- 상세보기 -->
+		select community_num,title,content,writer_id,regdate,viewcount from
+		community where community_num=#{community_num}
 	</select>
+
+	<delete id="delete"> <!-- 삭제-->
+		delete from community where community_num=#{community_num}
+	</delete>
+	<update id="modify">
+	 update community set title= #{title},content=#{content} where community_num=#{community_num}
+	
+	</update> <!-- 게시글 수정 -->
 
 </mapper>

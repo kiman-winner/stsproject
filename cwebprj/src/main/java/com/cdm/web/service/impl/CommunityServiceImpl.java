@@ -19,14 +19,24 @@ public class CommunityServiceImpl implements CommunityService{
 		communityDAO.write(vo);
 	}
 	@Override
-	public List<CommunityDTO> read() throws Exception {
+	public List<CommunityDTO> read() throws Exception {	//불러오기
 		// TODO Auto-generated method stub
 		return communityDAO.read();
 	}
 	@Override
-	public CommunityDTO detail(int community_num) throws Exception {
+	public CommunityDTO detail(int community_num) throws Exception {	//상세보기
 		// TODO Auto-generated method stub
 		return communityDAO.detail(community_num);
 	}
-	
+	@Override
+	public void delete(int community_num) throws Exception {
+		communityDAO.delete(community_num);
+		
+	}
+	@Override
+	public void modify(CommunityDTO vo) throws Exception {
+		communityDAO.modify(vo);
+		
+	}
+
 }

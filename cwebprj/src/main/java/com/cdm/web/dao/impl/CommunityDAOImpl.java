@@ -31,4 +31,15 @@ public class CommunityDAOImpl implements CommunityDAO{
 		
 		return session.selectOne("communityNS.detail",community_num);	
 	}
+
+	@Override
+	public void delete(int community_num) {
+		session.delete("communityNS.delete", community_num);	
+		
+	}
+
+	@Override
+	public void modify(CommunityDTO vo) throws Exception {
+		session.update("communityNS.modify", vo);
+	}
 }

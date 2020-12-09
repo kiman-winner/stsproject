@@ -42,3 +42,31 @@
 	height: inherit;	
 	/*float: left;*/    
 }
+#newBtn {
+	margin-left: 620px;
+	margin-top:20px;
+	border:0;
+	height:50px;
+	background: url("../../images/btn-write.png") no-repeat center;
+	outline:0;
+}
+#modifyBtn
+{
+	border:0;
+	width: 60px;
+	height:30px;
+	outline:0px;
+	background: url("../../images/btn-edit.png") no-repeat center;
+}
+#deleteBtn
+{border:0;
+	 width: 60px;
+	height:30px;
+	outline:0px;
+	background: url("../../images/btn-del.png") no-repeat center;
+}
+#modifydeltediv
+{
+	float:left;
+	
+}

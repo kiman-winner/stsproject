@@ -40,20 +40,8 @@
 	background: url("../../images/main/visual.png") no-repeat center;
 }
 
-#newBtn {
-	margin-left: 620px;
-	margin-top:20px;
-	width: 100px;
-	background-color: #8977ad;
-	color:white;
-	height:30px;
-	border:0;
-	border-radius: 12px;
-	outline:0;
-}
-#newBtn:hover {
-background-color: #8b00ff;
-}
+
+
 .main:not(h2) {
 	margin-left: 100px;
 }
@@ -142,7 +130,7 @@ background-color: #8b00ff;
 
 
 
-				<button id="newBtn">게시글 작성</button>
+				<button id="newBtn"></button>
 				
 				
 				
