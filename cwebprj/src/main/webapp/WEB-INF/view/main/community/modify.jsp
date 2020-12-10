@@ -79,19 +79,13 @@ background-color : gray;
 				<h2 class="main title">게시글 수정</h2>
 
 				<form name="form" action="modify/modifyPost" id="form1" method="post">
+				<input
+										id="community_num" type="hidden" name=community_num class="width-half"
+										required="required" value="${community_num}" readonly/>
 					<fieldset>
 						<legend class="hidden">게시글 수정</legend>
 						<table class="table margin-top first">
 							<tbody>
-								<tr>
-									<th><label>글 번호</label></th>
-									<td colspan="3" class="text-align-left indent">
-	
-									<input
-										id="community_num" type="text" name=community_num class="width-half"
-										required="required" value="${community_num}" readonly/>
-									</td>
-								</tr>
 								<tr>
 									<th><label>작성자 아이디</label></th>
 									<td colspan="3" class="text-align-left indent">

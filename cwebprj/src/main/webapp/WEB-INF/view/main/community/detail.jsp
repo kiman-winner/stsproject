@@ -19,22 +19,43 @@
 	$(document)
 			.ready(
 					function() {
-						$("#deleteBtn")
+
+						var formObj = $("form[name='readForm']");
+
+						// 삭제 post 전송 
+						$("#deleteBtn").on("click", function() {
+
+							if (confirm("정말 삭제하시겠습니까??") == true) { //확인
+
+								formObj.attr("action", "delete");
+								formObj.attr("method", "post");
+								formObj.submit();
+
+							} else { 
+								return false;
+							}
+
+						})
+
+						$("#modifyBtn")
 								.on(
 										"click",
 										function(evt) { //등록 버튼 클릭 시 
-											var result = confirm('정말 삭제 하시겠습니까?');
-											if (result)
-												location
-														.replace('delete?community_num=${detail.community_num}')
+											location
+													.replace('modify?title=${detail.title}&content=${detail.content}&community_num=${detail.community_num}')
 										});
-						$("#modifyBtn")
-						.on(
-								"click",
-								function(evt) { //등록 버튼 클릭 시 
-										location.replace('modify?title=${detail.title}&content=${detail.content}&community_num=${detail.community_num}')
-								});
 
+						/* $("#replydeleteBtn").on(
+								"click",
+								function(evt) { //삭제 버튼 클릭 시 
+									var result = confirm('정말 삭제 하시겠습니까?');
+
+									if (result)
+										location
+												.replace('delete?community_num=${detail.community_num}')
+
+												//&rno="+$(this).attr("data-rno");
+								}); */
 
 					}); //게시글 등록
 </script>
@@ -48,6 +69,29 @@
 	background: url("../../images/main/visual.png") no-repeat center;
 }
 
+#writer_id {
+	background-color: gray;
+}
+
+main .reply {
+	display: table;
+	table-layout: fixed;
+	width: 100%;
+	border-top: 1px solid #000;
+}
+
+.replybtn {
+	padding-left: 630px;
+}
+
+#replylabel {
+	font-family: "맑은 고딕";
+	font-weight: bold;
+	font-size: 15px;
+	color: #000;
+	margin-top: 50px;
+	text-decoration: none;
+}
 </style>
 
 </head>
@@ -77,6 +121,10 @@
 
 				<div class="margin-top first">
 					<h3 class="hidden">커뮤니티 내용</h3>
+					<form name="readForm" role="form" method="post">
+						<input type="hidden" id="community_num" name="community_num"
+							value="${detail.community_num}" />
+					</form>
 					<table class="table">
 						<tbody>
 							<tr>
@@ -104,11 +152,11 @@
 				</div>
 
 				<c:if test="${member.member_id == detail.writer_id }">
-				
+
 					<!-- 수정 삭제 버튼  -->
 					<div id="modifydeltediv">
 						<button id="modifyBtn"></button>
-						<button id="deleteBtn" ></button>
+						<button type="submit" id="deleteBtn"></button>
 
 					</div>
 					<!-- 로그인 안 했을 시에만 보이기 -->
@@ -120,6 +168,82 @@
 					<a class="btn btn-list" href="list">목록</a>
 
 				</div>
+
+				<c:if test="${member!=null}">
+
+					<!-- 댓글 작성 -->
+					<label id="replylabel">답변하기</label>
+
+
+					<form name="replyForm" id="form1" method="post"
+						action="detail/replyPost">
+						<input type="hidden" id="community_num" name="community_num"
+							value="${detail.community_num}">
+
+						<table class="table margin-top first">
+							<tbody>
+								<tr>
+									<th><label>댓글 작성자</label></th>
+									<td colspan="3" class="text-align-left indent"><input
+										id="writer_id" type="text" name=writer_id class="width-half"
+										required="required" value="${member.member_id}" readonly /></td>
+								</tr>
+
+								<tr>
+									<th><label>내용</label></th>
+									<td colspan="3" class="text-align-left indent"><textarea
+											class="form-control" id="exampleFormControlTextarea1"
+											name="content" rows="5" placeholder="내용을 입력하세요"
+											required="required"></textarea></td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="replybtn">
+							<input id="submit-Button" type="submit" name="btn" value=""
+								style="height: 30px; margin: 20px;" class="btn-answer" />
+						</div>
+					</form>
+
+				</c:if>
+
+				<!-- 댓글 -->
+
+
+				<c:forEach items="${replyList}" var="replyList">
+
+					<table class="table margin-top first">
+						<tbody>
+							<tr>
+								<th><label>작성자 아이디</label></th>
+								<td colspan="3" class="text-align-left indent">작성자 :
+									${replyList.writer_id}</td>
+
+								<th><label>작성 날짜</label></th>
+								<td colspan="1" class="text-align-left indent"><fmt:formatDate
+										value="${replyList.regdate}" pattern="yyyy-MM-dd" /></td>
+							</tr>
+
+							<tr>
+								<th><label>내용</label></th>
+								<td colspan="4" class="text-align-left indent">
+									${replyList.content}</td>
+							</tr>
+						</tbody>
+					</table>
+					<c:if test="${member.member_id ==replyList.writer_id}">
+
+						<!-- 수정 삭제 버튼  -->
+						<div id="reply_modifydeltediv">
+							<button id="replymodifyBtn"
+								data-reply_num="${replyList.reply_num}"></button>
+							<button id="replydeleteBtn"
+								data-reply_num="${replyList.reply_num}"></button>
+
+						</div>
+					</c:if>
+				</c:forEach>
+
+
 
 				<div class="margin-top">
 					<table class="table border-top-default">

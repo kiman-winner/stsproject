@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
+"http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<mapper namespace="replyNS">
+	<!-- 댓글 조회 -->
+	<select id="readReply" resultType="Reply">
+		SELECT
+		reply_num, content,
+		writer_id,regdate
+		FROM community_reply
+		WHERE community_num =
+		#{community_num}
+		ORDER BY reply_num DESC
+	</select>
+
+	<!-- 댓글 작성 -->
+	<insert id="writeReply">
+		INSERT INTO community_reply(
+		community_num
+		, reply_num
+		, CONTENT
+		, writer_id
+		)
+		VALUES( #{community_num}
+		, community_reply_seq.NEXTVAL
+		, #{content}
+		, #{writer_id} )
+	</insert>
+</mapper>

@@ -33,9 +33,9 @@ public class CommunityDAOImpl implements CommunityDAO{
 	}
 
 	@Override
-	public void delete(int community_num) {
-		session.delete("communityNS.delete", community_num);	
-		
+	public void delete(int community_num) {	//게시글 삭제 
+		session.delete("communityNS.replydelete", community_num);	// 댓글 모두 삭제 
+		session.delete("communityNS.delete", community_num);	//게시글 삭제 
 	}
 
 	@Override

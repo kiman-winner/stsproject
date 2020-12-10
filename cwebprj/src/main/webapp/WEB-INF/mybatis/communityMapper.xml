@@ -4,25 +4,23 @@
 
 <mapper namespace="communityNS">
 
-
-
 	<insert id="write"> <!-- 게시글 등록 -->
 		INSERT INTO community(community_num, title, content, writer_id)
 		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id})
 	</insert>
 	<select id="read" resultType="Community"> <!-- 불러오기 -->
-		select * FROM ( 
-		        SELECT community_num, 
-		               title, 
-		               content, 
-		               writer_id, 
-		               regdate, 
-		               viewcount,
-		               ROW_NUMBER() OVER(ORDER BY regdate DESC) AS RNUM
-		         FROM community 
-		                       ) MP
-		WHERE RNUM BETWEEN ${pageStart} AND  ${endPage}
-		ORDER BY regdate DESC
+		select * FROM (
+		SELECT community_num,
+		title,
+		content,
+		writer_id,
+		regdate,
+		viewcount,
+		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS RNUM
+		FROM community
+		) MP
+		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
+		
 	</select>
 	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
 		<![CDATA[
@@ -36,15 +34,24 @@
 		community where community_num=#{community_num}
 	</select>
 
-	<delete id="delete"> <!-- 삭제-->
+	<delete id="delete"> <!-- 삭제 -->
 		delete from community where community_num=#{community_num}
 	</delete>
+		<delete id="replydelete"> <!-- 삭제 -->
+		delete from community_reply where community_num=#{community_num}
+	</delete>
+	
+	
+	
+	
 	<update id="modify">
-	 update community set title= #{title},content=#{content} where community_num=#{community_num}
+		update community set title= #{title},content=#{content} where
+		community_num=#{community_num}
 	</update> <!-- 게시글 수정 -->
 	<update id="updateViewCount">
-	 update community set viewcount = viewcount+1 where community_num=#{community_num}
+		update community set viewcount = viewcount+1 where
+		community_num=#{community_num}
 	</update> <!-- 조회수 증가 -->
-	
+
 
 </mapper>

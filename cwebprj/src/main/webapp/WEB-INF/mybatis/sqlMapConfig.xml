@@ -7,5 +7,7 @@
 		<typeAlias alias="Member" type="com.cdm.web.dto.MemberDTO" />
 		<typeAlias alias="Community"
 			type="com.cdm.web.dto.CommunityDTO" />
+				<typeAlias alias="Reply"
+			type="com.cdm.web.dto.ReplyDTO" />
 	</typeAliases>
 </configuration>

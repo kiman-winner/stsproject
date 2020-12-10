@@ -265,10 +265,8 @@ main .table .textarea{
 	
 	padding: 5px;
 	width:100%;
-	min-height:400px;
-	
+	min-height:50px;
 	line-height: 24px; 
-	/* text-align: center; */
 }
 
 main .table.border-top-default {

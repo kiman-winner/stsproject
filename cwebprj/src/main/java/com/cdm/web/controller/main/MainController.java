@@ -15,7 +15,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.dto.Criteria;
 import com.cdm.web.dto.PageMaker;
+import com.cdm.web.dto.ReplyDTO;
 import com.cdm.web.service.CommunityService;
+import com.cdm.web.service.ReplyService;
 
 @Controller
 @RequestMapping("/main/")
@@ -23,6 +25,8 @@ public class MainController {
 
 	@Autowired
 	private CommunityService communityService;
+	@Autowired
+	private ReplyService replyService;
 
 	@RequestMapping("intro") // 홈페이지 소개
 	public String intro() {
@@ -44,7 +48,7 @@ public class MainController {
 		ModelAndView mv = new ModelAndView();
 
 		List<CommunityDTO> list = communityService.read(criteria);
-		
+
 		mv.setViewName("/main/community/list"); // list뷰
 		mv.addObject("list", list); // 뷰로 보낼 데이터
 		mv.addObject("pageMaker", pageMaker);
@@ -77,11 +81,13 @@ public class MainController {
 		communityService.updateViewCount(community_num); // 조회수 증가
 		mv.addObject("detail", communityService.detail(community_num)); // 상세보기 서비스를 통해 해당 게시글 불러오기
 
+		List<ReplyDTO> replyList = replyService.readReply(community_num); // 댓글 불러오기
+		mv.addObject("replyList", replyList);
 		mv.setViewName("main/community/detail");
 		return mv;
 	}
 
-	@RequestMapping(value = "community/delete", method = RequestMethod.GET) // 커뮤니티 게시판 삭제 클릭 시
+	@RequestMapping(value = "community/delete", method = RequestMethod.POST) // 커뮤니티 게시판 삭제 클릭 시
 	public void delete(@RequestParam("community_num") int community_num, HttpServletResponse response)
 			throws Exception {
 		response.setCharacterEncoding("UTF-8");
@@ -117,4 +123,14 @@ public class MainController {
 		out.println("<script>alert('수정 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 	}
 
+	@RequestMapping(value = "community/detail/replyPost", method = RequestMethod.POST)//  댓글 작성 
+	public void replypost(ReplyDTO replyDTO,HttpServletResponse response) throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
+		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+
+		replyService.writeReply(replyDTO);
+
+		out.println("<script>alert('댓글이 등록 되었습니다.'); " + "location.href = '/main/community/detail?community_num="+replyDTO.getCommunity_num()+"'</script>");
+	}
 }

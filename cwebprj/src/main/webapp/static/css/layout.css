@@ -70,3 +70,39 @@
 	float:left;
 	
 }
+#reply_modifydeltediv
+{
+	float:left;
+	width:200px;
+	margin-left:600px;
+}
+#replymodifyBtn
+{
+	border:0;
+	width: 60px;
+	height:30px;
+	outline:0px;
+	background: url("../../images/btn-edit.png") no-repeat center;
+}
+#replydeleteBtn
+{border:0;
+	 width: 60px;
+	height:30px;
+	outline:0px;
+	background: url("../../images/btn-del.png") no-repeat center;
+}
+
+
+.btn-answer {
+    border: 0;
+    width: 70px;
+    height: 40px;
+    outline: 0px;
+    background: url(../../images/btn-answer.png) no-repeat center;
+}
+
+
+
+
+
+
