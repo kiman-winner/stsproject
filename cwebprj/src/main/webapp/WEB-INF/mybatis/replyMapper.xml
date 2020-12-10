@@ -27,4 +27,11 @@
 		, #{content}
 		, #{writer_id} )
 	</insert>
+	
+	<delete id="replyAlldelete"> <!-- 해당 게시글 댓글 삭제 -->
+		delete from community_reply where community_num=#{community_num}
+	</delete>
+	<delete id="replydelete"> <!-- 해당 댓글 삭제 -->
+		delete from community_reply where reply_num=#{reply_num}
+	</delete>
 </mapper>

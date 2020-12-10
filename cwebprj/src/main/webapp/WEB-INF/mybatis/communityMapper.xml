@@ -17,10 +17,11 @@
 		regdate,
 		viewcount,
 		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS RNUM
-		FROM community
+		FROM
+		community
 		) MP
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
-		
+
 	</select>
 	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
 		<![CDATA[
@@ -36,16 +37,12 @@
 
 	<delete id="delete"> <!-- 삭제 -->
 		delete from community where community_num=#{community_num}
+
 	</delete>
-		<delete id="replydelete"> <!-- 삭제 -->
-		delete from community_reply where community_num=#{community_num}
-	</delete>
-	
-	
-	
-	
+
 	<update id="modify">
-		update community set title= #{title},content=#{content} where
+		update community set title=
+		#{title},content=#{content} where
 		community_num=#{community_num}
 	</update> <!-- 게시글 수정 -->
 	<update id="updateViewCount">

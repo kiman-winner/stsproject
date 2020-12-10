@@ -28,4 +28,19 @@ public class ReplyServiceImpl implements ReplyService {
 		replyDAO.writeReply(replyDTO);		
 	}
 
+
+	@Override
+	public void deleteAll(int community_num) throws Exception {
+		replyDAO.deleteAll(community_num);
+	}
+
+
+	@Override
+	public void deleteReply(int reply_num) throws Exception {
+		replyDAO.deleteReply(reply_num);
+		
+	}
+
+
+
 }

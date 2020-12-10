@@ -94,6 +94,7 @@ public class MainController {
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
+		replyService.deleteAll(community_num);//해당 댓글 모두 삭제 
 		communityService.delete(community_num);
 
 		out.println("<script>alert('삭제 되었습니다.'); " + "location.href = '/main/community/list'</script>");
@@ -123,14 +124,5 @@ public class MainController {
 		out.println("<script>alert('수정 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 	}
 
-	@RequestMapping(value = "community/detail/replyPost", method = RequestMethod.POST)//  댓글 작성 
-	public void replypost(ReplyDTO replyDTO,HttpServletResponse response) throws Exception {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
-		PrintWriter out = response.getWriter(); // 응답을 위한 객체
-
-		replyService.writeReply(replyDTO);
-
-		out.println("<script>alert('댓글이 등록 되었습니다.'); " + "location.href = '/main/community/detail?community_num="+replyDTO.getCommunity_num()+"'</script>");
-	}
+	
 }

@@ -22,6 +22,8 @@
 
 						var formObj = $("form[name='readForm']");
 
+						var replyformObj = $("form[name='replyForm']");
+
 						// 삭제 post 전송 
 						$("#deleteBtn").on("click", function() {
 
@@ -31,11 +33,11 @@
 								formObj.attr("method", "post");
 								formObj.submit();
 
-							} else { 
+							} else {
 								return false;
 							}
 
-						})
+						});
 
 						$("#modifyBtn")
 								.on(
@@ -45,17 +47,19 @@
 													.replace('modify?title=${detail.title}&content=${detail.content}&community_num=${detail.community_num}')
 										});
 
-						/* $("#replydeleteBtn").on(
+						 $("#replydeleteBtn").on(	//댓글 삭제 버튼 
 								"click",
 								function(evt) { //삭제 버튼 클릭 시 
-									var result = confirm('정말 삭제 하시겠습니까?');
+									if (confirm("정말 삭제하시겠습니까??") == true) { //확인
 
-									if (result)
-										location
-												.replace('delete?community_num=${detail.community_num}')
+										replyformObj.attr("action", "detail/replyDelete");
+										replyformObj.attr("method", "post");
+										replyformObj.submit();
 
-												//&rno="+$(this).attr("data-rno");
-								}); */
+									} else {
+										return false;
+									}
+								}); 
 
 					}); //게시글 등록
 </script>
@@ -176,7 +180,7 @@ main .reply {
 
 
 					<form name="replyForm" id="form1" method="post"
-						action="detail/replyPost">
+						action="detail/replyWrite">
 						<input type="hidden" id="community_num" name="community_num"
 							value="${detail.community_num}">
 
@@ -230,17 +234,26 @@ main .reply {
 							</tr>
 						</tbody>
 					</table>
+					
+					<!-- 댓글 수정 삭제  -->
 					<c:if test="${member.member_id ==replyList.writer_id}">
 
-						<!-- 수정 삭제 버튼  -->
-						<div id="reply_modifydeltediv">
-							<button id="replymodifyBtn"
-								data-reply_num="${replyList.reply_num}"></button>
-							<button id="replydeleteBtn"
-								data-reply_num="${replyList.reply_num}"></button>
+						<form name="replyForm" role="form" method="post">
+							<input type="hidden" id="reply_num" name="reply_num"
+								value="${replyList.reply_num}" />
+								<input type="hidden" id="community_num" name="community_num"
+								value="${detail.community_num}" />
 
-						</div>
+							<!-- 수정 삭제 버튼  -->
+							<div id="reply_modifydeltediv">
+								<button id="replymodifyBtn"></button>
+								<button id="replydeleteBtn"></button>
+
+							</div>
+						</form>
+
 					</c:if>
+
 				</c:forEach>
 
 
