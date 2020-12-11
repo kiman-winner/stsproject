@@ -98,6 +98,7 @@
 								<th class="w100">작성자</th>
 								<th class="w60">작성일</th>
 								<th class="w60">조회수</th>
+								<th class="w60">댓글수</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -113,6 +114,7 @@
 											pattern="yyyy-MM-dd" /></td>
 
 									<td>${communityDTO.viewcount}</td>
+									<td>${communityDTO.replycount}</td>
 								</tr>
 							</c:forEach>
 

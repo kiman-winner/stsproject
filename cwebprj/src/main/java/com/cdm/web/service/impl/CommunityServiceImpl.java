@@ -48,6 +48,16 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		communityDAO.updateViewCount(community_num);
 	}
+	@Override
+	public void upReplyCount(int community_num) throws Exception {	//´ñ±Û ¼ö Áõ°¡
+		communityDAO.upReplyCount(community_num);
+		
+	}
+	@Override
+	public void downReplyCount(int community_num) throws Exception {
+		communityDAO.downReplyCount(community_num);
+		
+	}
 
 
 }

@@ -42,26 +42,21 @@
 						$("#modifyBtn")
 								.on(
 										"click",
-										function(evt) { //등록 버튼 클릭 시 
+										function(evt) { //게시글 수정 버튼 클릭 시 
 											location
 													.replace('modify?title=${detail.title}&content=${detail.content}&community_num=${detail.community_num}')
 										});
 
-						 $("#replydeleteBtn").on(	//댓글 삭제 버튼 
-								"click",
-								function(evt) { //삭제 버튼 클릭 시 
-									if (confirm("정말 삭제하시겠습니까??") == true) { //확인
+							
+					}); 
 
-										replyformObj.attr("action", "detail/replyDelete");
-										replyformObj.attr("method", "post");
-										replyformObj.submit();
-
-									} else {
-										return false;
-									}
-								}); 
-
-					}); //게시글 등록
+					function replyUpdate (reply_num,writer_id,content) { 	//댓글 수정 
+						 var childwindow =window.open("detail/replyUpdateForm?reply_num="+reply_num+"&content="+content+"&writer_id="+writer_id
+								,
+								"updateForm","width=430,height=250,scrollbars=no,resizable=no");
+						childwindow.focus();
+					
+					}
 </script>
 
 
@@ -95,6 +90,10 @@ main .reply {
 	color: #000;
 	margin-top: 50px;
 	text-decoration: none;
+}
+
+th {
+	background: #f5f5f5;
 }
 </style>
 
@@ -138,14 +137,17 @@ main .reply {
 							</tr>
 							<tr>
 								<th>작성일</th>
-								<td class="text-align-left text-indent" colspan="3"><fmt:formatDate
+								<td class="text-align-left text-indent"><fmt:formatDate
 										value="${detail.regdate}" pattern="yyyy-MM-dd" /></td>
-							</tr>
-							<tr>
 								<th>작성자</th>
 								<td>${detail.writer_id}</td>
+							</tr>
+							<tr>
+
 								<th>조회수</th>
 								<td>${detail.viewcount}</td>
+								<th>댓글수</th>
+								<td>${detail.replycount}</td>
 							</tr>
 
 							<tr class="content">
@@ -213,7 +215,7 @@ main .reply {
 				<!-- 댓글 -->
 
 
-				<c:forEach items="${replyList}" var="replyList">
+				<c:forEach items="${replyList}" var="replyList" varStatus="status">
 
 					<table class="table margin-top first">
 						<tbody>
@@ -230,27 +232,33 @@ main .reply {
 							<tr>
 								<th><label>내용</label></th>
 								<td colspan="4" class="text-align-left indent">
-									${replyList.content}</td>
+									<p>${replyList.content}</p>
+								</td>
 							</tr>
 						</tbody>
 					</table>
-					
+
 					<!-- 댓글 수정 삭제  -->
 					<c:if test="${member.member_id ==replyList.writer_id}">
+						<div id="reply_modifydeltediv">
+							<button id="replymodifyBtn"
+								onclick="replyUpdate(${replyList.reply_num},'${replyList.writer_id}','${replyList.content}')"></button>
 
-						<form name="replyForm" role="form" method="post">
-							<input type="hidden" id="reply_num" name="reply_num"
-								value="${replyList.reply_num}" />
-								<input type="hidden" id="community_num" name="community_num"
-								value="${detail.community_num}" />
+							<form name="replyForm" role="form" method="post"
+								action="detail/replyDelete">
+								<input type="hidden" id="reply_num" name="reply_num"
+									value="${replyList.reply_num}" /> <input type="hidden"
+									id="community_num" name="community_num"
+									value="${detail.community_num}" /> 
+									
+									<input id="replydeleteBtn"
+									type="submit" name="btn" value=""
+									style="height: 30px; " />
 
-							<!-- 수정 삭제 버튼  -->
-							<div id="reply_modifydeltediv">
-								<button id="replymodifyBtn"></button>
-								<button id="replydeleteBtn"></button>
 
-							</div>
-						</form>
+
+							</form>
+						</div>
 
 					</c:if>
 

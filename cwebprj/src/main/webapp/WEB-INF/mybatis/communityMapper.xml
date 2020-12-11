@@ -16,6 +16,7 @@
 		writer_id,
 		regdate,
 		viewcount,
+		replycount,
 		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS RNUM
 		FROM
 		community
@@ -50,5 +51,13 @@
 		community_num=#{community_num}
 	</update> <!-- 조회수 증가 -->
 
-
+	<update id="upReplyCount">
+		update community set replycount = replycount+1 where
+		community_num=#{community_num}
+	</update> <!-- 댓글 수 증가 -->
+	<update id="downReplyCount">
+		update community set replycount = replycount-1 where
+		community_num=#{community_num}
+	</update> <!-- 댓글 수 감소 -->
+	
 </mapper>

@@ -35,4 +35,10 @@ public class ReplyDAOImpl implements ReplyDAO{
 	public void deleteReply(int reply_num) throws Exception {	//´ñ±Û »èÁ¦ 
 		session.delete("replyNS.replydelete", reply_num);
 	}
+
+	@Override
+	public void modifyReply(ReplyDTO replyDTO) throws Exception {	//´ñ±Û ¼öÁ¤ 
+		session.update("replyNS.modifyReply", replyDTO);
+		
+	}
 }

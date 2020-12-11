@@ -42,5 +42,12 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 
+	@Override
+	public void modifyReply(ReplyDTO replyDTO) throws Exception {
+		replyDAO.modifyReply(replyDTO);
+		
+	}
+
+
 
 }

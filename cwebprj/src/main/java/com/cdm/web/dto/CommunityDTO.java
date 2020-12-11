@@ -13,6 +13,14 @@ public class CommunityDTO {
 	private Date regdate;
 	private String content;
 	private int viewcount;
+	private int replycount;
+	
+	public int getReplycount() {
+		return replycount;
+	}
+	public void setReplycount(int replycount) {
+		this.replycount = replycount;
+	}
 	public int getCommunity_num() {
 		return community_num;
 	}

@@ -13,4 +13,6 @@ public interface ReplyService {
 
 	public void deleteReply(int reply_num)throws Exception;	//´ñ±Û »èÁ¦ 
 
+	public void modifyReply(ReplyDTO replyDTO) throws Exception;	//´ñ±Û ¼öÁ¤
+
 }
