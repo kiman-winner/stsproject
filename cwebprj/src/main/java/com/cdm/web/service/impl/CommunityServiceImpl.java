@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.cdm.web.dao.CommunityDAO;
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.dto.Criteria;
+import com.cdm.web.dto.SearchCriteria;
 import com.cdm.web.service.CommunityService;
 @Service
 public class CommunityServiceImpl implements CommunityService{
@@ -18,15 +19,6 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void write(CommunityDTO vo) throws Exception {	//게시글 작성
 		communityDAO.write(vo);
-	}
-	@Override
-	public List<CommunityDTO> read(Criteria criteria) throws Exception {	//불러오기
-		// TODO Auto-generated method stub
-		return communityDAO.read(criteria);
-	}
-	@Override
-	public int listCount() throws Exception {			//게시물 총 개수 
-		return communityDAO.listCount();
 	}
 	
 	@Override
@@ -54,6 +46,16 @@ public class CommunityServiceImpl implements CommunityService{
 	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception {
 		communityDAO.updateReplyCount(updateHash);
 		
+	}
+
+	@Override
+	public List<CommunityDTO> listSearch(SearchCriteria searchCriteria) throws Exception {	//게시물 목록, 검색
+		 return communityDAO.listSearch(searchCriteria);
+	}
+
+	@Override
+	public int countSearched(SearchCriteria searchCriteria) throws Exception {//게시물 수, 검색 수 
+		return communityDAO.countSearched(searchCriteria);
 	}
 
 

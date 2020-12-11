@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.dto.Criteria;
+import com.cdm.web.dto.SearchCriteria;
 
 public interface CommunityService {
 
@@ -16,11 +17,11 @@ public interface CommunityService {
 
 	void modify(CommunityDTO vo) throws Exception;
 
-	public void updateViewCount(int community_num)throws Exception;
-	
-	public int listCount() throws Exception;	//게시물 총 개수 
+	public void updateViewCount(int community_num) throws Exception;
 
-	List<CommunityDTO> read(Criteria criteria) throws Exception; //게시물 목록 조회 
+	List<CommunityDTO> listSearch(SearchCriteria searchCriteria) throws Exception; // 게시물 목록, 검색
 
-	public void updateReplyCount(HashMap<String, Integer> updateHash)throws Exception;	//게시물 댓글 수 업데이트 
+	int countSearched(SearchCriteria searchCriteria) throws Exception; // 게시물 수 , 검색 수
+
+	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception; // 게시물 댓글 수 업데이트
 }

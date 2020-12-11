@@ -8,7 +8,8 @@
 		INSERT INTO community(community_num, title, content, writer_id)
 		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id})
 	</insert>
-	<select id="read" resultType="Community"> <!-- 불러오기 -->
+	<select id="listSearch" resultType="Community"> <!-- 불러오기 -->
+		  <![CDATA[
 		select * FROM (
 		SELECT community_num,
 		title,
@@ -21,10 +22,42 @@
 		RNUM
 		FROM
 		community
+		WHERE community_num > 0
+    ]]>
+		
+		<include refid="search"/>
+		
 		) MP
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
 
 	</select>
+	
+
+<select id="countSearched" resultType="int">	<!-- 검색 결과 수  -->
+    <![CDATA[
+    SELECT
+        COUNT(community_num)
+    FROM community
+    WHERE community_num > 0
+    ]]>
+    <include refid="search"/>
+</select>
+
+<sql id="search">	<!-- 검색 조건  -->
+    <if test="searchType != null">
+        <if test="searchType == 't'.toString()">
+            AND title LIKE '%'||#{keyword}||'%'
+        </if>
+        <if test="searchType == 'c'.toString()">
+            AND content LIKE '%'||#{keyword}||'%'
+        </if>
+        <if test="searchType == 'w'.toString()">
+            AND writer LIKE '%'||#{keyword}||'%'
+        </if>
+    </if>
+</sql>
+
+
 	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
 		<![CDATA[
 		SELECT COUNT(community_num)

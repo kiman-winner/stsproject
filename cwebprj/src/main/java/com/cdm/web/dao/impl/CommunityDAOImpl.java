@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.cdm.web.dao.CommunityDAO;
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.dto.Criteria;
+import com.cdm.web.dto.SearchCriteria;
 
 @Repository
 public class CommunityDAOImpl implements CommunityDAO{
@@ -20,11 +21,6 @@ public class CommunityDAOImpl implements CommunityDAO{
 	public void write(CommunityDTO vo) throws Exception {	//게시물 등록 
 		
 		session.insert("communityNS.write", vo);	
-	}
-	
-	public List<CommunityDTO> read(Criteria criteria) throws Exception {	//게시물 등록 
-		
-		return session.selectList("communityNS.read",criteria);	
 	}
 
 	@Override
@@ -50,16 +46,19 @@ public class CommunityDAOImpl implements CommunityDAO{
 	}
 
 	@Override
-	public int listCount() throws Exception {	//게시물 총 개수 구하기 
-		// TODO Auto-generated method stub
-		return session.selectOne("communityNS.listCount");	
-	}
-
-
-	@Override
 	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception {
 		session.update("communityNS.updateReplyCount",updateHash);
 		
+	}
+
+	@Override
+	public List<CommunityDTO> listSearch(SearchCriteria searchCriteria) throws Exception {	//게시물 검색
+		  return session.selectList("communityNS.listSearch", searchCriteria);
+	}
+
+	@Override
+	public int countSearched(SearchCriteria searchCriteria) throws Exception {	//게시물 수 
+		 return session.selectOne("communityNS.countSearched", searchCriteria);
 	}
 
 

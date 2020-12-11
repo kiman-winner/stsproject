@@ -43,7 +43,6 @@
 .main:not(h2) {
 	margin-left: 100px;
 }
-
 </style>
 
 
@@ -75,20 +74,26 @@
 
 				<div class="search-form margin-top first align-right">
 					<h3 class="hidden">커뮤니티 검색폼</h3>
-					<form class="table-form">
+					<form class="table-form" action="list">
 						<fieldset>
 							<legend class="hidden">커뮤니티 검색 필드</legend>
 							<label class="hidden">검색분류</label> 
 							
-							<select name="f">
-								<option value="title">제목</option>
-								<option value="writerId">작성자</option>
-							</select> <label class="hidden">검색어</label> 
-							
-							<input type="text" name="q"
-								value="" /> 
+							<select name="searchType" >
+								<option value="n"
+									<c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>선택 </option>
+								<option value="t"
+									<c:out value="${searchCriteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
+								<option value="c"
+									<c:out value="${searchCriteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
+								<option value="w"
+									<c:out value="${searchCriteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
+							</select>
+							 <label class="hidden">검색어</label> 
+							 <input type="text" name="keyword"
+								value="${searchCriteria.keyword}" /> 
 								<input class="btn btn-search" type="submit"
-								value="검색" />
+								value="검색" placeholder="검색어"/>
 						</fieldset>
 					</form>
 				</div>
@@ -112,7 +117,8 @@
 								<tr>
 									<td>${communityDTO.community_num }</td>
 									<td class="title indent text-align-left"><a
-										href="detail?community_num=${communityDTO.community_num}">${communityDTO.title}
+										href="detail${pageMaker.makeSearch(pageMaker.criteria.page)}&community_num=${communityDTO.community_num}">
+										${communityDTO.title}
 									</a></td>
 									<td>${communityDTO.writer_id}</td>
 									<td><fmt:formatDate value="${communityDTO.regdate}"
@@ -140,21 +146,22 @@
 
 				<div class="margin-top align-center pager">
 
-					<ul class="-list- center">	<!-- 페이징 -->
+					<ul class="-list- center">
+						<!-- 페이징 -->
 						<c:if test="${pageMaker.prev}">
-							<span id="btn-prev" 
-									OnClick="location.href='list?page=${pageMaker.startPage - 1}'"></span>
+							<span id="btn-prev"
+								OnClick="location.href='list${pageMaker.makeSearch(pageMaker.startPage - 1)}'"></span>
 						</c:if>
 						<c:forEach begin="${pageMaker.startPage}"
 							end="${pageMaker.endPage}" var="idx">
 							<li
 								<c:out value="${pageMaker.criteria.page == idx ? 'class=text-orange text-strong' : ''}"/>>
-								<a href="list?page=${idx}">${idx}</a>
+								<a href="list${pageMaker.makeSearch(idx)}">${idx}</a>
 							</li>
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-							<span  id="btn-next"
-								OnClick="location.href='list?page=${pageMaker.endPage + 1}'"></span>
+							<span id="btn-next"
+								OnClick="location.href='list?${pageMaker.makeSearch(pageMaker.endPage + 1)}'"></span>
 						</c:if>
 					</ul>
 

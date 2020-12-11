@@ -15,10 +15,9 @@
 <!-- css임포트 -->
 
 <script>
-function goBack(){
-	window.history.back();
-}
-
+	function goBack() {
+		window.history.back();
+	}
 </script>
 
 
@@ -33,23 +32,25 @@ function goBack(){
 .main:not(h2) {
 	margin-left: 100px;
 }
+
 #cancelBtn {
 	margin-left: 100px;
-	margin-top:0px;
-	color:white;
-	height:30px;
-	outline:0;
+	margin-top: 0px;
+	color: white;
+	height: 30px;
+	outline: 0;
 }
 
-#td3{
-padding-left:300px;
+#td3 {
+	padding-left: 300px;
 }
 
-#community_num{
-background-color : gray;
+#community_num {
+	background-color: gray;
 }
-#writer_id{
-background-color : gray;
+
+#writer_id {
+	background-color: gray;
 }
 </style>
 
@@ -78,22 +79,24 @@ background-color : gray;
 			<main class="main">
 				<h2 class="main title">게시글 수정</h2>
 
-				<form name="form" action="modify/modifyPost" id="form1" method="post">
-				<input
-										id="community_num" type="hidden" name=community_num class="width-half"
-										required="required" value="${community_num}" readonly/>
+				<form name="form" action="modify/modifyPost" id="form1"
+					method="post">
+					<input id="community_num" type="hidden" name=community_num
+						class="width-half" required="required" value="${community_num}"
+						readonly />
+						<input type="hidden" name="page" value="${searchCriteria.page}">
+						 <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
+    <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
+						
 					<fieldset>
 						<legend class="hidden">게시글 수정</legend>
 						<table class="table margin-top first">
 							<tbody>
 								<tr>
 									<th><label>작성자 아이디</label></th>
-									<td colspan="3" class="text-align-left indent">
-	
-									<input
+									<td colspan="3" class="text-align-left indent"><input
 										id="writer_id" type="text" name=writer_id class="width-half"
-										required="required" value="${member.member_id}" readonly/>
-									</td>
+										required="required" value="${member.member_id}" readonly /></td>
 								</tr>
 								<tr>
 									<th><label>제목</label></th>
@@ -108,13 +111,13 @@ background-color : gray;
 											name="content" rows="10" placeholder="내용을 입력하세요">${content}</textarea></td>
 								</tr>
 								<tr>
-									<td id="td3" colspan="3"><input type="hidden" name="" value="" />
-										<input id="submit-Button" type="submit" name="btn"
-										value="게시물 수정" style="height: 30px; margin: 20px;"
+									<td id="td3" colspan="3"><input type="hidden" name=""
+										value="" /> <input id="submit-Button" type="submit"
+										name="btn" value="게시물 수정" style="height: 30px; margin: 20px;"
 										class="btn-text btn-default" /></td>
-									<td colspan="1"><input id="cancelBtn" name="cancelbtn" type="button"
-										value="돌아가기" style="height: 30px;"
-										class="btn-text btn-default"  onclick="history.back();" /></td>
+									<td colspan="1"><input id="cancelBtn" name="cancelbtn"
+										type="button" value="돌아가기" style="height: 30px;"
+										class="btn-text btn-default" onclick="history.back();" /></td>
 								</tr>
 							</tbody>
 						</table>

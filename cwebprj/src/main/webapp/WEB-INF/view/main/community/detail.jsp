@@ -43,9 +43,20 @@
 								.on(
 										"click",
 										function(evt) { //게시글 수정 버튼 클릭 시 
-											location
-													.replace('modify?title=${detail.title}&content=${detail.content}&community_num=${detail.community_num}')
+											 formObj.attr("action", "modify");
+										        formObj.attr("method", "get");
+										        formObj.submit();
+											
 										});
+						$(".btn-list")
+						.on(
+								"click",
+								function(evt) { //게시글 목록 버튼 클릭 시 
+									 formObj.attr("action", "list");
+								        formObj.attr("method", "get");
+								        formObj.submit();
+									
+								});
 
 							
 					}); 
@@ -126,7 +137,15 @@ th {
 					<h3 class="hidden">커뮤니티 내용</h3>
 					<form name="readForm" role="form" method="post">
 						<input type="hidden" id="community_num" name="community_num"
-							value="${detail.community_num}" />
+							value="${detail.community_num}" /> <input type="hidden"
+							name="page" value="${searchCriteria.page}"> <input
+							type="hidden" name="searchType"
+							value="${searchCriteria.searchType}"> <input
+							type="hidden" name="keyword" value="${searchCriteria.keyword}">
+							<input
+							type="hidden" name="title" value="${detail.title}">
+							<input
+							type="hidden" name="content" value="${detail.content}">
 					</form>
 					<table class="table">
 						<tbody>
@@ -161,7 +180,7 @@ th {
 
 					<!-- 수정 삭제 버튼  -->
 					<div id="modifydeltediv">
-						<button id="modifyBtn"></button>
+						<button type="submit" id="modifyBtn"></button>
 						<button type="submit" id="deleteBtn"></button>
 
 					</div>
@@ -171,7 +190,7 @@ th {
 
 				<div class="margin-top text-align-center">
 
-					<a class="btn btn-list" href="list">목록</a>
+					<button class="btn btn-list" >목록</button>
 
 				</div>
 
@@ -249,11 +268,8 @@ th {
 								<input type="hidden" id="reply_num" name="reply_num"
 									value="${replyList.reply_num}" /> <input type="hidden"
 									id="community_num" name="community_num"
-									value="${detail.community_num}" /> 
-									
-									<input id="replydeleteBtn"
-									type="submit" name="btn" value=""
-									style="height: 30px; " />
+									value="${detail.community_num}" /> <input id="replydeleteBtn"
+									type="submit" name="btn" value="" style="height: 30px;" />
 
 
 

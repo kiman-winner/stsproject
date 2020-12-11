@@ -7,15 +7,17 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.Criteria;
 import com.cdm.web.dto.PageMaker;
 import com.cdm.web.dto.ReplyDTO;
+import com.cdm.web.dto.SearchCriteria;
 import com.cdm.web.service.CommunityService;
 import com.cdm.web.service.ReplyService;
 
@@ -39,15 +41,15 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/list", method = RequestMethod.GET) // 커뮤니티 게시판 리스트 불러오기
-	public ModelAndView communitylist(Criteria criteria) throws Exception {
+	public ModelAndView communitylist(SearchCriteria searchCriteria) throws Exception {
 
 		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCriteria(criteria);
-		pageMaker.setTotalCount(communityService.listCount());// 전체 게시글
+		pageMaker.setCriteria(searchCriteria);
+		pageMaker.setTotalCount(communityService.countSearched(searchCriteria));// 전체 게시글
 
 		ModelAndView mv = new ModelAndView();
 
-		List<CommunityDTO> list = communityService.read(criteria);
+		List<CommunityDTO> list = communityService.listSearch(searchCriteria);
 
 		mv.setViewName("/main/community/list"); // list뷰
 		mv.addObject("list", list); // 뷰로 보낼 데이터
@@ -75,7 +77,8 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/detail", method = RequestMethod.GET) // 커뮤니티 게시판 디테일
-	public ModelAndView detail(@RequestParam("community_num") int community_num) throws Exception {
+	public ModelAndView detail(@RequestParam("community_num") int community_num,
+			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
 		ModelAndView mv = new ModelAndView();
 
 		communityService.updateViewCount(community_num); // 조회수 증가
@@ -88,21 +91,23 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/delete", method = RequestMethod.POST) // 커뮤니티 게시판 삭제 클릭 시
-	public void delete(@RequestParam("community_num") int community_num, HttpServletResponse response)
+	public String delete(@RequestParam("community_num") int community_num, SearchCriteria searchCriteria,
+            RedirectAttributes redirectAttributes)
 			throws Exception {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
-		PrintWriter out = response.getWriter(); // 응답을 위한 객체
-
+		
 		replyService.deleteAll(community_num);//해당 댓글 모두 삭제 
 		communityService.delete(community_num);
+		
+		redirectAttributes.addAttribute("page", searchCriteria.getPage());
+		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
+	    redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());	//검색 정보 유지
 
-		out.println("<script>alert('삭제 되었습니다.'); " + "location.href = '/main/community/list'</script>");
+		return "redirect:/main/community/list";
 	}
 
 	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
 	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("community_num") int community_num) {
+			@RequestParam("community_num") int community_num, @ModelAttribute("searchCriteria") SearchCriteria searchCriteria) {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.
@@ -114,14 +119,16 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
-	public void modify(CommunityDTO vo, HttpServletResponse response) throws Exception {
-		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
-		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+	public String modify(CommunityDTO vo
+			, SearchCriteria searchCriteria,
+            RedirectAttributes redirectAttributes) throws Exception {
 
 		communityService.modify(vo);
+		redirectAttributes.addAttribute("page", searchCriteria.getPage());
+		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
+	    redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());	//검색 정보 유지
 
-		out.println("<script>alert('수정 되었습니다.'); " + "location.href = '/main/community/list'</script>");
+		return "redirect:/main/community/list";
 	}
 
 	
