@@ -1,5 +1,6 @@
 package com.cdm.web.service.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,16 +49,13 @@ public class CommunityServiceImpl implements CommunityService{
 		// TODO Auto-generated method stub
 		communityDAO.updateViewCount(community_num);
 	}
+
 	@Override
-	public void upReplyCount(int community_num) throws Exception {	//´ñ±Û ¼ö Áõ°¡
-		communityDAO.upReplyCount(community_num);
+	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception {
+		communityDAO.updateReplyCount(updateHash);
 		
 	}
-	@Override
-	public void downReplyCount(int community_num) throws Exception {
-		communityDAO.downReplyCount(community_num);
-		
-	}
+
 
 
 }

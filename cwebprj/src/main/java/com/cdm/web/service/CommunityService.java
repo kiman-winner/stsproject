@@ -1,5 +1,6 @@
 package com.cdm.web.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.cdm.web.dto.CommunityDTO;
@@ -21,7 +22,5 @@ public interface CommunityService {
 
 	List<CommunityDTO> read(Criteria criteria) throws Exception; //게시물 목록 조회 
 
-	public void upReplyCount(int community_num) throws Exception;//게시물 댓글 수 증가 
-
-	public void downReplyCount(int community_num)throws Exception;//게시물 댓글 수 감소 
+	public void updateReplyCount(HashMap<String, Integer> updateHash)throws Exception;	//게시물 댓글 수 업데이트 
 }

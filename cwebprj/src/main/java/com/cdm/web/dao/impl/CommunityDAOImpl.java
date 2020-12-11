@@ -1,5 +1,6 @@
 package com.cdm.web.dao.impl;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -54,14 +55,12 @@ public class CommunityDAOImpl implements CommunityDAO{
 		return session.selectOne("communityNS.listCount");	
 	}
 
-	@Override
-	public void upReplyCount(int community_num) throws Exception {
-		session.update("communityNS.upReplyCount", community_num);
-	}
 
 	@Override
-	public void downReplyCount(int community_num) throws Exception {
-		session.update("communityNS.downReplyCount", community_num);
+	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception {
+		session.update("communityNS.updateReplyCount",updateHash);
 		
 	}
+
+
 }

@@ -1,6 +1,7 @@
 package com.cdm.web.controller.main;
 
 import java.io.PrintWriter;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,7 +15,6 @@ import org.springframework.web.servlet.ModelAndView;
 import com.cdm.web.dto.ReplyDTO;
 import com.cdm.web.service.CommunityService;
 import com.cdm.web.service.ReplyService;
-import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 @Controller
 @RequestMapping("/main/community/detail/")
@@ -32,7 +32,12 @@ public class ReplyController {		//댓글 관리
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
 		replyService.writeReply(replyDTO);
-		communityService.upReplyCount(replyDTO.getCommunity_num());	//댓글 수 증가 
+		
+		HashMap<String, Integer> updateHash = new HashMap<String, Integer>(); 
+		updateHash.put("updown", 1);
+		updateHash.put("community_num", replyDTO.getCommunity_num());
+		
+		communityService.updateReplyCount(updateHash);	//댓글 수 증가 
 
 		out.println("<script>alert('댓글이 등록 되었습니다.'); " + "location.href = '/main/community/detail?community_num="
 				+ replyDTO.getCommunity_num() + "'</script>");
@@ -45,7 +50,12 @@ public class ReplyController {		//댓글 관리
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
 		replyService.deleteReply(reply_num);	//댓글 삭제 
-		communityService.downReplyCount(community_num);	//댓글 수 감소
+		
+		HashMap<String, Integer> updateHash = new HashMap<String, Integer>(); 
+		updateHash.put("updown", 0);
+		updateHash.put("community_num", community_num);
+		
+		communityService.updateReplyCount(updateHash);	//댓글 수 증가 
 
 		out.println("<script>alert('댓글이 삭제 되었습니다.'); " + "location.href = '/main/community/detail?community_num="
 				+ community_num + "'</script>");
