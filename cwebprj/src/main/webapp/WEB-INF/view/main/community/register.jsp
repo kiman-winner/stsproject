@@ -75,7 +75,7 @@ background-color : gray;
 			<main class="main">
 				<h2 class="main title">게시글 작성</h2>
 
-				<form name="form" action="write" id="form1" method="post">
+				<form name="form" action="write" id="form1" method="post" enctype="multipart/form-data">
 					<fieldset>
 						<legend class="hidden">게시글 작성</legend>
 						<table class="table margin-top first">
@@ -100,6 +100,11 @@ background-color : gray;
 									<td colspan="3" class="text-align-left indent"><textarea
 											class="form-control" id="exampleFormControlTextarea1"
 											name="content" rows="10" placeholder="내용을 입력하세요"></textarea></td>
+								</tr>
+								<tr>
+									<td>
+										<input type="file" name="file">
+									</td>
 								</tr>
 								<tr>
 									<td id="td3" colspan="3"><input type="hidden" name="" value="" />

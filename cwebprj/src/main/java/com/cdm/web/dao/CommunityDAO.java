@@ -2,6 +2,7 @@ package com.cdm.web.dao;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.dto.Criteria;
@@ -19,4 +20,9 @@ public interface CommunityDAO {
 	List<CommunityDTO> listSearch(SearchCriteria searchCriteria) throws Exception;	//게시물 목록, 검색 
 	
 	int countSearched(SearchCriteria searchCriteria) throws Exception;	//게시물 수 , 검색 수  
+	public void insertFile(Map<String, Object> map)throws Exception;	//파일 삽입 
+	
+	public List<Map<String, Object>> selectFileList(int community_num) throws Exception;	//첨부 파일 조회
+	
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;	//첨부 파일 다운
 }

@@ -1,7 +1,10 @@
 package com.cdm.web.controller.main;
 
+import java.io.File;
 import java.io.PrintWriter;
+import java.net.URLEncoder;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -64,12 +68,14 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/write", method = RequestMethod.POST) // 커뮤니티 게시판 등록
-	public void communityWrite(CommunityDTO vo, HttpServletResponse response) throws Exception {
+	public void communityWrite(CommunityDTO vo, HttpServletResponse response, MultipartHttpServletRequest mpRequest)
+			throws Exception {
+
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
-		communityService.write(vo);
+		communityService.write(vo, mpRequest);
 
 		out.println("<script>alert('등록 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 
@@ -86,28 +92,32 @@ public class MainController {
 
 		List<ReplyDTO> replyList = replyService.readReply(community_num); // 댓글 불러오기
 		mv.addObject("replyList", replyList);
+		
+		List<Map<String, Object>> fileList = communityService.selectFileList(community_num);	//파일 불러오기
+		mv.addObject("file", fileList);
+		
 		mv.setViewName("main/community/detail");
 		return mv;
 	}
 
 	@RequestMapping(value = "community/delete", method = RequestMethod.POST) // 커뮤니티 게시판 삭제 클릭 시
 	public String delete(@RequestParam("community_num") int community_num, SearchCriteria searchCriteria,
-            RedirectAttributes redirectAttributes)
-			throws Exception {
-		
-		replyService.deleteAll(community_num);//해당 댓글 모두 삭제 
+			RedirectAttributes redirectAttributes) throws Exception {
+
+		replyService.deleteAll(community_num);// 해당 댓글 모두 삭제
 		communityService.delete(community_num);
-		
+
 		redirectAttributes.addAttribute("page", searchCriteria.getPage());
 		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
-	    redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());	//검색 정보 유지
+		redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword()); // 검색 정보 유지
 
 		return "redirect:/main/community/list";
 	}
 
 	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
 	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,
-			@RequestParam("community_num") int community_num, @ModelAttribute("searchCriteria") SearchCriteria searchCriteria) {
+			@RequestParam("community_num") int community_num,
+			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.
@@ -119,17 +129,36 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
-	public String modify(CommunityDTO vo
-			, SearchCriteria searchCriteria,
-            RedirectAttributes redirectAttributes) throws Exception {
+	public String modify(CommunityDTO vo, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes)
+			throws Exception {
 
 		communityService.modify(vo);
 		redirectAttributes.addAttribute("page", searchCriteria.getPage());
 		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
-	    redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword());	//검색 정보 유지
+		redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword()); // 검색 정보 유지
 
 		return "redirect:/main/community/list";
 	}
-
 	
+	@RequestMapping(value="community/detail/fileDown")
+	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{ //파일 다운로드
+		Map<String, Object> resultMap = communityService.selectFileInfo(map);
+		
+		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+		
+		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\Tools\\cwebprj\\file\\"+storedFileName));
+		
+		response.setContentType("application/octet-stream");	//mime 이진 파일 기본값
+		response.setContentLength(fileByte.length); //크기 지정
+		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
+		//첨부 파일 헤더 셋
+		
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
+		
+	}
+
 }

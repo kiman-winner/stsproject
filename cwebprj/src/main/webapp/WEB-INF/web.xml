@@ -10,20 +10,23 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
-	<context-param> <!-- 리스너가 가진 파라미터를 context param이란 이름으로 가질 수 있다. -->
-		<param-name>contextConfigLocation</param-name> <!-- 이 컨텍스트 로더라는것을 디스패처 서블릿이 이용할 수 있다. -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/service-context.xml
 		</param-value>
 	</context-param>
 
 	<servlet>
-		<servlet-name>dispatcher</servlet-name><!-- 이름자기마음 -->
+		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>/WEB-INF/spring/servlet-context.xml</param-value><!-- 여긴 
-				하나만 추가가능 -->
+			<param-value>
+			/WEB-INF/spring/servlet-context.xml
+			/WEB-INF/spring/context-common.xml
+			</param-value>
+
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>
@@ -39,7 +42,7 @@
      Welcome to Tomcat
   </description>
 
-<!-- post 요청 시 한글깨짐 방지 -->
+	<!-- post 요청 시 한글깨짐 방지 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>
 		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

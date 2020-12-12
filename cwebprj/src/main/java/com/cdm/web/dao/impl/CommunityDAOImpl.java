@@ -2,6 +2,7 @@ package com.cdm.web.dao.impl;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,25 @@ public class CommunityDAOImpl implements CommunityDAO{
 	public int countSearched(SearchCriteria searchCriteria) throws Exception {	//게시물 수 
 		 return session.selectOne("communityNS.countSearched", searchCriteria);
 	}
+
+	@Override
+	public void insertFile(Map<String, Object> map) throws Exception {
+		System.out.println("dao 객체 실행전"+map.get("community_num"));
+		
+		
+		session.insert("communityNS.insertFile", map);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectFileList(int community_num) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectList("communityNS.selectFileList", community_num);
+	}
+
+	@Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
+		return session.selectOne("communityNS.selectFileInfo", map);
+		}
 
 
 }

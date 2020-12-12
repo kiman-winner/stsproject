@@ -68,6 +68,13 @@
 						childwindow.focus();
 					
 					}
+
+					function fn_fileDown(fileNo){	//파일 다운로드 
+						var formObj = $("form[name='readForm']");
+						$("#FILE_NO").attr("value", fileNo);
+						formObj.attr("action", "detail/fileDown");
+						formObj.submit();
+					}
 </script>
 
 
@@ -142,10 +149,11 @@ th {
 							type="hidden" name="searchType"
 							value="${searchCriteria.searchType}"> <input
 							type="hidden" name="keyword" value="${searchCriteria.keyword}">
-							<input
-							type="hidden" name="title" value="${detail.title}">
-							<input
-							type="hidden" name="content" value="${detail.content}">
+						<input type="hidden" name="title" value="${detail.title}">
+						<input type="hidden" name="content" value="${detail.content}">
+						
+						<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
+						
 					</form>
 					<table class="table">
 						<tbody>
@@ -172,6 +180,17 @@ th {
 							<tr class="content">
 								<td colspan="4">${detail.content}</td>
 							</tr>
+							<tr>
+							<th>첨부파일</th>
+								<td colspan="1">
+									<div class="form-group" style="border: 1px solid #dbdbdb;">
+										<c:forEach var="file" items="${file}">
+											<a href="#"
+												onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+										</c:forEach>
+									</div>
+								</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -190,7 +209,7 @@ th {
 
 				<div class="margin-top text-align-center">
 
-					<button class="btn btn-list" >목록</button>
+					<button class="btn btn-list">목록</button>
 
 				</div>
 

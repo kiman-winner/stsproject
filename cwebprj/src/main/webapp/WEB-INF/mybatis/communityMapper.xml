@@ -4,10 +4,60 @@
 
 <mapper namespace="communityNS">
 
-	<insert id="write"> <!-- 게시글 등록 -->
+	<insert id="write" useGeneratedKeys="true"
+		keyProperty="community_num">
+		<!-- 게시글 등록 -->
+		<selectKey keyProperty="community_num" resultType="int"
+			order="BEFORE">
+			SELECT seq_COMMUNITY.NEXTVAL FROM DUAL
+		</selectKey>
+
 		INSERT INTO community(community_num, title, content, writer_id)
-		VALUES(seq_COMMUNITY.NEXTVAL, #{title}, #{content}, #{writer_id})
+		VALUES(#{community_num}, #{title}, #{content}, #{writer_id})
 	</insert>
+
+
+	<insert id="insertFile" parameterType="hashMap">	<!-- 파일 삽입 -->
+		INSERT INTO community_file(
+		FILE_NO,
+		community_num,
+		ORG_FILE_NAME,
+		STORED_FILE_NAME,
+		FILE_SIZE
+		)VALUES(
+		SEQ_community_FILE.NEXTVAL,
+		#{community_num},
+		#{ORG_FILE_NAME},
+		#{STORED_FILE_NAME},
+		#{FILE_SIZE}
+		)
+	</insert>
+	<!-- 첨부파일 조회 -->
+
+	<select id="selectFileList" parameterType="int"
+		resultType="hashMap">
+		SELECT FILE_NO,
+		ORG_FILE_NAME,
+		ROUND(FILE_SIZE/1024,1) AS
+		FILE_SIZE
+		FROM community_file
+		WHERE community_num = #{community_num}
+		AND
+		DEL_GB = 'N'
+	</select>
+
+	<!-- 첨부파일 다운 -->
+	<select id="selectFileInfo" parameterType="hashMap"
+		resultType="hashMap">
+		SELECT
+		STORED_FILE_NAME,
+		ORG_FILE_NAME
+		FROM community_file
+		WHERE FILE_NO = #{FILE_NO}
+	</select>
+
+
+
 	<select id="listSearch" resultType="Community"> <!-- 불러오기 -->
 		  <![CDATA[
 		select * FROM (
@@ -24,39 +74,38 @@
 		community
 		WHERE community_num > 0
     ]]>
-		
-		<include refid="search"/>
-		
+
+		<include refid="search" />
+
 		) MP
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
 
 	</select>
-	
 
-<select id="countSearched" resultType="int">	<!-- 검색 결과 수  -->
+
+	<select id="countSearched" resultType="int">	<!-- 검색 결과 수 -->
     <![CDATA[
     SELECT
         COUNT(community_num)
     FROM community
     WHERE community_num > 0
     ]]>
-    <include refid="search"/>
-</select>
+		<include refid="search" />
+	</select>
 
-<sql id="search">	<!-- 검색 조건  -->
-    <if test="searchType != null">
-        <if test="searchType == 't'.toString()">
-            AND title LIKE '%'||#{keyword}||'%'
-        </if>
-        <if test="searchType == 'c'.toString()">
-            AND content LIKE '%'||#{keyword}||'%'
-        </if>
-        <if test="searchType == 'w'.toString()">
-            AND writer LIKE '%'||#{keyword}||'%'
-        </if>
-    </if>
-</sql>
-
+	<sql id="search">	<!-- 검색 조건 -->
+		<if test="searchType != null">
+			<if test="searchType == 't'.toString()">
+				AND title LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="searchType == 'c'.toString()">
+				AND content LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test="searchType == 'w'.toString()">
+				AND writer LIKE '%'||#{keyword}||'%'
+			</if>
+		</if>
+	</sql>
 
 	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
 		<![CDATA[
