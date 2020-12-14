@@ -1,4 +1,4 @@
-package com.cdm.web.dto;
+package com.cdm.web.page;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

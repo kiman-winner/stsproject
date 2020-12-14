@@ -9,8 +9,6 @@ public interface ReplyService {
 	
 	public void writeReply(ReplyDTO replyDTO) throws Exception;	//댓글 작성 
 
-	public void deleteAll(int community_num) throws Exception;	//게시글에 댓글 모두 삭제 
-
 	public void deleteReply(int reply_num)throws Exception;	//댓글 삭제 
 
 	public void modifyReply(ReplyDTO replyDTO) throws Exception;	//댓글 수정

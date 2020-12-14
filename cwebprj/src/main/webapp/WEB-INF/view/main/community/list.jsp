@@ -161,7 +161,7 @@
 						</c:forEach>
 						<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 							<span id="btn-next"
-								OnClick="location.href='list?${pageMaker.makeSearch(pageMaker.endPage + 1)}'"></span>
+								OnClick="location.href='list${pageMaker.makeSearch(pageMaker.endPage + 1)}'"></span>
 						</c:if>
 					</ul>
 

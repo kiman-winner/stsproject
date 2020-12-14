@@ -151,9 +151,9 @@ th {
 							type="hidden" name="keyword" value="${searchCriteria.keyword}">
 						<input type="hidden" name="title" value="${detail.title}">
 						<input type="hidden" name="content" value="${detail.content}">
-						
-						<input type="hidden" id="FILE_NO" name="FILE_NO" value=""> 
-						
+
+						<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+
 					</form>
 					<table class="table">
 						<tbody>
@@ -181,8 +181,8 @@ th {
 								<td colspan="4">${detail.content}</td>
 							</tr>
 							<tr>
-							<th>첨부파일</th>
-								<td colspan="1">
+								<th>첨부파일</th>
+								<td colspan="2">
 									<div class="form-group" style="border: 1px solid #dbdbdb;">
 										<c:forEach var="file" items="${file}">
 											<a href="#"
@@ -301,28 +301,22 @@ th {
 
 
 
-				<div class="margin-top">
+				<!-- <div class="margin-top">
 					<table class="table border-top-default">
 						<tbody>
-
-							<tr>
-								<th>다음글</th>
-								<td colspan="3" class="text-align-left text-indent">다음글 부분</td>
-							</tr>
-
-
-
-
 							<tr>
 								<th>이전글</th>
 								<td colspan="3" class="text-align-left text-indent"><a
 									class="text-blue text-strong" href="">이전글 부분</a></td>
 							</tr>
-
+							<tr>
+								<th>다음글</th>
+								<td colspan="3" class="text-align-left text-indent">다음글 부분</td>
+							</tr>
 
 						</tbody>
 					</table>
-				</div>
+				</div> --> 
 
 			</main>
 

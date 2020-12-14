@@ -1,4 +1,4 @@
-package com.cdm.web.dto;
+package com.cdm.web.page;
 
 public class SearchCriteria extends Criteria {
 

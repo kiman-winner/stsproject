@@ -42,8 +42,7 @@
 		FILE_SIZE
 		FROM community_file
 		WHERE community_num = #{community_num}
-		AND
-		DEL_GB = 'N'
+		order by file_no asc
 	</select>
 
 	<!-- 첨부파일 다운 -->
@@ -80,6 +79,21 @@
 		) MP
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
 
+	</select>
+	<select id="list" resultType="Community"> <!-- 메인 홈페이지 -->
+			  <![CDATA[
+		select * FROM (
+		SELECT community_num,
+		title,
+		regdate,
+		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS
+		RNUM
+		FROM
+		community
+		WHERE community_num > 0
+    ]]>
+		) MP
+		WHERE RNUM BETWEEN 1 AND 5
 	</select>
 
 
@@ -134,6 +148,18 @@
 		community_num=#{community_num}
 	</update> <!-- 조회수 증가 -->
 
+<!-- 파일 삭제 업데이트 -->
+	<delete id="deleteFile" parameterType="hashMap">
+		delete from community_file 
+		WHERE FILE_NO = #{FILE_NO}
+	</delete>
+	
+<!-- 게시글 파일 모두 삭제 업데이트 -->
+	<delete id="deleteFileAll" parameterType="hashMap">
+		delete from community_file where
+		community_num=#{community_num}
+	</delete>
+	
 	<update id="updateReplyCount">
 		update community
 		<set>
@@ -143,5 +169,18 @@
 		where
 		community_num=#{community_num}
 	</update> <!-- 댓글 수 업데이트 -->
+	
+	<select id="searchDeleteFile" resultType="String"> 	<!-- 지울 파일의 저장 이름 -->
+		SELECT STORED_FILE_NAME
+		FROM community_file
+		WHERE FILE_NO = #{FILE_NO}
+	</select>
+	
+	<select id="searchDeleteFileAll" resultType="String"> <!-- 게시글 삭제 시 모든 첨부파일 저장 이름 -->
+		SELECT STORED_FILE_NAME
+		FROM community_file
+		WHERE community_num = #{community_num}
+
+	</select>
 
 </mapper>

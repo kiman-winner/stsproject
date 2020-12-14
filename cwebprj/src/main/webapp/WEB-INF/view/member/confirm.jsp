@@ -43,7 +43,7 @@
 						<li><a class="" href="/member/login">로그인</a></li>
 						<li><a class="" href="/member/join">회원가입</a></li>
 						<li><a class="" href="/member/find-id">아이디찾기</a></li>
-						<li><a class="" href="/member/pwd-reset">비밀번호 재발급</a></li>
+						<li><a class="" href="/member/find-pwd">비밀번호 찾기</a></li>
 
 					</ul>
 				</nav>

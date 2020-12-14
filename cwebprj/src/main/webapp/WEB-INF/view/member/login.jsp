@@ -46,7 +46,7 @@
 						<li><a class="" href="/member/login">로그인</a></li>
 						<li><a class="" href="/member/join">회원가입</a></li>
 						<li><a class="" href="/member/find-id">아이디찾기</a></li>
-						<li><a class="" href="/member/pwd-reset">비밀번호 재발급</a></li>
+						<li><a class="" href="/member/find-pwd">비밀번호 찾기</a></li>
 
 					</ul>
 				</nav>
@@ -96,7 +96,7 @@
 											<img alt="ID/PWD 찾기" src="../images/member/btn-find.png" />
 									</a></li>
 									<li class="margin-top"><span>아이디가 없으신 분은 회원가입을
-											해주세요.</span> <a href="agree"> <img alt="회원가입"
+											해주세요.</span> <a href="join"> <img alt="회원가입"
 											src="../images/member/btn-join.png" />
 									</a></li>
 								</ul>

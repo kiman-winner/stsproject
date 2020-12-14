@@ -14,7 +14,7 @@ public class CommunityDTO {
 	private String content;
 	private int viewcount;
 	private int replycount;
-	
+
 	public int getReplycount() {
 		return replycount;
 	}

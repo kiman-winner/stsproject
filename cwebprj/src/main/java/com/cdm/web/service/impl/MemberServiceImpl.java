@@ -32,4 +32,17 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.idCheck(member_id);
 	}
 
+	@Override
+	public String findId(MemberDTO vo) throws Exception {	//아이디 찾기 
+		// TODO Auto-generated method stub
+		return memberDAO.findId(vo);
+	}
+
+	@Override
+	public String findpwd(MemberDTO vo) throws Exception {	//비밀번호 찾기
+		return memberDAO.findPwd(vo);
+	}
+
+	
+
 }

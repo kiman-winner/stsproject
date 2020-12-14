@@ -7,7 +7,7 @@ import java.util.Map;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.SearchCriteria;
+import com.cdm.web.page.SearchCriteria;
 
 public interface CommunityService {
 
@@ -16,9 +16,8 @@ public interface CommunityService {
 
 	public void delete(int community_num) throws Exception;
 
-	void modify(CommunityDTO vo) throws Exception;
-
-	public void updateViewCount(int community_num) throws Exception;
+	void modify(CommunityDTO vo,String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest) 
+			throws Exception;	//게시물 수정
 
 	List<CommunityDTO> listSearch(SearchCriteria searchCriteria) throws Exception; // 게시물 목록, 검색
 
@@ -31,4 +30,7 @@ public interface CommunityService {
 	public List<Map<String, Object>> selectFileList(int community_num) throws Exception;	//파일 조회
 	
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;//파일 다운로드
+
+	List<CommunityDTO> listSearch()throws Exception; // 메인 홈페이지 게시물 
+
 }

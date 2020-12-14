@@ -18,6 +18,30 @@
 		where
 		member_id=#{member_id}
 	</select>
+	
+	<select id="findPwd" parameterType="Member" resultType="String">	<!-- 비밀번호 찾기 -->
+		select password
+		from member
+		where
+		member_id=#{member_id}
+		and phone=#{phone}
+		and email=#{email}
+		
+	</select>
+	
+		<select id="findId" parameterType="Member" resultType="String">	<!-- 아이디 찾기 -->
+		select member_id
+		from member
+		where
+		member_name=#{member_name}
+		<if test="email == ''">
+		and phone=#{phone}
+		</if>
+		<if test="phone == ''">
+		and email=#{email}
+		</if>
+		
+	</select>
 
 	<insert id="join">						<!-- 회원가입 -->
 		INSERT INTO member(member_id

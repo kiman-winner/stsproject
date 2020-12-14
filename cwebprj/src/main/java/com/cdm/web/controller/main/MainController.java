@@ -19,9 +19,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.cdm.web.dto.CommunityDTO;
-import com.cdm.web.dto.PageMaker;
 import com.cdm.web.dto.ReplyDTO;
-import com.cdm.web.dto.SearchCriteria;
+import com.cdm.web.page.PageMaker;
+import com.cdm.web.page.SearchCriteria;
 import com.cdm.web.service.CommunityService;
 import com.cdm.web.service.ReplyService;
 
@@ -86,8 +86,7 @@ public class MainController {
 	public ModelAndView detail(@RequestParam("community_num") int community_num,
 			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
 		ModelAndView mv = new ModelAndView();
-
-		communityService.updateViewCount(community_num); // 조회수 증가
+	
 		mv.addObject("detail", communityService.detail(community_num)); // 상세보기 서비스를 통해 해당 게시글 불러오기
 
 		List<ReplyDTO> replyList = replyService.readReply(community_num); // 댓글 불러오기
@@ -104,7 +103,6 @@ public class MainController {
 	public String delete(@RequestParam("community_num") int community_num, SearchCriteria searchCriteria,
 			RedirectAttributes redirectAttributes) throws Exception {
 
-		replyService.deleteAll(community_num);// 해당 댓글 모두 삭제
 		communityService.delete(community_num);
 
 		redirectAttributes.addAttribute("page", searchCriteria.getPage());
@@ -117,22 +115,29 @@ public class MainController {
 	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
 	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("community_num") int community_num,
-			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) {
+			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.
 		mv.addObject("content", content);
 		mv.addObject("community_num", community_num);
+		
+		List<Map<String,Object>> fileList = communityService.selectFileList(community_num);	//파일 리스트 불러오기 
+		mv.addObject("file",fileList);
+		
 		mv.setViewName("main/community/modify");
 
 		return mv;
 	}
 
 	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
-	public String modify(CommunityDTO vo, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes)
+	public String modify(CommunityDTO vo, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes
+			, @RequestParam(value="fileNoDel[]") String[] files,
+			 @RequestParam(value="fileNameDel[]") String[] fileNames,
+			 MultipartHttpServletRequest mpRequest)
 			throws Exception {
 
-		communityService.modify(vo);
+		communityService.modify(vo, files, fileNames, mpRequest);
 		redirectAttributes.addAttribute("page", searchCriteria.getPage());
 		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
 		redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword()); // 검색 정보 유지

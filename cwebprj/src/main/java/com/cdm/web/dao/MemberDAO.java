@@ -12,5 +12,9 @@ public interface MemberDAO {
 
 	
 	public int idCheck(String member_id) throws Exception;
+
+	public String findId(MemberDTO vo) throws Exception;//아이디 찾기 
+
+	public String findPwd(MemberDTO vo)throws Exception;//비밀번호 찾기
 	
 }

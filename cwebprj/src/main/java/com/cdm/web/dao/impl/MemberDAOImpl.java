@@ -37,4 +37,14 @@ public class MemberDAOImpl implements MemberDAO{
 		
 		return count;
 	}
+
+	@Override
+	public String findId(MemberDTO vo) throws Exception {//아이디 찾기 
+		return session.selectOne("memberNS.findId",vo);
+	}
+
+	@Override
+	public String findPwd(MemberDTO vo) throws Exception {	//비밀번호 찾기 
+		return session.selectOne("memberNS.findPwd",vo);
+	}
 }

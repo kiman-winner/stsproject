@@ -13,11 +13,40 @@
 
 <link href="/css/main/layout.css" type="text/css" rel="stylesheet" />
 <!-- css임포트 -->
-
+<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
+var fileIndex = 1;
 	function goBack() {
 		window.history.back();
 	}
+
+	function fn_addFile() {	// 파일 추가 버튼 
+		
+		$("#fileIndex")
+				.append(
+						"<div><input type='file' class='btn-default' style='float:left;' name='file_"
+								+ (fileIndex++)
+								+ "'>"
+								+ "<button type='button'class='btn-text btn-default fileDelBtn' style='float:right;'>"
+								+ "삭제" + "</button></div>");
+	}
+
+	$(document).on("click",".fileDelBtn", function(){	//파일 삭제 
+		$(this).parent().remove();
+		
+	});
+	
+		var fileNoArry = new Array();
+		var fileNameArry = new Array();
+		function fn_del(value, name){	//파일 삭제 
+			
+			fileNoArry.push(value);
+			fileNameArry.push(name);
+			$("#fileNoDel").attr("value", fileNoArry);
+			$("#fileNameDel").attr("value", fileNameArry);
+
+			$(this).parent().remove();
+		}
 </script>
 
 
@@ -79,15 +108,18 @@
 			<main class="main">
 				<h2 class="main title">게시글 수정</h2>
 
-				<form name="form" action="modify/modifyPost" id="form1"
+				<form name="form" action="modify/modifyPost" id="form1" enctype="multipart/form-data"
 					method="post">
 					<input id="community_num" type="hidden" name=community_num
 						class="width-half" required="required" value="${community_num}"
-						readonly />
-						<input type="hidden" name="page" value="${searchCriteria.page}">
-						 <input type="hidden" name="searchType" value="${searchCriteria.searchType}">
-    <input type="hidden" name="keyword" value="${searchCriteria.keyword}">
-						
+						readonly /> <input type="hidden" name="page"
+						value="${searchCriteria.page}"> <input type="hidden"
+						name="searchType" value="${searchCriteria.searchType}"> <input
+						type="hidden" name="keyword" value="${searchCriteria.keyword}">
+						<!-- 삭제 파일 -->
+						<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
+					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
+
 					<fieldset>
 						<legend class="hidden">게시글 수정</legend>
 						<table class="table margin-top first">
@@ -109,6 +141,23 @@
 									<td colspan="3" class="text-align-left indent"><textarea
 											class="form-control" id="exampleFormControlTextarea1"
 											name="content" rows="10" placeholder="내용을 입력하세요">${content}</textarea></td>
+								</tr>
+								<tr>
+									<td colspan="1"><button type="button" onclick="fn_addFile()" class="fileAdd_btn btn-text btn-default">파일추가</button></td>
+									<td colspan="2" id="fileIndex"><c:forEach var="file"
+											items="${file}" varStatus="var">
+											<div>
+												<input type="hidden" id="FILE_NO"
+													name="FILE_NO_${var.index}" value="${file.FILE_NO }">
+												<input type="hidden" id="FILE_NAME" name="FILE_NAME"
+													value="FILE_NO_${var.index}"> <a href="#"
+													id="fileName" onclick="return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)
+												<button id="fileDel" class="btn-text btn-default fileDelBtn"
+													onclick="fn_del('${file.FILE_NO}','FILE_NO_${var.index}');"
+													type="button">삭제</button>
+												<br>
+											</div>
+										</c:forEach></td>
 								</tr>
 								<tr>
 									<td id="td3" colspan="3"><input type="hidden" name=""
