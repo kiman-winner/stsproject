@@ -73,8 +73,23 @@
 
 	// 비밀번호 유효성 검사 및 아이디 체크 버튼 누른지 확인 
 	function pwdcheck() {
+		 var pw = $("#password").val();	
+		 var num = pw.search(/[0-9]/g);
+		 var eng = pw.search(/[a-z]/ig);
+		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-		if (form.password.value != form.passwordcheck.value) {
+		 if(pw.length < 10 || pw.length > 20){	//유효성 검사
+		  alert("10자리 ~ 20자리 이내로 입력해주세요.");
+		  return false;
+		 }else if(pw.search(/\s/) != -1){
+		  alert("비밀번호는 공백 없이 입력해주세요.");
+		  return false;
+		 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+		  alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+		  return false;
+		 }
+		 
+		if (form.password.value != form.passwordcheck.value) {	//비밀번호 체크 확인
 			alert("패스워드와 패스워드 확인이 일치하지 않습니다.");
 			form.password.value = "";
 			form.passwordcheck.value = "";
@@ -166,7 +181,8 @@
 									<th><label>비밀번호</label></th>
 									<td colspan="3" class="text-align-left indent"><input
 										type="password" id="password" name="password" class=""
-										required placeholder="비밀번호 입력" /></td>
+										required placeholder="비밀번호 입력 *10~20자리 영문,숫자,특수문자 중 2가지 혼합" /></td>
+									
 								</tr>
 								<tr>
 									<th><label>비밀번호 확인</label></th>

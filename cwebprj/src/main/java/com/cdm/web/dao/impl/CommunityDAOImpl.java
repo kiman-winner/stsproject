@@ -19,9 +19,9 @@ public class CommunityDAOImpl implements CommunityDAO{
 	@Autowired
 	private SqlSession session;
 	@Override
-	public void write(CommunityDTO vo) throws Exception {	//게시물 등록 
+	public void write(CommunityDTO communityDTO) throws Exception {	//게시물 등록 
 		
-		session.insert("communityNS.write", vo);	
+		session.insert("communityNS.write", communityDTO);	
 	}
 
 	@Override
@@ -32,12 +32,12 @@ public class CommunityDAOImpl implements CommunityDAO{
 
 	@Override
 	public void delete(int community_num) {	//게시글 삭제 
-		session.delete("communityNS.delete", community_num);	//게시글 삭제 
+		session.delete("communityNS.delete", community_num);	
 	}
 
 	@Override
-	public void modify(CommunityDTO vo) throws Exception {
-		session.update("communityNS.modify", vo);
+	public void modify(CommunityDTO communityDTO) throws Exception {
+		session.update("communityNS.modify", communityDTO);
 	}
 
 	@Override
@@ -81,13 +81,6 @@ public class CommunityDAOImpl implements CommunityDAO{
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
 		return session.selectOne("communityNS.selectFileInfo", map);
 		}
-
-
-	@Override
-	public void deleteFileAll(int community_num) throws Exception {
-		session.delete("communityNS.deleteFileAll", community_num);	
-		
-	}
 
 	@Override
 	public void deleteFile(Map<String, Object> tempMap) throws Exception {

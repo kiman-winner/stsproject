@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cdm.web.dto.CommunityDTO;
+import com.cdm.web.dto.NoticeDTO;
 
 @Component("fileUtils")
 public class FileUtils {
@@ -113,5 +114,16 @@ private static final String filePath = "D:\\Tools\\cwebprj\\file\\"; // 파일이 �
 		if(file.exists() == true){
 			file.delete();
 		}
+	}
+
+	public List<Map<String, Object>> parseInsertFileInfo(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest) {
+		// 공지사항 파일 리스트 추가 
+		return null;
+	}
+
+	public List<Map<String, Object>> parseUpdateFileInfo(NoticeDTO noticeDTO, String[] files, String[] fileNames,
+			MultipartHttpServletRequest mpRequest) {
+		//공지사항 파일 리스트 수정
+		return null;
 	}
 }

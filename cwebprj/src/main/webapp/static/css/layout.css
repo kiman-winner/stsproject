@@ -119,5 +119,17 @@
 	padding-left:300px;
 }
 
+#btn-next{
+	background-image: url('../../images/btn-next.png');
+    background-repeat: no-repeat;
+    width: 20px;
+    margin-left:10px;
+    height: 20px;}
+#btn-prev{
+	background-image: url('../../images/btn-prev.png');
+    background-repeat: no-repeat;
+    width: 20px;
+     margin-right:10px;
+    height: 20px;;}
 
 

@@ -51,12 +51,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 
 		if (login == null) { // 로그인 실패
 			session.setAttribute("member", null);
-			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다.'); " + "location.href = '/member/login'</script>"); // 실패
-																													// 시
-																													// 다시
-																													// 로그인
-																													// 페이지
-																													// 복귀
+			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다.'); " + "location.href = '/member/login'</script>"); // 실패시 다시 로그인 페이지 복귀
 			out.close();
 			return null;
 		} else { // 로그인 성공시
@@ -105,12 +100,10 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/find-id";
 	}
 
-	@RequestMapping(value = "find_idPost", method = RequestMethod.POST) // 아이디 찾기 post
+	@RequestMapping(value = "find-id-confirm", method = RequestMethod.POST) // 아이디 찾기 post
 	public String findid_confirm(MemberDTO vo, RedirectAttributes redirectAttributes) throws Exception {
 
 		redirectAttributes.addFlashAttribute("member_id", memberservice.findId(vo));
-
-		System.out.print("컨트롤단 결과 " + memberservice.findId(vo));
 
 		return "redirect:find-id-confirm";
 	}

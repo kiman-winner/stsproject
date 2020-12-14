@@ -2,31 +2,30 @@
 <!DOCTYPE mapper PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN" 
 "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
 
-<mapper namespace="communityNS">
+<mapper namespace="noticeNS">
 
 	<insert id="write" useGeneratedKeys="true"
-		keyProperty="community_num">
+		keyProperty="notice_num">
 		<!-- 게시글 등록 -->
-		<selectKey keyProperty="community_num" resultType="int"
+		<selectKey keyProperty="notice_num" resultType="int"
 			order="BEFORE">
-			SELECT seq_COMMUNITY.NEXTVAL FROM DUAL
+			SELECT notice_PK.NEXTVAL FROM DUAL
 		</selectKey>
 
-		INSERT INTO community(community_num, title, content, writer_id)
-		VALUES(#{community_num}, #{title}, #{content}, #{writer_id})
+		INSERT INTO notice(notice_num, title, content)
+		VALUES(#{notice_num}, #{title}, #{content})
 	</insert>
 
-
 	<insert id="insertFile" parameterType="hashMap">	<!-- 파일 삽입 -->
-		INSERT INTO community_file(
+		INSERT INTO notice_file(
 		FILE_NO,
-		community_num,
+		notice_num,
 		ORG_FILE_NAME,
 		STORED_FILE_NAME,
 		FILE_SIZE
 		)VALUES(
-		SEQ_community_FILE.NEXTVAL,
-		#{community_num},
+		notice_file_seq.NEXTVAL,
+		#{notice_num},
 		#{ORG_FILE_NAME},
 		#{STORED_FILE_NAME},
 		#{FILE_SIZE}
@@ -40,8 +39,8 @@
 		ORG_FILE_NAME,
 		ROUND(FILE_SIZE/1024,1) AS
 		FILE_SIZE
-		FROM community_file
-		WHERE community_num = #{community_num}
+		FROM notice_file
+		WHERE notice_num = #{notice_num}
 		order by file_no asc
 	</select>
 
@@ -51,25 +50,23 @@
 		SELECT
 		STORED_FILE_NAME,
 		ORG_FILE_NAME
-		FROM community_file
+		FROM notice_file
 		WHERE FILE_NO = #{FILE_NO}
 	</select>
 
-	<select id="listSearch" resultType="Community"> <!-- 불러오기 -->
+	<select id="listSearch" resultType="Notice"> <!-- 불러오기 -->
 		  <![CDATA[
 		select * FROM (
-		SELECT community_num,
+		SELECT notice_num,
 		title,
 		content,
-		writer_id,
 		regdate,
 		viewcount,
-		replycount,
-		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS
+		ROW_NUMBER() OVER(ORDER BY notice_num DESC) AS
 		RNUM
 		FROM
-		community
-		WHERE community_num > 0
+		notice
+		WHERE notice_num > 0
     ]]>
 
 		<include refid="search" />
@@ -78,17 +75,17 @@
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
 
 	</select>
-	<select id="list" resultType="Community"> <!-- 메인 홈페이지 -->
+	<select id="list" resultType="Notice"> <!-- 메인 홈페이지 -->
 			  <![CDATA[
 		select * FROM (
-		SELECT community_num,
+		SELECT notice_num,
 		title,
 		regdate,
-		ROW_NUMBER() OVER(ORDER BY community_num DESC) AS
+		ROW_NUMBER() OVER(ORDER BY notice_num DESC) AS
 		RNUM
 		FROM
-		community
-		WHERE community_num > 0
+		notice
+		WHERE notice_num > 0
     ]]>
 		) MP
 		WHERE RNUM BETWEEN 1 AND 5
@@ -98,9 +95,9 @@
 	<select id="countSearched" resultType="int">	<!-- 검색 결과 수 -->
     <![CDATA[
     SELECT
-        COUNT(community_num)
-    FROM community
-    WHERE community_num > 0
+        COUNT(notice_num)
+    FROM notice
+    WHERE notice_num > 0
     ]]>
 		<include refid="search" />
 	</select>
@@ -113,71 +110,58 @@
 			<if test="searchType == 'c'.toString()">
 				AND content LIKE '%'||#{keyword}||'%'
 			</if>
-			<if test="searchType == 'w'.toString()">
-				AND writer_id LIKE '%'||#{keyword}||'%'
-			</if>
 		</if>
 	</sql>
 
 	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
 		<![CDATA[
-		SELECT COUNT(community_num)
-		  FROM community
-		 WHERE community_num > 0
+		SELECT COUNT(notice_num)
+		  FROM notice
+		 WHERE notice_num > 0
 	]]>
 	</select>
 	<select id="detail" resultType="Community"><!-- 상세보기 -->
 		select * from
-		community where community_num=#{community_num}
+		notice where notice_num=#{notice_num}
 	</select>
 
 	<delete id="delete"> <!-- 삭제 -->
-		delete from community where community_num=#{community_num}
+		delete from notice where notice_num=#{notice_num}
 
 	</delete>
 
 	<update id="modify">
-		update community set title=
+		update notice set title=
 		#{title},content=#{content} where
-		community_num=#{community_num}
+		notice_num=#{notice_num}
 	</update> <!-- 게시글 수정 -->
 	<update id="updateViewCount">
-		update community set viewcount = viewcount+1 where
-		community_num=#{community_num}
+		update notice set viewcount = viewcount+1 where
+		notice_num=#{notice_num}
 	</update> <!-- 조회수 증가 -->
 
 <!-- 파일 삭제 업데이트 -->
 	<delete id="deleteFile" parameterType="hashMap">
-		delete from community_file 
+		delete from notice_file 
 		WHERE FILE_NO = #{FILE_NO}
 	</delete>
 	
 <!-- 게시글 파일 모두 삭제 업데이트 -->
 	<delete id="deleteFileAll" parameterType="hashMap">
-		delete from community_file where
-		community_num=#{community_num}
+		delete from notice_file where
+		notice_num=#{notice_num}
 	</delete>
-	
-	<update id="updateReplyCount">
-		update community
-		<set>
-			<if test="updown == 1">replycount = replycount+1,</if>
-			<if test="updown != 1">replycount = replycount-1,</if>
-		</set>
-		where
-		community_num=#{community_num}
-	</update> <!-- 댓글 수 업데이트 -->
 	
 	<select id="searchDeleteFile" resultType="String"> 	<!-- 지울 파일의 저장 이름 -->
 		SELECT STORED_FILE_NAME
-		FROM community_file
+		FROM notice_file
 		WHERE FILE_NO = #{FILE_NO}
 	</select>
 	
 	<select id="searchDeleteFileAll" resultType="String"> <!-- 게시글 삭제 시 모든 첨부파일 저장 이름 -->
 		SELECT STORED_FILE_NAME
-		FROM community_file
-		WHERE community_num = #{community_num}
+		FROM notice_file
+		WHERE notice_num = #{notice_num}
 
 	</select>
 

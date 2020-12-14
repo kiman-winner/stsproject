@@ -2,43 +2,22 @@ package com.cdm.web.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class NoticeDTO {
-	private int id;
+	
+	private int notice_num;
 	private String title;
-	private String writerId;
-	private Date regDate;
+	
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	private Date regdate;
 	private String content;
-	private int hit;
-	private String files;
-	
-	public NoticeDTO() {
-		
+	private int viewcount;
+	public int getNotice_num() {
+		return notice_num;
 	}
-	
-	
-
-
-
-	public NoticeDTO(int id, String title, String writerId, Date regDate, String content, int hit, String files) {
-		super();
-		this.id = id;
-		this.title = title;
-		this.writerId = writerId;
-		this.regDate = regDate;
-		this.content = content;
-		this.hit = hit;
-		this.files = files;
-	}
-
-
-
-
-
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
+	public void setNotice_num(int notice_num) {
+		this.notice_num = notice_num;
 	}
 	public String getTitle() {
 		return title;
@@ -46,17 +25,11 @@ public class NoticeDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getWriterId() {
-		return writerId;
+	public Date getRegdate() {
+		return regdate;
 	}
-	public void setWriterId(String writerId) {
-		this.writerId = writerId;
-	}
-	public Date getRegDate() {
-		return regDate;
-	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
 	public String getContent() {
 		return content;
@@ -64,22 +37,10 @@ public class NoticeDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getHit() {
-		return hit;
+	public int getViewcount() {
+		return viewcount;
 	}
-	public void setHit(int hit) {
-		this.hit = hit;
+	public void setViewcount(int viewcount) {
+		this.viewcount = viewcount;
 	}
-
-	public String getFiles() {
-		return files;
-	}
-
-	public void setFiles(String files) {
-		this.files = files;
-	}
-	
-	
-	
-	
 }

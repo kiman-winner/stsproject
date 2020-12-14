@@ -14,17 +14,17 @@ public class MemberDAOImpl implements MemberDAO{
 	private SqlSession session;
 	
 	@Override
-	public void join(MemberDTO vo) throws Exception {	//회원가입 처리
+	public void join(MemberDTO memberDTO) throws Exception {	//회원가입 처리
 		// TODO Auto-generated method stub
-		session.insert("memberNS.join", vo);	
+		session.insert("memberNS.join", memberDTO);	
 	}
 
 	@Override
-	public MemberDTO login(MemberDTO vo) throws Exception {		//로그인 처리 
+	public MemberDTO login(MemberDTO memberDTO) throws Exception {		//로그인 처리 
 		// TODO Auto-generated method stub
 	
 		
-		MemberDTO member = session.selectOne("memberNS.login",vo);
+		MemberDTO member = session.selectOne("memberNS.login",memberDTO);
 		return member;
 	}
 
@@ -39,12 +39,28 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public String findId(MemberDTO vo) throws Exception {//아이디 찾기 
-		return session.selectOne("memberNS.findId",vo);
+	public String findId(MemberDTO memberDTO) throws Exception {//아이디 찾기 
+		return session.selectOne("memberNS.findId",memberDTO);
 	}
 
 	@Override
-	public String findPwd(MemberDTO vo) throws Exception {	//비밀번호 찾기 
-		return session.selectOne("memberNS.findPwd",vo);
+	public String findPwd(MemberDTO memberDTO) throws Exception {	//비밀번호 찾기 
+		return session.selectOne("memberNS.findPwd",memberDTO);
+	}
+
+	@Override
+	public void updateMember(MemberDTO memberDTO) throws Exception {//개인정보 수정
+		session.update("memberNS.updateMember", memberDTO);	
+		
+	}
+
+	@Override
+	public void updatepwd(MemberDTO memberDTO) throws Exception {	//비밀번호 변경
+		session.update("memberNS.updatepwd", memberDTO);			
+	}
+
+	@Override
+	public void deleteMember(String member_id) throws Exception {
+		session.delete("memberNS.deleteMember",member_id);
 	}
 }

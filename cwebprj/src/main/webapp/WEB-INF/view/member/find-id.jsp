@@ -87,7 +87,7 @@
 			<main>
 		<h2 class="main title">아이디 간편 찾기</h2>
 		
-		<form method="post" action="find_idPost">
+		<form method="post" action="find-id-confirm">
 		<div class="margin-top first color-orange text-align-center">
 			※가입할 때 등록한 정보로 아이디를 찾습니다.
 		</div>

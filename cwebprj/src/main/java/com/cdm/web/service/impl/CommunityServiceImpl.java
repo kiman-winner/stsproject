@@ -9,20 +9,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cdm.web.dao.CommunityDAO;
-import com.cdm.web.dao.ReplyDAO;
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.page.SearchCriteria;
 import com.cdm.web.service.CommunityService;
 import com.cdm.web.util.FileUtils;
-
-import oracle.jdbc.logging.annotations.Log;
 @Service
 public class CommunityServiceImpl implements CommunityService{
 	
 	@Autowired
 	private CommunityDAO communityDAO;
-	@Autowired
-	private ReplyDAO replyDAO;
 	
 	@Autowired
 	private FileUtils fileUtils;
@@ -37,14 +32,10 @@ public class CommunityServiceImpl implements CommunityService{
 	@Override
 	public void delete(int community_num) throws Exception {	//게시글 삭제
 		
-		replyDAO.deleteAll(community_num);	// 댓글 모두 삭제 
-		
 		List<String> list = communityDAO.searchDeleteFileAll(community_num); //게시판 전체 첨부파일 검색
 		
 		for(int i=0;i<list.size();i++)
 		fileUtils.deleteFile(list.get(i));//서버에서 첨부파일 삭제
-		
-		communityDAO.deleteFileAll(community_num);	//첨부파일 모두 삭제 
 		
 		communityDAO.delete(community_num);	
 		
@@ -71,10 +62,10 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public void write(CommunityDTO vo, MultipartHttpServletRequest mpRequest) throws Exception {	//게시물 작성
-		communityDAO.write(vo);
+	public void write(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception {	//게시물 작성
+		communityDAO.write(communityDTO);
 
-		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(vo, mpRequest); 
+		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(communityDTO, mpRequest); 
 		int size = list.size();
 		
 		for(int i=0; i<size; i++){ 
@@ -91,12 +82,12 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDAO.selectFileInfo(map);
 	}
 	@Override
-	public void modify(CommunityDTO vo, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)//게시물 수정
+	public void modify(CommunityDTO communityDTO, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)//게시물 수정
 			throws Exception {
 		
-		communityDAO.modify(vo);	//게시물 업데이트 
+		communityDAO.modify(communityDTO);	//게시물 업데이트 
 		
-		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(vo, files, fileNames, mpRequest); //업데이트 할 것
+		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(communityDTO, files, fileNames, mpRequest); //업데이트 할 것
 		Map<String, Object> tempMap = null;
 		int size = list.size();
 		for(int i = 0; i<size; i++) {

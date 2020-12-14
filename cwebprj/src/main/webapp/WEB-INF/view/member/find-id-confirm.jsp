@@ -17,25 +17,7 @@
 	background: url("../../images/member/visual.png") no-repeat center;
 }
 </style>
-	<script>
-		window.addEventListener("load", function(event) {
-			var phoneTr = document.querySelector(".phone");
-			var emailTr = document.querySelector(".email");
-			
-			var phoneRadio = document.querySelector("input[value='phone']");
-			var emailRadio = document.querySelector("input[value='email']");
-			
-			phoneRadio.onclick = function(){
-				phoneTr.classList.remove("hidden");
-				emailTr.classList.add("hidden");				
-			};
-			
-			emailRadio.onclick = function(){				
-				phoneTr.classList.add("hidden");
-				emailTr.classList.remove("hidden");
-			};
-		});
-	</script>
+
 </head>
 
 <body>

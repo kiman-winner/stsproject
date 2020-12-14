@@ -5,7 +5,7 @@
 <mapper namespace="memberNS">
 
 	<select id="login" resultType="Member">	<!-- 로그인 sql -->
-		select member_id,password,member_name
+		select *
 		from member
 		where
 		member_id=#{member_id}
@@ -60,6 +60,24 @@
 		)
 
 	</insert>
-
+	<update id="updateMember">	<!-- 개인정보 수정 -->
+		update member set 
+		member_name=
+		#{member_name},
+		email=#{email},
+		phone=#{phone},
+		birth=#{birth}
+		where
+		member_id=#{member_id}
+	</update>
+	<update id="updatepwd"><!-- 비밀번호 변경 -->
+		update member set 
+		password=#{password}
+		where
+		member_id=#{member_id}
+	</update>
+	<delete id="deleteMember"> <!-- 회원탈퇴 -->
+		delete from member where member_id=#{member_id}
+	</delete>
 
 </mapper>

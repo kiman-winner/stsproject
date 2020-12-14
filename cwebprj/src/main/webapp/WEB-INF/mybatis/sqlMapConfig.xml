@@ -9,5 +9,7 @@
 			type="com.cdm.web.dto.CommunityDTO" />
 				<typeAlias alias="Reply"
 			type="com.cdm.web.dto.ReplyDTO" />
+			<typeAlias alias="Notice"
+			type="com.cdm.web.dto.NoticeDTO" />
 	</typeAliases>
 </configuration>

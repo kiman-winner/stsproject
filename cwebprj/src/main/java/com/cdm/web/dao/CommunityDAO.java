@@ -10,10 +10,10 @@ import com.cdm.web.page.SearchCriteria;
 
 public interface CommunityDAO {
 	
-	public void write(CommunityDTO vo) throws Exception ;
+	public void write(CommunityDTO communityDTO) throws Exception ;
 	public CommunityDTO detail(int community_num)throws Exception ;
 	public void delete(int community_num)throws Exception ;
-	void modify(CommunityDTO vo) throws Exception;
+	void modify(CommunityDTO communityDTO) throws Exception;
 	public void updateViewCount(int community_num)throws Exception;
 	public void updateReplyCount(HashMap<String, Integer> updateHash)throws Exception; //게시물 댓글 수 업데이트
 	
@@ -26,8 +26,6 @@ public interface CommunityDAO {
 	public List<Map<String, Object>> selectFileList(int community_num) throws Exception;	//첨부 파일 조회
 	
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;	//첨부 파일 다운
-	
-	public void deleteFileAll(int community_num)throws Exception;	//해당 게시글 첨부파일 삭제 
 
 	public void deleteFile(Map<String, Object> tempMap) throws Exception;	//첨부파일 삭제 
 	public String searchDeleteFile(Map<String, Object> tempMap) throws Exception;	//첨부파일 저장명 조회

@@ -6,6 +6,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 
 public class MemberDTO { //user vo Å¬·¹½º 
+	@Override
+	public String toString() {
+		return "MemberDTO [member_id=" + member_id + ", member_name=" + member_name + ", password=" + password
+				+ ", email=" + email + ", birth=" + birth + ", phone=" + phone + "]";
+	}
 	private String member_id;
 	private String member_name;
 	private String password;

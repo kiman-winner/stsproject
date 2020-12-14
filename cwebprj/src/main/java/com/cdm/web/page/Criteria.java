@@ -13,7 +13,7 @@ public class Criteria {
     }
 
     public int getEndPage() {	//시작 페이지 +9
-		return (this.page - 1) * perPageNum +  perPageNum-1;
+		return (this.page - 1) * perPageNum +  perPageNum;
 	}
 
 	public void setPage(int page) {
@@ -46,7 +46,7 @@ public class Criteria {
     }
 
     public int getPageStart() {
-        return (this.page - 1) * perPageNum;
+        return (this.page - 1) * perPageNum+1;
     }
 
    

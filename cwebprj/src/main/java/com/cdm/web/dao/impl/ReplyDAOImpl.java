@@ -26,12 +26,6 @@ public class ReplyDAOImpl implements ReplyDAO{
 	}
 
 	@Override
-	public void deleteAll(int community_num) throws Exception {	//해당 게시물 댓글 모두 삭제 
-
-			session.delete("replyNS.replyAlldelete", community_num);
-	}
-
-	@Override
 	public void deleteReply(int reply_num) throws Exception {	//댓글 삭제 
 		session.delete("replyNS.replydelete", reply_num);
 	}

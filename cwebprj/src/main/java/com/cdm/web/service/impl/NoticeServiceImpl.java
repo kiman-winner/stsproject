@@ -1,179 +1,101 @@
 package com.cdm.web.service.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cdm.web.dao.NoticeDAO;
 import com.cdm.web.dto.NoticeDTO;
+import com.cdm.web.page.SearchCriteria;
 import com.cdm.web.service.NoticeService;
+import com.cdm.web.util.FileUtils;
 
-@Service //@Controller, @Service,@Repository
+@Service
 public class NoticeServiceImpl implements NoticeService {
-	// private String url = "jdbc:oracle:thin:@localhost:1521/xe";
-//	private String uid = "c##spring";
-//	private String pwd = "1111";
-//	private String driver = "oracle.jdbc.driver.OracleDriver";
+
 	@Autowired
-	private DataSource dataSource;
+	private NoticeDAO noticeDAO;
 
-	public List<NoticeDTO> getList(int page, String field, String query) throws ClassNotFoundException, SQLException {
+	@Autowired
+	private FileUtils fileUtils;
 
-		int start = 1 + (page - 1) * 10; // 1, 11, 21, 31, ..
-		int end = 10 * page; // 10, 20, 30, 40...
+	@Override
+	public NoticeDTO detail(int notice_num) throws Exception { // 상세보기
+		noticeDAO.updateViewCount(notice_num); // 조회수 증가
+		return noticeDAO.detail(notice_num);
+	}
 
-		String sql = "SELECT * FROM NOTICE_VIEW WHERE " + field + " LIKE ? AND NUM BETWEEN ? AND ?";
+	@Override
+	public void delete(int notice_num) throws Exception { // 삭제
+		List<String> list = noticeDAO.searchDeleteFileAll(notice_num); // 공지사항 전체 첨부파일 검색
 
-		// Class.forName(driver);
-		// Connection con = DriverManager.getConnection(url, uid, pwd);
+		for (int i = 0; i < list.size(); i++)
+			fileUtils.deleteFile(list.get(i));// 서버에서 첨부파일 삭제
 
-		Connection con = dataSource.getConnection(); // 데이터 소스 객체를 통해 커넥션 객체 생성
+		noticeDAO.delete(notice_num);
+	}
 
-		PreparedStatement st = con.prepareStatement(sql);
+	@Override
+	public void modify(NoticeDTO noticeDTO, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)
+			throws Exception {
+		noticeDAO.modify(noticeDTO); // 공지사항 업데이트
 
-		st.setString(1, "%" + query + "%");
-		st.setInt(2, start);
-		st.setInt(3, end);
-
-		ResultSet rs = st.executeQuery();
-
-		List<NoticeDTO> list = new ArrayList<NoticeDTO>();
-
-		while (rs.next()) {
-			int id = rs.getInt("ID");
-			String title = rs.getString("TITLE");
-			String writerId = rs.getString("WRITER_ID");
-			Date regDate = rs.getDate("REGDATE");
-			String content = rs.getString("CONTENT");
-			int hit = rs.getInt("hit");
-			String files = rs.getString("FILES");
-
-			NoticeDTO notice = new NoticeDTO(id, title, writerId, regDate, content, hit, files);
-
-			list.add(notice);
-
+		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(noticeDTO, files, fileNames, mpRequest); // 업데이트
+																													// 할
+																													// 것
+		Map<String, Object> tempMap = null;
+		int size = list.size();
+		for (int i = 0; i < size; i++) {
+			tempMap = list.get(i);
+			if (tempMap.get("IS_NEW").equals("Y")) { // 새것 이면 삽입
+				noticeDAO.insertFile(tempMap);
+			} else {
+				fileUtils.deleteFile(noticeDAO.searchDeleteFile(tempMap));// 삭제 파일명 검색 및 서버에서 삭제
+				noticeDAO.deleteFile(tempMap); // 삭제
+			}
 		}
 
-		rs.close();
-		st.close();
-		con.close();
-
-		return list;
 	}
 
-	// Scalar
-	public int getCount() throws ClassNotFoundException, SQLException {
-		int count = 0;
-
-		String sql = "SELECT COUNT(ID) COUNT FROM NOTICE";
-
-		// Class.forName(driver);
-		// Connection con = DriverManager.getConnection(url, uid, pwd);
-
-		Connection con = dataSource.getConnection(); // �뜲�씠�꽣 �냼�뒪 而ㅻ꽖�뀡 �젙蹂닿��졇�샂
-
-		Statement st = con.createStatement();
-
-		ResultSet rs = st.executeQuery(sql);
-
-		if (rs.next())
-			count = rs.getInt("COUNT");
-
-		rs.close();
-		st.close();
-		con.close();
-
-		return count;
+	@Override
+	public List<NoticeDTO> listSearch(SearchCriteria searchCriteria) throws Exception { // 공지사항 검색
+		return noticeDAO.listSearch(searchCriteria);
 	}
 
-	public int insert(NoticeDTO notice) throws SQLException, ClassNotFoundException {
-		String title = notice.getTitle();
-		String writerId = notice.getWriterId();
-		String content = notice.getContent();
-		String files = notice.getFiles();
-
-		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-		String sql = "INSERT INTO notice (    " + "    title," + "    writer_id," + "    content," + "    files"
-				+ ") VALUES (?,?,?,?)";
-
-		// Class.forName(driver);
-		// Connection con = DriverManager.getConnection(url, uid, pwd);
-
-		Connection con = dataSource.getConnection(); // �뜲�씠�꽣 �냼�뒪 而ㅻ꽖�뀡 �젙蹂닿��졇�샂
-		// Statement st = con.createStatement();
-		// st.ex....(sql)
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, title);
-		st.setString(2, writerId);
-		st.setString(3, content);
-		st.setString(4, files);
-
-		int result = st.executeUpdate();
-
-		st.close();
-		con.close();
-
-		return result;
+	@Override
+	public int countSearched(SearchCriteria searchCriteria) throws Exception { // 공지사항 갯수 구하기
+		return noticeDAO.countSearched(searchCriteria);
 	}
 
-	public int update(NoticeDTO notice) throws SQLException, ClassNotFoundException {
-		String title = notice.getTitle();
-		String content = notice.getContent();
-		String files = notice.getFiles();
-		int id = notice.getId();
+	@Override
+	public void write(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest) throws Exception { // 공지사항 작성
+		noticeDAO.write(noticeDTO);
 
-		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-		String sql = "UPDATE NOTICE " + "SET" + "    TITLE=?," + "    CONTENT=?," + "    FILES=?" + "WHERE ID=?";
+		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(noticeDTO, mpRequest);
+		int size = list.size();
 
-		// Class.forName(driver);
-		// Connection con = DriverManager.getConnection(url, uid, pwd);
+		for (int i = 0; i < size; i++) {
+			noticeDAO.insertFile(list.get(i));
+		}
 
-		Connection con = dataSource.getConnection(); // �뜲�씠�꽣 �냼�뒪 而ㅻ꽖�뀡 �젙蹂닿��졇�샂
-		// Statement st = con.createStatement();
-		// st.ex....(sql)
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setString(1, title);
-		st.setString(2, content);
-		st.setString(3, files);
-		st.setInt(4, id);
-
-		int result = st.executeUpdate();
-
-		st.close();
-		con.close();
-
-		return result;
 	}
 
-	public int delete(int id) throws ClassNotFoundException, SQLException {
+	@Override
+	public List<Map<String, Object>> selectFileList(int notice_num) throws Exception { // 첨부파일 리스트 검색
+		return noticeDAO.selectFileList(notice_num);
+	}
 
-		String url = "jdbc:oracle:thin:@localhost:1521/xepdb1";
-		String sql = "DELETE NOTICE WHERE ID=?";
+	@Override
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception { // 파일 검색
+		return noticeDAO.selectFileInfo(map);
+	}
 
-		// Class.forName(driver);
-		// Connection con = DriverManager.getConnection(url, uid, pwd);
-
-		Connection con = dataSource.getConnection(); // �뜲�씠�꽣 �냼�뒪 而ㅻ꽖�뀡 �젙蹂닿��졇�샂
-		// Statement st = con.createStatement();
-		// st.ex....(sql)
-		PreparedStatement st = con.prepareStatement(sql);
-		st.setInt(1, id);
-
-		int result = st.executeUpdate();
-
-		st.close();
-		con.close();
-
-		return result;
+	@Override
+	public List<NoticeDTO> listSearch() throws Exception { // 홈페이지 공지사항 출력
+		return noticeDAO.listSearch();
 	}
 
 }

@@ -68,14 +68,14 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/write", method = RequestMethod.POST) // 커뮤니티 게시판 등록
-	public void communityWrite(CommunityDTO vo, HttpServletResponse response, MultipartHttpServletRequest mpRequest)
+	public void communityWrite(CommunityDTO communityDTO, HttpServletResponse response, MultipartHttpServletRequest mpRequest)
 			throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
-		communityService.write(vo, mpRequest);
+		communityService.write(communityDTO, mpRequest);
 
 		out.println("<script>alert('등록 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 
@@ -131,13 +131,13 @@ public class MainController {
 	}
 
 	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
-	public String modify(CommunityDTO vo, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes
+	public String modify(CommunityDTO communityDTO, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes
 			, @RequestParam(value="fileNoDel[]") String[] files,
 			 @RequestParam(value="fileNameDel[]") String[] fileNames,
 			 MultipartHttpServletRequest mpRequest)
 			throws Exception {
 
-		communityService.modify(vo, files, fileNames, mpRequest);
+		communityService.modify(communityDTO, files, fileNames, mpRequest);
 		redirectAttributes.addAttribute("page", searchCriteria.getPage());
 		redirectAttributes.addAttribute("searchType", searchCriteria.getSearchType());
 		redirectAttributes.addAttribute("keyword", searchCriteria.getKeyword()); // 검색 정보 유지
