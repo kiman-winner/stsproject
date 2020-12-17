@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cdm.web.dao.NoticeDAO;
@@ -22,6 +24,7 @@ public class NoticeServiceImpl implements NoticeService {
 	@Autowired
 	private FileUtils fileUtils;
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public NoticeDTO detail(int notice_num) throws Exception { // 상세보기
 		
@@ -29,6 +32,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDAO.detail(notice_num);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void delete(int notice_num) throws Exception { // 삭제
 		List<String> list = noticeDAO.searchDeleteFileAll(notice_num); // 공지사항 전체 첨부파일 검색
@@ -38,7 +42,8 @@ public class NoticeServiceImpl implements NoticeService {
 
 		noticeDAO.delete(notice_num);
 	}
-
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void modify(NoticeDTO noticeDTO, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)
 			throws Exception {
@@ -71,6 +76,7 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDAO.countSearched(searchCriteria);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void register(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest) throws Exception { // 공지사항 작성
 		

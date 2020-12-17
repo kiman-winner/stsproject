@@ -82,7 +82,7 @@
 			<main>
 				<h2 class="main title">회원탈퇴</h2>
 
-				<form name="form" action="deletememberPost" id="form1" method="post">
+				<form name="form" action="deletemember.do" id="form1" method="post">
 					<input type="hidden" id="member_id" name="member_id"
 						value="${member.member_id}" /> <br> <br>
 					<p>정말 탈퇴하시겠습니까?</p>

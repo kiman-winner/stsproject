@@ -37,7 +37,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/login";
 	}
 
-	@RequestMapping(value = "login/loginPost", method = RequestMethod.POST) // 로그인 처리
+	@RequestMapping(value = "login.do", method = RequestMethod.POST) // 로그인 처리
 	public ModelAndView loginPost(MemberDTO vo, HttpServletRequest req, HttpServletResponse response) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
@@ -85,7 +85,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return memberservice.idCheck(member_id);
 	}
 
-	@RequestMapping(value = "join/joinPost", method = RequestMethod.POST) // 회원가입 페이지
+	@RequestMapping(value = "join.do", method = RequestMethod.POST) // 회원가입 페이지
 	public String joinPost(MemberDTO vo) throws Exception {
 
 		memberservice.join(vo);
@@ -120,7 +120,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/find-pwd";
 	}
 
-	@RequestMapping(value = "find-pwdPost", method = RequestMethod.POST) // 비밀번호 찾기 메일 발송
+	@RequestMapping(value = "find-pwd.do", method = RequestMethod.POST) // 비밀번호 찾기 메일 발송
 	public void findpwdPost(MemberDTO vo, HttpServletResponse response) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");

@@ -161,7 +161,7 @@
 
 
 				<form onsubmit="return pwdcheck();" name="form"
-					action="/member/join/joinPost" id="form1" method="post">
+					action="join.do" id="form1" method="post">
 					<fieldset>
 						<legend class="hidden">회원정보</legend>
 						<table class="table margin-top first">

@@ -69,7 +69,7 @@
 				<h2 class="main title">개인정보 수정</h2>
 		
 				<form  name="form"
-					action="updatememberPost" id="form1" method="post">
+					action="updatemember.do" id="form1" method="post">
 					<fieldset>
 						<legend class="hidden">회원정보</legend>
 						<table class="table margin-top first">

@@ -84,7 +84,7 @@
 			<main>
 				<h2 class="main title">개인정보 수정</h2>
 
-				<form name="form" onsubmit="return pwdcheck();" action="updatepwdPost" id="form1" method="post">
+				<form name="form" onsubmit="return pwdcheck();" action="updatepwd.do" id="form1" method="post">
 					<fieldset>
 						<legend class="hidden">회원정보</legend>
 						<table class="table margin-top first">

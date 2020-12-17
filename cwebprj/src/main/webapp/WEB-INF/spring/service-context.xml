@@ -4,19 +4,27 @@
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans
         https://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/mvc
         https://www.springframework.org/schema/mvc/spring-mvc.xsd
         http://www.springframework.org/schema/context
-        https://www.springframework.org/schema/context/spring-context.xsd">
+        https://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx 
+        http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+        http://www.springframework.org/schema/aop 
+     	http://www.springframework.org/schema/aop/spring-aop-2.0.xsd ">
 
 	<context:component-scan
 		base-package="com.cdm.web.service" />
 	<context:component-scan
 		base-package="com.cdm.web.dao" />
-		<context:component-scan base-package="com.cdm.web.util"/>
-
+	<context:component-scan
+		base-package="com.cdm.web.util" />
+	<bean id="LogAdvice" class="com.cdm.web.logger.LogAdvice"/>
+	
 	<!-- SqlSessionFactoryBean 설정 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">
@@ -32,6 +40,17 @@
 			</list>
 		</property>
 	</bean>
+
+	<!-- 트랜잭션 -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+
+
 
 	<!-- SqlSessionTemplate 설정 -->
 	<bean id="sqlSession"
@@ -49,4 +68,6 @@
 		<property name="username" value="c##spring" />
 		<property name="password" value="1111" />
 	</bean>
+
+	<aop:aspectj-autoproxy />
 </beans>

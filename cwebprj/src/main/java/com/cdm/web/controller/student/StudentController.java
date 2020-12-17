@@ -48,7 +48,7 @@ public class StudentController {
 	public String updatemember() {
 		return "student/updatemember";
 	}
-	@RequestMapping(value="updatememberPost",method = RequestMethod.POST) // 마이페이지 개인정보 수정 처리
+	@RequestMapping(value="updatemember.do",method = RequestMethod.POST) // 마이페이지 개인정보 수정 처리
 	public void updatememberPost(MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 		
 		response.setCharacterEncoding("UTF-8");
@@ -65,7 +65,7 @@ public class StudentController {
 		return "student/updatepwd";
 	}
 	
-	@RequestMapping(value="updatepwdPost",method = RequestMethod.POST) //비밀번호 변경
+	@RequestMapping(value="updatepwd.do",method = RequestMethod.POST) //비밀번호 변경
 	public void updatepwdPost(@RequestParam("newpassword") String newpassword,MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 		
 		response.setCharacterEncoding("UTF-8");
@@ -84,7 +84,7 @@ public class StudentController {
 	public String deletemember() {
 		return "student/deletemember";
 	}
-	@RequestMapping("deletememberPost") // 회원탈퇴 
+	@RequestMapping("deletemember.do") // 회원탈퇴 
 	public void deletememberPost(@RequestParam("member_id") String member_id,HttpSession session, HttpServletResponse response)throws Exception {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정

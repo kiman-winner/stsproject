@@ -71,7 +71,7 @@
 			<main>
 		<h2 class="main title">회원 비밀번호 찾기</h2>
 	
-		<form method="post" action="find-pwdPost">
+		<form method="post" action="find-pwd.do">
 		<div class="margin-top first color-orange text-align-center">
 			※가입할 때 등록한 이메일 주소로 비밀번호를 찾기 위한 메일이 전달됩니다.
 		</div>

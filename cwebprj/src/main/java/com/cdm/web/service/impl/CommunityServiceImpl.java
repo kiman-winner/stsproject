@@ -6,6 +6,8 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.cdm.web.dao.CommunityDAO;
@@ -22,6 +24,7 @@ public class CommunityServiceImpl implements CommunityService{
 	@Autowired
 	private FileUtils fileUtils;
 
+	@Transactional(isolation = Isolation.READ_COMMITTED) //트랜잭션 커밋 되어 확정된 데이터만 읽도록 허용
 	@Override
 	public CommunityDTO detail(int community_num) throws Exception {	//상세보기
 	
@@ -29,6 +32,8 @@ public class CommunityServiceImpl implements CommunityService{
 		
 		return communityDAO.detail(community_num);
 	}
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void delete(int community_num) throws Exception {	//게시글 삭제
 		
@@ -61,6 +66,7 @@ public class CommunityServiceImpl implements CommunityService{
 		return communityDAO.countSearched(searchCriteria);
 	}
 
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void register(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception {	//게시물 작성
 		communityDAO.register(communityDTO);
@@ -81,6 +87,8 @@ public class CommunityServiceImpl implements CommunityService{
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {
 		return communityDAO.selectFileInfo(map);
 	}
+	
+	@Transactional(isolation = Isolation.READ_COMMITTED)
 	@Override
 	public void modify(CommunityDTO communityDTO, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)//게시물 수정
 			throws Exception {
