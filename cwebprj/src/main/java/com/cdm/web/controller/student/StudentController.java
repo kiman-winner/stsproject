@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,6 +28,8 @@ public class StudentController {
 	private CommunityService communityService;
 	@Autowired
 	private MemberService memberservice;
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
 
 	@RequestMapping("mycommunity") // 마이페이지 나의 커뮤니티 
 	public ModelAndView mycommunity(SearchCriteria searchCriteria) throws Exception {
@@ -72,10 +75,12 @@ public class StudentController {
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
-		if(memberservice.login(memberDTO)!=null)//기존 아이디 비번 확인 
+		MemberDTO login = memberservice.login(memberDTO);
+		boolean passMatch = passEncoder.matches(memberDTO.getPassword(),login.getPassword());	//로그인 확인
+		
+		if(login!=null&&passMatch)//기존 아이디 비번 확인 
 		{	
-			memberDTO.setPassword(newpassword);
-			memberservice.updatepwd(memberDTO);//비밀번호 변경 서비스 
+			memberservice.updatepwd(memberDTO,newpassword);//비밀번호 변경 서비스 
 			out.println("<script>alert('변경 되었습니다.'); " + "location.href = '/index'</script>");}
 		else {	out.println("<script>alert('기존 비밀번호와 일치하지 않습니다.'); " + "location.href = 'updatepwd'</script>");}
 	

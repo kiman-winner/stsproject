@@ -9,7 +9,6 @@
 		from member
 		where
 		member_id=#{member_id}
-		and password=#{password}
 	</select>
 
 	<select id="idcheck" resultType="int">	<!-- 로그인 아이디 체크 -->
@@ -17,16 +16,6 @@
 		from member
 		where
 		member_id=#{member_id}
-	</select>
-	
-	<select id="findPwd" parameterType="Member" resultType="String">	<!-- 비밀번호 찾기 -->
-		select password
-		from member
-		where
-		member_id=#{member_id}
-		and phone=#{phone}
-		and email=#{email}
-		
 	</select>
 	
 		<select id="findId" parameterType="Member" resultType="String">	<!-- 아이디 찾기 -->
@@ -60,6 +49,14 @@
 		)
 
 	</insert>
+	<select id="pwdcheck" parameterType="Member" resultType="String">	<!-- 비밀번호 체크 -->
+		select member_name
+		from member
+		where
+		member_id=#{member_id}
+		and phone=#{phone}
+		and email=#{email}
+	</select>
 	<update id="updateMember">	<!-- 개인정보 수정 -->
 		update member set 
 		member_name=

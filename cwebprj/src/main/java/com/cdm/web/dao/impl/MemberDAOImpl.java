@@ -47,11 +47,6 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public String findPwd(MemberDTO memberDTO) throws Exception {	//비밀번호 찾기 
-		return session.selectOne("memberNS.findPwd",memberDTO);
-	}
-
-	@Override
 	public void updateMember(MemberDTO memberDTO) throws Exception {//개인정보 수정
 		session.update("memberNS.updateMember", memberDTO);	
 		
@@ -65,5 +60,11 @@ public class MemberDAOImpl implements MemberDAO{
 	@Override
 	public void deleteMember(String member_id) throws Exception {
 		session.delete("memberNS.deleteMember",member_id);
+	}
+
+	@Override
+	public String pwdcheck(MemberDTO memberDTO) throws Exception {
+		// TODO Auto-generated method stub
+		return session.selectOne("memberNS.pwdcheck",memberDTO);
 	}
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,8 +30,8 @@ public class MemberController { // 멤버 관련 컨트롤러
 
 	@Autowired
 	private MemberService memberservice;
-
-//	private UserSignUpService userSignUpService;
+	@Autowired
+	private BCryptPasswordEncoder passEncoder;
 
 	@RequestMapping("login") // 로그인 페이지
 	public String login() {
@@ -38,7 +39,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 	}
 
 	@RequestMapping(value = "login.do", method = RequestMethod.POST) // 로그인 처리
-	public ModelAndView loginPost(MemberDTO vo, HttpServletRequest req, HttpServletResponse response) throws Exception {
+	public ModelAndView loginPost(MemberDTO memberDTO, HttpServletRequest req, HttpServletResponse response) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
@@ -49,20 +50,21 @@ public class MemberController { // 멤버 관련 컨트롤러
 		ModelAndView mav = new ModelAndView();
 
 		HttpSession session = req.getSession();
-		MemberDTO login = memberservice.login(vo);
+		MemberDTO login = memberservice.login(memberDTO);
+		
+		boolean passMatch = passEncoder.matches(memberDTO.getPassword(),login.getPassword());
 
-		if (login == null) { // 로그인 실패
+		if (login != null && passMatch) { // 로그인 성공
+			session.setAttribute("member", login); // 세션에 저장.
+			mav.setView(rv);
+		} else { // 로그인  실패
 			session.setAttribute("member", null);
 			out.println("<script>alert('아이디 혹은 비밀번호가 일치하지 않습니다.'); " + "location.href = '/member/login'</script>"); // 실패시 다시 로그인 페이지 복귀
 			out.close();
-			return null;
-		} else { // 로그인 성공시
-			session.setAttribute("member", login); // 세션에 저장.
-			mav.setView(rv);
 		}
 		return mav;
 	}
-
+	
 	// 로그아웃
 	@RequestMapping("logout")
 	public String logout(HttpSession session) throws Exception {
@@ -86,9 +88,8 @@ public class MemberController { // 멤버 관련 컨트롤러
 	}
 
 	@RequestMapping(value = "join.do", method = RequestMethod.POST) // 회원가입 페이지
-	public String joinPost(MemberDTO vo) throws Exception {
-
-		memberservice.join(vo);
+	public String joinPost(MemberDTO memberDTO) throws Exception {
+		memberservice.join(memberDTO);
 		return "redirect:/member/confirm"; // 회원가입 완료 페이지
 	}
 
@@ -103,9 +104,9 @@ public class MemberController { // 멤버 관련 컨트롤러
 	}
 
 	@RequestMapping(value = "find-id-confirm", method = RequestMethod.POST) // 아이디 찾기 post
-	public String findid_confirm(MemberDTO vo, RedirectAttributes redirectAttributes) throws Exception {
+	public String findid_confirm(MemberDTO memberDTO, RedirectAttributes redirectAttributes) throws Exception {
 
-		redirectAttributes.addFlashAttribute("member_idList", memberservice.findId(vo));
+		redirectAttributes.addFlashAttribute("member_idList", memberservice.findId(memberDTO));
 
 		return "redirect:find-id-confirm";
 	}
@@ -115,33 +116,26 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/find-id-confirm";
 	}
 
-	@RequestMapping("find-pwd") // 비밀번호 찾기 페이지
+	@RequestMapping("pwd-reset") // 비밀번호 찾기 페이지
 	public String findpwd() {
-		return "member/find-pwd";
+		return "member/pwd-reset";
 	}
 
-	@RequestMapping(value = "find-pwd.do", method = RequestMethod.POST) // 비밀번호 찾기 메일 발송
-	public void findpwdPost(MemberDTO vo, HttpServletResponse response) throws Exception {
+	@RequestMapping(value = "pwd-reset.do", method = RequestMethod.POST) // 비밀번호 찾기 메일 발송
+	public void findpwdPost(MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
-		String pwd = memberservice.findpwd(vo); // 비밀번호 찾기
+		
+		String pwdcheck = memberservice.pwdcheck(memberDTO); // 비밀번호 찾기
 
-		if (pwd == null)
-			out.println("<script>alert('정보가 올바르지 않습니다.'); " + "location.href = '/member/find-pwd'</script>");
+		if (pwdcheck == null)
+			out.println("<script>alert('정보가 올바르지 않습니다.'); " + "location.href = '/member/pwd-reset'</script>");
 
-		String subject = "[CDMlucture] 비밀번호 찾기";
+		memberservice.resetPwd(memberDTO);	//비밀번호 초기화
 
-		String msg = "";
-		msg += "<div align='center' style='border:1px solid black; font-family:verdana'>";
-		msg += "<h3 style='color: blue;'><strong>" + vo.getMember_id();
-		msg += "님</strong>의 비밀번호 입니다. 로그인 후 비밀번호를 변경하세요.</h3>";
-		msg += "<p>비밀번호 : <strong>" + pwd + "</strong></p></div>";
-
-		MailUtil.sendMail(vo.getEmail(), subject, msg);
-
-		out.println("<script>alert('비밀번호 발송이 완료되었습니다.'); " + "location.href = '/member/login'</script>");
+		out.println("<script>alert('임시 비밀번호 발송이 완료되었습니다.'); " + "location.href = '/member/login'</script>");
 	}
 
 }

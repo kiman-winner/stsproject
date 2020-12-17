@@ -16,12 +16,11 @@ public interface MemberDAO {
 
 	public List<String> findId(MemberDTO memberDTO) throws Exception;//아이디 찾기 
 
-	public String findPwd(MemberDTO memberDTO)throws Exception;//비밀번호 찾기
-
 	public void updateMember(MemberDTO memberDTO)throws Exception;//개인정보 수정
 
 	public void updatepwd(MemberDTO memberDTO)throws Exception;//비밀번호 변경
 
 	public void deleteMember(String member_id)throws Exception;//회원 탈퇴
+	public String pwdcheck(MemberDTO memberDTO)throws Exception;//비밀번호 체크
 	
 }
