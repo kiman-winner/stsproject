@@ -18,6 +18,7 @@
 		base-package="com.cdm.web.controller" />
 	<mvc:annotation-driven />
 	<aop:aspectj-autoproxy />
+	
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"></property>
