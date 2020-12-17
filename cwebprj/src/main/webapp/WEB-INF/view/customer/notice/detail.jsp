@@ -8,7 +8,15 @@
 <meta charset="UTF-8">
 <title>공지사항</title>
 
+<link href="/css/main/layout.css" type="text/css" rel="stylesheet" />
 <link href="/css/customer/layout.css" type="text/css" rel="stylesheet" />
+
+<link href="/css/layout.css" type="text/css" rel="stylesheet" />
+<link href="/css/index.css" type="text/css" rel="stylesheet" />
+<link href="/css/intro.css" type="text/css" rel="stylesheet" />
+
+<link href="/css/main/layout.css" type="text/css" rel="stylesheet" />
+<!-- css임포트 -->
 <style>
 #visual .content-container {
 	height: inherit;
@@ -17,6 +25,58 @@
 	background: url("../../images/customer/visual.png") no-repeat center;
 }
 </style>
+<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+$(document)
+.ready(
+		function() {
+
+			var formObj = $("form[name='readForm']");
+
+			var replyformObj = $("form[name='replyForm']");
+
+			// 삭제 post 전송 
+			$("#deleteBtn").on("click", function() {
+
+				if (confirm("정말 삭제하시겠습니까??") == true) { //확인
+
+					formObj.attr("action", "delete");
+					formObj.attr("method", "post");
+					formObj.submit();
+
+				} else {
+					return false;
+				}
+
+			});
+
+			$("#modifyBtn")
+					.on(
+							"click",
+							function(evt) { //게시글 수정 버튼 클릭 시 
+								 formObj.attr("action", "modify");
+							        formObj.attr("method", "get");
+							        formObj.submit();
+								
+							});
+			$(".btn-list")
+			.on(
+					"click",
+					function(evt) { //게시글 목록 버튼 클릭 시 
+						 formObj.attr("action", "list");
+					        formObj.attr("method", "get");
+					        formObj.submit();
+						
+					});
+		}); 
+function fn_fileDown(fileNo){	//파일 다운로드 
+	var formObj = $("form[name='readForm']");
+	$("#FILE_NO").attr("value", fileNo);
+	formObj.attr("action", "detail/fileDown");
+	formObj.submit();
+}
+
+</script>
 </head>
 
 <body>
@@ -43,10 +103,10 @@
 				<nav class="menu text-menu first margin-top">
 					<h1>고객센터메뉴</h1>
 					<ul>
-						<li><a class="current" href="/customer/notice">공지사항</a></li>
-						<li><a class="" href="/customer/faq">자주하는 질문</a></li>
+						<li><a class="current" href="/customer/notice/list">공지사항</a></li>
+					<!-- 	<li><a class="" href="/customer/faq">자주하는 질문</a></li>
 						<li><a class="" href="/customer/question">수강문의</a></li>
-						<li><a class="" href="/customer/event">이벤트</a></li>
+						<li><a class="" href="/customer/event">이벤트</a></li> -->
 
 					</ul>
 				</nav>
@@ -81,77 +141,88 @@
 
 				<div class="margin-top first">
 					<h3 class="hidden">공지사항 내용</h3>
+					
+					<form name="readForm" role="form" method="post">
+						<input type="hidden" id="notice_num" name="notice_num"
+							value="${detail.notice_num}" /> <input type="hidden"
+							name="page" value="${searchCriteria.page}"> <input
+							type="hidden" name="searchType"
+							value="${searchCriteria.searchType}"> <input
+							type="hidden" name="keyword" value="${searchCriteria.keyword}">
+						<input type="hidden" name="title" value="${detail.title}">
+						<input type="hidden" name="content" value="${detail.content}">
+
+						<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
+
+					</form>
 					<table class="table">
 						<tbody>
 							<tr>
 								<th>제목</th>
 								<td class="text-align-left text-indent text-strong text-orange"
-									colspan="3">스프링 8강까지의 예제 코드</td>
+									colspan="3">${detail.title}</td>
 							</tr>
 							<tr>
 								<th>작성일</th>
-								<td class="text-align-left text-indent" colspan="3">2019-08-18
+								<td class="text-align-left text-indent" colspan="1"><fmt:formatDate
+										value="${detail.regdate}" pattern="yyyy-MM-dd" />
 								</td>
+								<th colspan="1">조회수</th>
+								<td>${detail.viewcount}</td>
 							</tr>
-							<tr>
-								<th>작성자</th>
-								<td>newlec</td>
-								<th>조회수</th>
-								<td>148</td>
+							
+							<tr class="content">
+							
+								<td>${detail.content}</td>
 							</tr>
 							<tr>
 								<th>첨부파일</th>
-								<td colspan="3"></td>
-							</tr>
-							<tr class="content">
-								<td colspan="4">안녕하세요. 뉴렉처입니다.
-									<div>
-										<br>
-									</div>
-									<div>현재 진행중인 스프링 DI 8강까지의 예제입니다.</div>
-									<div>
-										<br>
-									</div>
-									
-									<div>
-										<br>
-									</div>
-									<div>
-										<br>
+								<td colspan="2">
+									<div class="form-group" style="border: 1px solid #dbdbdb;">
+										<c:forEach var="file" items="${file}">
+											<a href="#"
+												onclick="fn_fileDown('${file.FILE_NO}'); return false;">${file.ORG_FILE_NAME}</a>(${file.FILE_SIZE}kb)<br>
+										</c:forEach>
 									</div>
 								</td>
 							</tr>
+							
 						</tbody>
 					</table>
 				</div>
+				
+				<c:if test="${member.member_id == 'atlas69' }">
+
+					<!-- 수정 삭제 버튼  -->
+					<div id="modifydeltediv">
+						<button type="submit" id="modifyBtn"></button>
+						<button type="submit" id="deleteBtn"></button>
+
+					</div>
+					<!-- 로그인 안 했을 시에만 보이기 -->
+				</c:if>
+				
 
 				<div class="margin-top text-align-center">
-					<a class="btn btn-list" href="list.html">목록</a>
+					<a class="btn btn-list" href="list">목록</a>
 				</div>
 
-				<div class="margin-top">
+				<!-- <div class="margin-top">
 					<table class="table border-top-default">
 						<tbody>
-
 							<tr>
 								<th>다음글</th>
 								<td colspan="3" class="text-align-left text-indent">다음글이
 									없습니다.</td>
 							</tr>
-
-
-
-
 							<tr>
 								<th>이전글</th>
 								<td colspan="3" class="text-align-left text-indent"><a
 									class="text-blue text-strong" href="">스프링 DI 예제 코드</a></td>
 							</tr>
-
-
 						</tbody>
 					</table>
-				</div>
+				</div> -->
 
 			</main>
 

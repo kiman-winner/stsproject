@@ -4,12 +4,12 @@
 
 <mapper namespace="noticeNS">
 
-	<insert id="write" useGeneratedKeys="true"
+	<insert id="register" useGeneratedKeys="true"
 		keyProperty="notice_num">
 		<!-- 게시글 등록 -->
 		<selectKey keyProperty="notice_num" resultType="int"
 			order="BEFORE">
-			SELECT notice_PK.NEXTVAL FROM DUAL
+			SELECT notice_seq.NEXTVAL FROM DUAL
 		</selectKey>
 
 		INSERT INTO notice(notice_num, title, content)
@@ -120,7 +120,7 @@
 		 WHERE notice_num > 0
 	]]>
 	</select>
-	<select id="detail" resultType="Community"><!-- 상세보기 -->
+	<select id="detail" resultType="Notice"><!-- 상세보기 -->
 		select * from
 		notice where notice_num=#{notice_num}
 	</select>
@@ -135,6 +135,7 @@
 		#{title},content=#{content} where
 		notice_num=#{notice_num}
 	</update> <!-- 게시글 수정 -->
+	
 	<update id="updateViewCount">
 		update notice set viewcount = viewcount+1 where
 		notice_num=#{notice_num}

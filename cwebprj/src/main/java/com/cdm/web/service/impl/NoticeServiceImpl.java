@@ -24,6 +24,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public NoticeDTO detail(int notice_num) throws Exception { // 상세보기
+		
 		noticeDAO.updateViewCount(notice_num); // 조회수 증가
 		return noticeDAO.detail(notice_num);
 	}
@@ -44,8 +45,8 @@ public class NoticeServiceImpl implements NoticeService {
 		noticeDAO.modify(noticeDTO); // 공지사항 업데이트
 
 		List<Map<String, Object>> list = fileUtils.parseUpdateFileInfo(noticeDTO, files, fileNames, mpRequest); // 업데이트
-																													// 할
-																													// 것
+																												// 할
+																												// 것
 		Map<String, Object> tempMap = null;
 		int size = list.size();
 		for (int i = 0; i < size; i++) {
@@ -71,15 +72,18 @@ public class NoticeServiceImpl implements NoticeService {
 	}
 
 	@Override
-	public void write(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest) throws Exception { // 공지사항 작성
-		noticeDAO.write(noticeDTO);
-
+	public void register(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest) throws Exception { // 공지사항 작성
+		
+		noticeDAO.register(noticeDTO);
+		
 		List<Map<String, Object>> list = fileUtils.parseInsertFileInfo(noticeDTO, mpRequest);
+		
 		int size = list.size();
 
-		for (int i = 0; i < size; i++) {
-			noticeDAO.insertFile(list.get(i));
-		}
+			for (int i = 0; i < size; i++) {
+				noticeDAO.insertFile(list.get(i));
+			}
+		
 
 	}
 

@@ -64,41 +64,45 @@
 
 			<!-- --------------------------- main --------------------------------------- -->
 
-<main>
-		<h2 class="main title">아이디 간편 찾기 결과</h2>
-		
+			<main>
+				<h2 class="main title">아이디 간편 찾기 결과</h2>
 
-		<form >
-		<div class="margin-top first color-orange text-align-center">
-			※가입할 때 등록한 정보로 아이디를 찾았습니다.
-		</div>
-		<div class="margin-top border table"
-			style="width:568px;min-height: 190px;box-sizing: border-box;border-radius: 10px;margin-left: auto;margin-right: auto;">
-			
-			<!-- ---------------------------------------------------------------------------------------------------- -->
-			<div class="margin-top padding border-ver text-align-center color-green text-strong"
-				style="width:568px;box-sizing: border-box;margin-left: auto;margin-right: auto;">
-				회원 정보로 검색한 정보는 다음과 같습니다.
-			</div>
-			<div style="margin-top:30px;">
-				<table class="table" style="width:80%;margin-left:10%;">					
-					<tr>
-						<th>아이디</th>
-						<td class="text-align-left indent">${member_id}</td>
-					</tr>
-				</table>
-			</div>
-			
-			<!-- ---------------------------------------------------------------------------------------------------- -->
-		</div>
-		<div class="margin-top text-align-center">			
-			<a class="btn-text btn-default" href="login">로그인</a>
-			<a class="btn-text btn-cancel" href="find-pwd">비밀번호 찾기</a>
-		</div>
-		</form>
-	</main>
 
-	
+				<form>
+					<div class="margin-top first color-orange text-align-center">
+						※가입할 때 등록한 정보로 아이디를 찾았습니다.</div>
+					<div class="margin-top border table"
+						style="width: 568px; min-height: 190px; box-sizing: border-box; border-radius: 10px; margin-left: auto; margin-right: auto;">
+
+						<!-- ---------------------------------------------------------------------------------------------------- -->
+						<div
+							class="margin-top padding border-ver text-align-center color-green text-strong"
+							style="width: 568px; box-sizing: border-box; margin-left: auto; margin-right: auto;">
+							회원 정보로 검색한 정보는 다음과 같습니다.</div>
+						<div style="margin-top: 30px;">
+							<table class="table" style="width: 80%; margin-left: 10%;">
+								<tr>
+									<th>아이디</th>
+									<td class="text-align-left indent"><c:forEach
+											var="member_id" items="${member_idList}">
+											${member_id} <br>
+										</c:forEach></td>
+								</tr>
+							</table>
+						</div>
+
+
+
+						<!-- ---------------------------------------------------------------------------------------------------- -->
+					</div>
+					<div class="margin-top text-align-center">
+						<a class="btn-text btn-default" href="login">로그인</a> <a
+							class="btn-text btn-cancel" href="find-pwd">비밀번호 찾기</a>
+					</div>
+				</form>
+			</main>
+
+
 
 		</div>
 	</div>

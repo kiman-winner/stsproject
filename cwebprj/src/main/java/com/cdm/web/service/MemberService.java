@@ -1,5 +1,8 @@
 package com.cdm.web.service;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cdm.web.dto.MemberDTO;
 
 public interface MemberService {
@@ -10,7 +13,7 @@ public interface MemberService {
 	
 	public int idCheck(String member_id) throws Exception;	//아이디 중복 확인
 
-	public String findId(MemberDTO memberDTO) throws Exception;//아이디 찾기 
+	public List<String> findId(MemberDTO memberDTO) throws Exception;//아이디 찾기 
 
 	public String findpwd(MemberDTO memberDTO)throws Exception;//비밀번호 찾기 
 

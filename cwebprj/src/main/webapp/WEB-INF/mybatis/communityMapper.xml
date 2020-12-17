@@ -4,7 +4,7 @@
 
 <mapper namespace="communityNS">
 
-	<insert id="write" useGeneratedKeys="true"
+	<insert id="register" useGeneratedKeys="true"
 		keyProperty="community_num">
 		<!-- 게시글 등록 -->
 		<selectKey keyProperty="community_num" resultType="int"

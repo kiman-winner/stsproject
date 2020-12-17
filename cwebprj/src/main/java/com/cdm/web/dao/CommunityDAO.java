@@ -10,7 +10,7 @@ import com.cdm.web.page.SearchCriteria;
 
 public interface CommunityDAO {
 	
-	public void write(CommunityDTO communityDTO) throws Exception ;
+	public void register(CommunityDTO communityDTO) throws Exception ;
 	public CommunityDTO detail(int community_num)throws Exception ;
 	public void delete(int community_num)throws Exception ;
 	void modify(CommunityDTO communityDTO) throws Exception;

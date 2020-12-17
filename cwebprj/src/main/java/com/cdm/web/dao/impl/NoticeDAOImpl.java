@@ -47,8 +47,8 @@ public class NoticeDAOImpl implements NoticeDAO{
 	}
 
 	@Override
-	public void write(NoticeDTO noticeDTO) throws Exception {//공지사항 등록 
-		session.insert("noticeNS.write", noticeDTO);	
+	public void register(NoticeDTO noticeDTO) throws Exception {//공지사항 등록 
+		session.insert("noticeNS.register", noticeDTO);	
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class NoticeDAOImpl implements NoticeDAO{
 
 	@Override
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception {//파일 다운 
-		return session.selectOne("communityNS.selectFileInfo", map);
+		return session.selectOne("noticeNS.selectFileInfo", map);
 	}
 
 	@Override
@@ -73,7 +73,7 @@ public class NoticeDAOImpl implements NoticeDAO{
 
 	@Override
 	public String searchDeleteFile(Map<String, Object> tempMap) throws Exception {//삭제할 파일 검색
-		return session.selectOne("communityNS.searchDeleteFile",tempMap);
+		return session.selectOne("noticeNS.searchDeleteFile",tempMap);
 	}
 
 	@Override

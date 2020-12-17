@@ -1,5 +1,8 @@
 package com.cdm.web.service.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +17,6 @@ public class MemberServiceImpl implements MemberService{
 	
 	@Autowired
 	private MemberDAO memberDAO;
-	@Autowired
-	private CommunityDAO communityDAO;
-	@Autowired
-	private ReplyDAO replyDAO;
 	
 	@Override
 	public void join(MemberDTO memberDTO) throws Exception {	//회원가입 DAO를 통한 데이터 접근
@@ -39,8 +38,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public String findId(MemberDTO memberDTO) throws Exception {	//아이디 찾기 
-		// TODO Auto-generated method stub
+	public List<String> findId(MemberDTO memberDTO) throws Exception {	//아이디 찾기 
 		return memberDAO.findId(memberDTO);
 	}
 

@@ -20,7 +20,7 @@ public interface NoticeDAO {
 
 	int countSearched(SearchCriteria searchCriteria)throws Exception ;	//공지사항 검색 갯수
 
-	void write(NoticeDTO noticeDTO)throws Exception ;//공지사항 작성
+	void register(NoticeDTO noticeDTO)throws Exception ;//공지사항 작성
 
 	void insertFile(Map<String, Object> map)throws Exception ; //공지사항 파일 첨부
 

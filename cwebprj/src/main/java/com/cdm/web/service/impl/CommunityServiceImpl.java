@@ -62,8 +62,8 @@ public class CommunityServiceImpl implements CommunityService{
 	}
 
 	@Override
-	public void write(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception {	//게시물 작성
-		communityDAO.write(communityDTO);
+	public void register(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception {	//게시물 작성
+		communityDAO.register(communityDTO);
 
 		List<Map<String,Object>> list = fileUtils.parseInsertFileInfo(communityDTO, mpRequest); 
 		int size = list.size();

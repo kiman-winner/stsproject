@@ -92,7 +92,7 @@ function goBack() {
 			<main class="main">
 				<h2 class="main title">게시글 작성</h2>
 
-				<form name="form" action="write" id="form1" method="post"
+				<form name="form" action="register.do" id="form1" method="post"
 					enctype="multipart/form-data">
 					<fieldset>
 						<legend class="hidden">게시글 작성</legend>

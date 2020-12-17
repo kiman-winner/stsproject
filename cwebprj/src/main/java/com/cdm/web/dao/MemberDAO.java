@@ -1,5 +1,8 @@
 package com.cdm.web.dao;
 
+import java.util.List;
+import java.util.Map;
+
 import com.cdm.web.dto.MemberDTO;
 
 public interface MemberDAO {
@@ -11,7 +14,7 @@ public interface MemberDAO {
 	
 	public int idCheck(String member_id) throws Exception;
 
-	public String findId(MemberDTO memberDTO) throws Exception;//아이디 찾기 
+	public List<String> findId(MemberDTO memberDTO) throws Exception;//아이디 찾기 
 
 	public String findPwd(MemberDTO memberDTO)throws Exception;//비밀번호 찾기
 

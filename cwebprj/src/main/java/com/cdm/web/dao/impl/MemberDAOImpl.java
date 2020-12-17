@@ -1,5 +1,8 @@
 package com.cdm.web.dao.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -39,8 +42,8 @@ public class MemberDAOImpl implements MemberDAO{
 	}
 
 	@Override
-	public String findId(MemberDTO memberDTO) throws Exception {//아이디 찾기 
-		return session.selectOne("memberNS.findId",memberDTO);
+	public List<String> findId(MemberDTO memberDTO) throws Exception {//아이디 찾기 
+		return session.selectList("memberNS.findId",memberDTO);
 	}
 
 	@Override

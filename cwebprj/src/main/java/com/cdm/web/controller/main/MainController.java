@@ -67,7 +67,7 @@ public class MainController {
 		return "main/community/register";
 	}
 
-	@RequestMapping(value = "community/write", method = RequestMethod.POST) // 커뮤니티 게시판 등록
+	@RequestMapping(value = "community/register.do", method = RequestMethod.POST) // 커뮤니티 게시판 등록
 	public void communityWrite(CommunityDTO communityDTO, HttpServletResponse response, MultipartHttpServletRequest mpRequest)
 			throws Exception {
 
@@ -75,7 +75,7 @@ public class MainController {
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
-		communityService.write(communityDTO, mpRequest);
+		communityService.register(communityDTO, mpRequest);
 
 		out.println("<script>alert('등록 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 
@@ -130,7 +130,7 @@ public class MainController {
 		return mv;
 	}
 
-	@RequestMapping(value = "community/modify/modifyPost", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
+	@RequestMapping(value = "community/modify.do", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
 	public String modify(CommunityDTO communityDTO, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes
 			, @RequestParam(value="fileNoDel[]") String[] files,
 			 @RequestParam(value="fileNameDel[]") String[] fileNames,

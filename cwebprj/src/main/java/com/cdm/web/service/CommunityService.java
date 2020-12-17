@@ -25,12 +25,13 @@ public interface CommunityService {
 
 	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception; // 게시물 댓글 수 업데이트
 
-	public void write(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception; // 게시물 작성
+	public void register(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception; // 게시물 작성
 
 	public List<Map<String, Object>> selectFileList(int community_num) throws Exception; // 파일 조회
 
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;// 파일 다운로드
 
 	List<CommunityDTO> listSearch() throws Exception; // 메인 홈페이지 게시물
+
 
 }

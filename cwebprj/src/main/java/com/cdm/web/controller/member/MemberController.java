@@ -1,6 +1,8 @@
 package com.cdm.web.controller.member;
 
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,7 +105,7 @@ public class MemberController { // 멤버 관련 컨트롤러
 	@RequestMapping(value = "find-id-confirm", method = RequestMethod.POST) // 아이디 찾기 post
 	public String findid_confirm(MemberDTO vo, RedirectAttributes redirectAttributes) throws Exception {
 
-		redirectAttributes.addFlashAttribute("member_id", memberservice.findId(vo));
+		redirectAttributes.addFlashAttribute("member_idList", memberservice.findId(vo));
 
 		return "redirect:find-id-confirm";
 	}

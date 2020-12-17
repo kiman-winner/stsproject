@@ -29,6 +29,16 @@
 	outline: 0;
 }
 </style>
+<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
+<script>
+	$(document).ready(
+			function() {
+				$("#newBtn").on("click", function(evt) { //공지사항 등록 버튼 클릭 시 
+					self.location = "register";
+				});
+			}); //공지사항 등록 
+
+</script>
 </head>
 
 <body>
@@ -139,7 +149,6 @@
 						<span class="text-orange text-strong">${pageMaker.criteria.page}/${pageMaker.totalCount}</span>
 					</div>
 				</div>
-
 
 				<c:if test="${member.member_id == 'atlas69' }">
 					<button id="newBtn"></button>

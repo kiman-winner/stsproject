@@ -19,9 +19,9 @@ public class CommunityDAOImpl implements CommunityDAO{
 	@Autowired
 	private SqlSession session;
 	@Override
-	public void write(CommunityDTO communityDTO) throws Exception {	//게시물 등록 
+	public void register(CommunityDTO communityDTO) throws Exception {	//게시물 등록 
 		
-		session.insert("communityNS.write", communityDTO);	
+		session.insert("communityNS.register", communityDTO);	
 	}
 
 	@Override

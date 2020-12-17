@@ -39,7 +39,7 @@
 					style="color: #00ffff;">IT EXPERT</span>
 			</div>
 		</div>
-		<!-- ----- 공지사항 줄 ------------------------------------------------------------------------------ -->
+		<!-- ----- 커뮤니티 줄 ------------------------------------------------------------------------------ -->
 		<div id="information">
 			<div class="content-container">
 				<section class="notice">
@@ -47,7 +47,7 @@
 
 					<ul class="list margin-top">
 
-						<c:forEach var="communityDTO" items="${list}">
+						<c:forEach var="communityDTO" items="${communitylist}">
 							<li><span class="notice-title"> 
 							<a href="/main/community/detail?community_num=${communityDTO.community_num}">${communityDTO.title}</a>
 							</span> <span><fmt:formatDate value="${communityDTO.regdate}"
@@ -62,30 +62,18 @@
 						<li>현재 강좌가 없습니다.</li>
 					</ul>
 				</section>
+				
 				<section class="notice">
 					<h1 class="title">공지사항</h1>
+
 					<ul class="list margin-top">
 
-						<li><span class="notice-title"> <a
-								href="notice/detail.html">스프링 8강까지의 예제 코드</a>
-						</span> <span>2019-08-18</span></li>
-
-						<li><span class="notice-title"> <a
-								href="notice/detail.html">스프링 DI 예제 코드</a>
-						</span> <span>2019-08-15</span></li>
-
-						<li><span class="notice-title"> <a
-								href="notice/detail.html">뉴렉쌤 9월 초 국기과정 모집 안내</a>
-						</span> <span>2019-06-11</span></li>
-
-						<li><span class="notice-title"> <a
-								href="notice/detail.html">뉴렉처 강의 수강 방식 안내</a>
-						</span> <span>2019-05-24</span></li>
-
-						<li><span class="notice-title"> <a
-								href="notice/detail.html">자바 구조적인 프로그래밍 강의 예제 파일</a>
-						</span> <span>2019-04-24</span></li>
-
+						<c:forEach var="noticeDTO" items="${noticelist}">
+							<li><span class="notice-title"> 
+							<a href="/customer/notice/detail?notice_num=${noticeDTO.notice_num}">${noticeDTO.title}</a>
+							</span> <span><fmt:formatDate value="${noticeDTO.regdate}"
+											pattern="yyyy-MM-dd" /></span></li>
+						</c:forEach>
 					</ul>
 				</section>
 			</div>

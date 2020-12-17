@@ -21,12 +21,12 @@ public interface NoticeService {
 
 	int countSearched(SearchCriteria searchCriteria) throws Exception; // 공지사항 수 , 검색 수
 
-	public void write(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest)throws Exception;	//공지사항 작성
+	public void register(NoticeDTO noticeDTO, MultipartHttpServletRequest mpRequest)throws Exception;	//공지사항 작성
 	
 	public List<Map<String, Object>> selectFileList(int notice_num) throws Exception;	//파일 조회
 	
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;//파일 다운로드
 
 	List<NoticeDTO> listSearch()throws Exception; // 메인 홈페이지 공지사항 
-	
+
 }
