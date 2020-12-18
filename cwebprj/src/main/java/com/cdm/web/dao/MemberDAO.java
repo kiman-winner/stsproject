@@ -1,7 +1,7 @@
 package com.cdm.web.dao;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.cdm.web.dto.MemberDTO;
 
@@ -22,5 +22,8 @@ public interface MemberDAO {
 
 	public void deleteMember(String member_id)throws Exception;//회원 탈퇴
 	public String pwdcheck(MemberDTO memberDTO)throws Exception;//비밀번호 체크
+	
+	void keepLogin(String member_id, String sessionId, Date sessionLimit) throws Exception;// 로그인 유지 처리
+	MemberDTO checkUserWithSessionKey(String value) throws Exception;	// 세션키 검증
 	
 }

@@ -15,6 +15,7 @@ public class MemberDTO { //user vo 클레스
 	private String member_name;
 	private String password;
 	private String email;
+	private boolean useCookie;
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date birth;
@@ -54,6 +55,12 @@ public class MemberDTO { //user vo 클레스
 	}
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+	public boolean isUseCookie() {
+		return useCookie;
+	}
+	public void setUseCookie(boolean useCookie) {
+		this.useCookie = useCookie;
 	}
 	
 	

@@ -1,7 +1,10 @@
 package com.cdm.web.controller.member;
 
 import java.io.PrintWriter;
+import java.util.Date;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -13,9 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.web.util.WebUtils;
 
 import com.cdm.web.dto.MemberDTO;
 import com.cdm.web.service.MemberService;
@@ -44,13 +46,36 @@ public class MemberController { // 멤버 관련 컨트롤러
 		} else {
 			model.addAttribute("member", null);
 		}
+
+		// 로그인 유지를 선택할 경우
+		if (memberDTO.isUseCookie()) {
+			int amount = 60 * 60 * 24 * 7; // 7일
+			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount)); // 로그인 유지기간 설정
+			memberservice.keepLogin(memberDTO.getMember_id(), httpSession.getId(), sessionLimit);
+		}
 	}
 
 	// 로그아웃
 	@RequestMapping("logout")
-	public String logout(HttpSession session) throws Exception {
-		session.invalidate();
-		return "redirect:/member/login";
+	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession)
+			throws Exception {
+	
+		Object object = httpSession.getAttribute("member");
+	    if (object != null) {
+	        MemberDTO memberDTO = (MemberDTO) object;
+	        httpSession.removeAttribute("member");
+	        httpSession.invalidate();
+	        
+	        Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+	        if (loginCookie != null) {	//자동로그인 선택 시 초기화
+	            loginCookie.setPath("/");
+	            loginCookie.setMaxAge(0);
+	            response.addCookie(loginCookie);
+	            memberservice.keepLogin(memberDTO.getMember_id(),"none", new Date());
+	        }
+	    }
+
+	    return "/member/login";
 	}
 
 	/* 회원가입 */

@@ -49,13 +49,32 @@
 	<!-- 로그인 권한 검사 인터셉터 -->
 	<bean id="authInterceptor"
 		class="com.cdm.web.commons.interceptor.AuthInterceptor" />
-
 	<mvc:interceptors>
 		<mvc:interceptor>
-			<mvc:mapping path="/main/community/register"/>
+			<mvc:mapping path="/main/community/register" />
 			<mvc:mapping path="/main/community/detail/replyWrite" />
 			<mvc:mapping path="/student/mycommunity" />
 			<ref bean="authInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	<!-- 자동 로그인 -->
+	<bean id="rememberMeInterceptor"
+		class="com.cdm.web.commons.interceptor.RememberMeInterceptor" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**/" />
+			<ref bean="rememberMeInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+	
+	<!-- 로그인 상태에서 로그인, 회원가입 서비스 이용 시 -->
+	<bean id="loginAfterInterceptor"
+		class="com.cdm.web.commons.interceptor.LoginAfterInterceptor" />
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/member/login" />
+			<mvc:mapping path="/member/register" />
+			<ref bean="loginAfterInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
 

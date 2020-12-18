@@ -16,6 +16,11 @@
 	align-items: center;
 	background: url("../../images/member/visual.png") no-repeat center;
 }
+
+.logincookie {
+	margin-top: 5px;
+	margin-left: 210px;
+}
 </style>
 </head>
 
@@ -81,8 +86,7 @@
 								</h4>
 
 								<ul class="login-box">
-									<li><label for="uid">아이디</label> 
-									<input type="text"
+									<li><label for="uid">아이디</label> <input type="text"
 										name="member_id" placeholder="아이디" /></li>
 									<li><label for="pwd">비밀번호</label> <input type="password"
 										name="password" placeholder="비밀번호" /></li>
@@ -90,6 +94,13 @@
 								<div class="login-btn-box">
 									<input type="hidden" name="" value="" /> <input type="submit"
 										class="btn login-btn" />
+								</div>
+								<div class="logincookie">
+									<div class="checkbox icheck">
+										<label> <input type="checkbox" name="useCookie">
+											로그인유지
+										</label>
+									</div>
 								</div>
 								<ul class="login-option">
 									<li><span>아이디 또는 비밀번호를 분실하셨나요?</span> <a href="find-id">

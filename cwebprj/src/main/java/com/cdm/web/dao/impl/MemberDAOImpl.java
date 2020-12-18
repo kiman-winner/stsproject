@@ -1,5 +1,7 @@
 package com.cdm.web.dao.impl;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -66,5 +68,20 @@ public class MemberDAOImpl implements MemberDAO{
 	public String pwdcheck(MemberDTO memberDTO) throws Exception {
 		// TODO Auto-generated method stub
 		return session.selectOne("memberNS.pwdcheck",memberDTO);
+	}
+
+	@Override
+	public void keepLogin(String member_id, String sessionId, Date sessionLimit) throws Exception { //세션 리미트 업데이트
+		Map<String, Object> paramMap = new HashMap<>();
+	    paramMap.put("member_id", member_id);
+	    paramMap.put("sessionId", sessionId);
+	    paramMap.put("sessionLimit", sessionLimit);
+
+	    session.update("memberNS.keepLogin", paramMap);
+	}
+
+	@Override
+	public MemberDTO checkUserWithSessionKey(String value) throws Exception { //쿠키로 사용자 조회
+	    return session.selectOne("memberNS.checkUserWithSessionKey", value);
 	}
 }

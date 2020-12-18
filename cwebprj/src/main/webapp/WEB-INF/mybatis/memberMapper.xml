@@ -17,19 +17,19 @@
 		where
 		member_id=#{member_id}
 	</select>
-	
-		<select id="findId" parameterType="Member" resultType="String">	<!-- 아이디 찾기 -->
+
+	<select id="findId" parameterType="Member" resultType="String">	<!-- 아이디 찾기 -->
 		select member_id
 		from member
 		where
 		member_name=#{member_name}
 		<if test="email == ''">
-		and phone=#{phone}
+			and phone=#{phone}
 		</if>
 		<if test="phone == ''">
-		and email=#{email}
+			and email=#{email}
 		</if>
-		
+
 	</select>
 
 	<insert id="join">						<!-- 회원가입 -->
@@ -54,11 +54,12 @@
 		from member
 		where
 		member_id=#{member_id}
-		and phone=#{phone}
+		and
+		phone=#{phone}
 		and email=#{email}
 	</select>
 	<update id="updateMember">	<!-- 개인정보 수정 -->
-		update member set 
+		update member set
 		member_name=
 		#{member_name},
 		email=#{email},
@@ -68,7 +69,7 @@
 		member_id=#{member_id}
 	</update>
 	<update id="updatepwd"><!-- 비밀번호 변경 -->
-		update member set 
+		update member set
 		password=#{password}
 		where
 		member_id=#{member_id}
@@ -77,4 +78,17 @@
 		delete from member where member_id=#{member_id}
 	</delete>
 
+	<update id="keepLogin">	<!-- 세션 리밋 설정 -->
+		UPDATE member
+		SET session_key = #{sessionId}
+		, session_limit =
+		#{sessionLimit}
+		WHERE member_id = #{member_id}
+	</update>
+	<select id="checkUserWithSessionKey" resultType="Member">
+		SELECT
+		*
+		FROM member
+		WHERE session_key = #{value}
+	</select>
 </mapper>

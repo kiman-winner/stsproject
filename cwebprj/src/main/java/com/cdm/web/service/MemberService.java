@@ -1,7 +1,7 @@
 package com.cdm.web.service;
 
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import com.cdm.web.dto.MemberDTO;
 
@@ -24,4 +24,8 @@ public interface MemberService {
 	public void resetPwd(MemberDTO memberDTO)throws Exception ;// 비밀번호 리셋
 
 	String pwdcheck(MemberDTO memberDTO) throws Exception;// 비밀번호 체크
+	
+	void keepLogin(String member_id, String sessionId, Date sessionLimit) throws Exception;	//세션 리밋 설정
+
+	MemberDTO checkLoginBefore(String value) throws Exception;	//쿠키 로그인 
 }
