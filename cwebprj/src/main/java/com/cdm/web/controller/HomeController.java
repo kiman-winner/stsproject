@@ -34,7 +34,6 @@ public class HomeController {
 		mv.addObject("noticelist",noticelist);
 		mv.setViewName("index"); 
 		
-		
 		return mv;
 	}
 }

@@ -30,14 +30,8 @@ public class ReplyController {		//댓글 관리
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
-
+		
 		replyService.writeReply(replyDTO);
-		
-		HashMap<String, Integer> updateHash = new HashMap<String, Integer>(); 
-		updateHash.put("updown", 1);
-		updateHash.put("community_num", replyDTO.getCommunity_num());
-		
-		communityService.updateReplyCount(updateHash);	//댓글 수 증가 
 
 		out.println("<script>alert('댓글이 등록 되었습니다.'); " + "location.href = '/main/community/detail?community_num="
 				+ replyDTO.getCommunity_num() + "'</script>");
@@ -49,13 +43,7 @@ public class ReplyController {		//댓글 관리
 		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
 		PrintWriter out = response.getWriter(); // 응답을 위한 객체
 
-		replyService.deleteReply(reply_num);	//댓글 삭제 
-		
-		HashMap<String, Integer> updateHash = new HashMap<String, Integer>(); 
-		updateHash.put("updown", 0);
-		updateHash.put("community_num", community_num);
-		
-		communityService.updateReplyCount(updateHash);	//댓글 수 증가 
+		replyService.deleteReply(reply_num,community_num);	//댓글 삭제 
 
 		out.println("<script>alert('댓글이 삭제 되었습니다.'); " + "location.href = '/main/community/detail?community_num="
 				+ community_num + "'</script>");

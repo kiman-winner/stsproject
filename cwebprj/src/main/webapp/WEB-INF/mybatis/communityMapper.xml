@@ -159,11 +159,8 @@
 	</delete>
 	
 	<update id="updateReplyCount">
-		update community
-		<set>
-			<if test="updown == 1">replycount = replycount+1,</if>
-			<if test="updown != 1">replycount = replycount-1,</if>
-		</set>
+		update community set
+			replycount = replycount + #{updown}
 		where
 		community_num=#{community_num}
 	</update> <!-- 댓글 수 업데이트 -->

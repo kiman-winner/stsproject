@@ -1,6 +1,5 @@
 package com.cdm.web.service.impl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -43,12 +42,6 @@ public class CommunityServiceImpl implements CommunityService{
 		fileUtils.deleteFile(list.get(i));//서버에서 첨부파일 삭제
 		
 		communityDAO.delete(community_num);	
-		
-	}
-
-	@Override
-	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception {
-		communityDAO.updateReplyCount(updateHash);
 		
 	}
 

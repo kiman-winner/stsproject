@@ -22,9 +22,6 @@ public interface CommunityService {
 
 	int countSearched(SearchCriteria searchCriteria) throws Exception; // 게시물 수 ,검색 수
 
-
-	public void updateReplyCount(HashMap<String, Integer> updateHash) throws Exception; // 게시물 댓글 수 업데이트
-
 	public void register(CommunityDTO communityDTO, MultipartHttpServletRequest mpRequest) throws Exception; // 게시물 작성
 
 	public List<Map<String, Object>> selectFileList(int community_num) throws Exception; // 파일 조회

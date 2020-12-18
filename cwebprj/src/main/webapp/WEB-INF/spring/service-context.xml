@@ -23,7 +23,10 @@
 		base-package="com.cdm.web.dao" />
 	<context:component-scan
 		base-package="com.cdm.web.util" />
-	<bean id="LogAdvice" class="com.cdm.web.logger.LogAdvice"/>
+		<context:component-scan
+		base-package="com.cdm.web.exception" />
+		<context:component-scan
+		base-package="com.cdm.web.logger" />
 	
 	<!-- SqlSessionFactoryBean 설정 -->
 	<bean id="sqlSessionFactory"
