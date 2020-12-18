@@ -33,7 +33,6 @@ public class HomeController {
 		List<NoticeDTO> noticelist = noticeService.listSearch(); //공지사항 출력
 		mv.addObject("noticelist",noticelist);
 		mv.setViewName("index"); 
-		
 		return mv;
 	}
 }

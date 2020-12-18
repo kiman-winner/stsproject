@@ -6,10 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.cdm.web.commons.util.MailUtil;
 import com.cdm.web.dao.MemberDAO;
 import com.cdm.web.dto.MemberDTO;
 import com.cdm.web.service.MemberService;
-import com.cdm.web.util.MailUtil;
 
 @Service
 public class MemberServiceImpl implements MemberService{

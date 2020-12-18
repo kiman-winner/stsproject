@@ -30,10 +30,6 @@ window.close();
 	background: url("../../images/main/visual.png") no-repeat center;
 }
 
-#writer_id {
-	background-color: gray;
-}
-
 #replylabel {
 	font-family: "맑은 고딕";
 	font-weight: bold;
@@ -69,17 +65,12 @@ textarea {
 	<form name="replyUpdateForm" id="form1" method="post"
 		action="replyUpdate">
 		<input type="hidden" id="reply_num" name="reply_num"
-			value="${reply_num}">
+			value="${reply_num}"> <input id="writer_id" type="hidden"
+			name=writer_id class="width-half" required="required"
+			value="${writer_id}" readonly />
 
 		<table class="updatetable">
 			<tbody>
-				<tr>
-					<th><label>댓글 작성자</label></th>
-					<td colspan="3" class="text-align-left indent"><input
-						id="writer_id" type="text" name=writer_id class="width-half"
-						required="required" value="${writer_id}" readonly /></td>
-				</tr>
-
 				<tr>
 					<th><label>내용</label></th>
 					<td colspan="3" class="text-align-left indent"><textarea
@@ -91,7 +82,8 @@ textarea {
 		</table>
 		<div id="updatediv">
 			<input id="submit-Button" type="submit" name="btn" value=""
-				style="height: 30px; margin: 20px;" class="btn-update" onclick="close();"/>
+				style="height: 30px; margin: 20px;" class="btn-update"
+				onclick="close();" />
 		</div>
 	</form>
 

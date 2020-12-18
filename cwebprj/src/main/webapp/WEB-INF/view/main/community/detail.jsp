@@ -86,10 +86,6 @@
 	background: url("../../images/main/visual.png") no-repeat center;
 }
 
-#writer_id {
-	background-color: gray;
-}
-
 main .reply {
 	display: table;
 	table-layout: fixed;
@@ -213,42 +209,41 @@ th {
 
 				</div>
 
-				<c:if test="${member!=null}">
-
-					<!-- 댓글 작성 -->
-					<label id="replylabel">답변하기</label>
 
 
-					<form name="replyForm" id="form1" method="post"
-						action="detail/replyWrite">
-						<input type="hidden" id="community_num" name="community_num"
-							value="${detail.community_num}">
+				<!-- 댓글 작성 -->
+				<label id="replylabel">답변하기</label>
 
-						<table class="table margin-top first">
-							<tbody>
-								<tr>
-									<th><label>댓글 작성자</label></th>
-									<td colspan="3" class="text-align-left indent"><input
-										id="writer_id" type="text" name=writer_id class="width-half"
-										required="required" value="${member.member_id}" readonly /></td>
-								</tr>
 
-								<tr>
-									<th><label>내용</label></th>
-									<td colspan="3" class="text-align-left indent"><textarea
-											class="form-control" id="exampleFormControlTextarea1"
-											name="content" rows="5" placeholder="내용을 입력하세요"
-											required="required"></textarea></td>
-								</tr>
-							</tbody>
-						</table>
+				<form name="replyForm" id="form1" method="post"
+					action="detail/replyWrite">
+					<input type="hidden" id="community_num" name="community_num"
+						value="${detail.community_num}"> <input id="writer_id"
+						type="hidden" name=writer_id class="width-half"
+						required="required" value="${member.member_id}" readonly />
+					<table class="table margin-top first">
+						<tbody>
+							<tr>
+								<th><label>내용</label></th>
+								<td colspan="3" class="text-align-left indent"><textarea
+										class="form-control" id="exampleFormControlTextarea1"
+										name="content" rows="5" placeholder="내용을 입력하세요"
+										required="required"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+					<c:if test="${member!=null}">
 						<div class="replybtn">
 							<input id="submit-Button" type="submit" name="btn" value=""
 								style="height: 30px; margin: 20px;" class="btn-answer" />
 						</div>
-					</form>
+					</c:if>
+					<c:if test="${member==null}">
+						<label>로그인한 사용자만 댓글 작성이 가능합니다.</label>
+					</c:if>
+				</form>
 
-				</c:if>
+
 
 				<!-- 댓글 -->
 
@@ -316,7 +311,7 @@ th {
 
 						</tbody>
 					</table>
-				</div> --> 
+				</div> -->
 
 			</main>
 

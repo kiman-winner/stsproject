@@ -14,24 +14,6 @@
 <link href="/css/main/layout.css" type="text/css" rel="stylesheet" />
 <!-- css임포트 -->
 
-<script src="http://code.jquery.com/jquery-3.3.1.js"></script>
-<script>
-	$(document).ready(
-			function() {
-				$("#newBtn").on("click", function(evt) { //등록 버튼 클릭 시 
-
-					if(${member!=null})
-					self.location = "register";
-					else
-						{alert('로그인이 필요한 서비스입니다.');
-						self.location = "../../member/login";	//로그인 요청 
-						}
-				});
-
-			}); //게시글 등록 
-
-</script>
-
 <style>
 #visual .content-container {
 	height: inherit;
@@ -142,7 +124,7 @@
 
 
 
-				<button id="newBtn"></button>
+				<button id="newBtn" onclick="location.href='register'"></button>
 
 				<div class="margin-top align-center pager">
 

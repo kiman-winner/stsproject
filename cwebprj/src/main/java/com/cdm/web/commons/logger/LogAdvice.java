@@ -1,4 +1,4 @@
-package com.cdm.web.logger;
+package com.cdm.web.commons.logger;
 
 import java.util.Arrays;
 
@@ -17,7 +17,6 @@ public class LogAdvice {
 	@Around("execution(* com..controller..*Controller.*(..)) " + "or execution(* com..service..*Impl.*(..))"
 			+ "or execution(* com..dao..*Impl.*(..))")
 	public Object logPrint(ProceedingJoinPoint joinPoint) throws Throwable {
-
 		// 이 메서드를 호출한 시간
 		long start = System.currentTimeMillis();
 		// 이 joinPoint.proceed()코드를 기준으로

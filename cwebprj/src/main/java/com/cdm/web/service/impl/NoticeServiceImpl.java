@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cdm.web.commons.util.FileUtils;
 import com.cdm.web.dao.NoticeDAO;
 import com.cdm.web.dto.NoticeDTO;
 import com.cdm.web.page.SearchCriteria;
 import com.cdm.web.service.NoticeService;
-import com.cdm.web.util.FileUtils;
 
 @Service
 public class NoticeServiceImpl implements NoticeService {

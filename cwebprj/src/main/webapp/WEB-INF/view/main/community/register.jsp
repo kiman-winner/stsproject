@@ -15,26 +15,26 @@
 <!-- css임포트 -->
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script type="text/javascript">
-var fileIndex = 1;
-function goBack() {
+	var fileIndex = 1;
+	function goBack() {
 		window.history.back();
 	}
 
-	function fn_addFile() {	// 파일 추가 버튼 
-		
+	function fn_addFile() { // 파일 추가 버튼 
+
 		$("#fileIndex")
 				.append(
-						"<div><input type='file' class='btn-default' style='float:left;' name='file_"+(fileIndex++)+"'>"
+						"<div><input type='file' class='btn-default' style='float:left;' name='file_"
+								+ (fileIndex++)
+								+ "'>"
 								+ "<button type='button'class='btn-text btn-default' style='float:right;' id='fileDelBtn'>"
 								+ "삭제" + "</button></div>");
 	}
 
-	$(document).on("click","#fileDelBtn", function(){
+	$(document).on("click", "#fileDelBtn", function() {
 		$(this).parent().remove();
-		
+
 	});
-
-
 </script>
 
 
@@ -94,16 +94,13 @@ function goBack() {
 
 				<form name="form" action="register.do" id="form1" method="post"
 					enctype="multipart/form-data">
+					<input id="writer_id" type="hidden" name=writer_id
+						class="width-half" required="required" value="${member.member_id}"
+						readonly />
 					<fieldset>
 						<legend class="hidden">게시글 작성</legend>
 						<table class="table margin-top first">
 							<tbody>
-								<tr>
-									<th><label>작성자 아이디</label></th>
-									<td colspan="3" class="text-align-left indent"><input
-										id="writer_id" type="text" name=writer_id class="width-half"
-										required="required" value="${member.member_id}" readonly /></td>
-								</tr>
 								<tr>
 									<th><label>제목</label></th>
 									<td colspan="3" class="text-align-left indent"><input
@@ -125,18 +122,13 @@ function goBack() {
 								</tr>
 								<tr>
 									<td id="td3" colspan="3"><input type="hidden" name=""
-										value="" /> 
-										
-										<c:if test="${member!=null}">
-										<input id="submit-Button" type="submit"
-										name="btn" value="게시물 작성" style="height: 30px; margin: 20px;"
-										class="btn-text btn-default" />
-										</c:if>
-										<c:if test="${member==null}">
-										<p>로그인이 필요한 서비스 입니다.</p>
-										</c:if>
-										
-										</td>
+										value="" /> <c:if test="${member!=null}">
+											<input id="submit-Button" type="submit" name="btn"
+												value="게시물 작성" style="height: 30px; margin: 20px;"
+												class="btn-text btn-default" />
+										</c:if> <c:if test="${member==null}">
+											<p>로그인이 필요한 서비스 입니다.</p>
+										</c:if></td>
 									<td colspan="1"><input id="cancelBtn" name="cancelbtn"
 										type="button" value="돌아가기" style="height: 30px;"
 										class="btn-text btn-default" onclick="history.back();" /></td>

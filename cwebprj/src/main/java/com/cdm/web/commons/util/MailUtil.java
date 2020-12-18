@@ -1,4 +1,4 @@
-package com.cdm.web.util;
+package com.cdm.web.commons.util;
 
 import org.apache.commons.mail.HtmlEmail;
 

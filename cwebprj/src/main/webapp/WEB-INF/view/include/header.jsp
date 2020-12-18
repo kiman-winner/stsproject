@@ -4,20 +4,6 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 
-<script>
-	 
-			function checkMember()   //마이페이지 선택 시 
-				{ 
-
-					if(${member==null})	//로그인 안했을 시 
-						{alert('로그인이 필요한 서비스입니다.');
-						self.location = "../../member/login";	
-						}
-					else{self.location = "../../student/mycommunity?searchType=w&keyword=${member.member_id}";
-						}
-				}
-
-</script>
 <header id="header">
 
 	<div class="content-container">
@@ -72,7 +58,7 @@
 				<nav id="member-menu" class="linear-layout">
 					<h1 class="hidden">고객메뉴</h1>
 					<ul class="linear-layout">
-						<li><a onclick="checkMember();"><img
+						<li><a href="../../student/mycommunity?searchType=w&keyword=${member.member_id}"><img
 								src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
 
 						<li><a href="/customer/notice/list"><img

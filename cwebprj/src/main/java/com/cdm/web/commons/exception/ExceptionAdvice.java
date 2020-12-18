@@ -1,4 +1,4 @@
-package com.cdm.web.exception;
+package com.cdm.web.commons.exception;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

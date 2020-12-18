@@ -22,12 +22,13 @@
 	<context:component-scan
 		base-package="com.cdm.web.dao" />
 	<context:component-scan
-		base-package="com.cdm.web.util" />
-		<context:component-scan
-		base-package="com.cdm.web.exception" />
-		<context:component-scan
-		base-package="com.cdm.web.logger" />
-	
+		base-package="com.cdm.web.commons.util" />
+	<context:component-scan
+		base-package="com.cdm.web.commons.exception" />
+
+	<bean id="LogAdvice" class="com.cdm.web.commons.logger.LogAdvice" />
+
+
 	<!-- SqlSessionFactoryBean 설정 -->
 	<bean id="sqlSessionFactory"
 		class="org.mybatis.spring.SqlSessionFactoryBean">

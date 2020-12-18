@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.cdm.web.commons.util.FileUtils;
 import com.cdm.web.dao.CommunityDAO;
 import com.cdm.web.dto.CommunityDTO;
 import com.cdm.web.page.SearchCriteria;
 import com.cdm.web.service.CommunityService;
-import com.cdm.web.util.FileUtils;
 @Service
 public class CommunityServiceImpl implements CommunityService{
 	

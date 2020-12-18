@@ -18,7 +18,7 @@
 		base-package="com.cdm.web.controller" />
 	<mvc:annotation-driven />
 	<aop:aspectj-autoproxy />
-	
+
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"></property>
@@ -34,4 +34,29 @@
 		<property name="maxUploadSize" value="100000000" />
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>
+
+	<!-- 로그인 인터셉터 -->
+	<bean id="loginInterceptor"
+		class="com.cdm.web.commons.interceptor.LoginInterceptor" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/member/login.do" />
+			<ref bean="loginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
+	<!-- 로그인 권한 검사 인터셉터 -->
+	<bean id="authInterceptor"
+		class="com.cdm.web.commons.interceptor.AuthInterceptor" />
+
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/main/community/register"/>
+			<mvc:mapping path="/main/community/detail/replyWrite" />
+			<mvc:mapping path="/student/mycommunity" />
+			<ref bean="authInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
+
 </beans>

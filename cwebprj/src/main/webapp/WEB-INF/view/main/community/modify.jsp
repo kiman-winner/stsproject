@@ -15,13 +15,13 @@
 <!-- css임포트 -->
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-var fileIndex = 1;
+	var fileIndex = 1;
 	function goBack() {
 		window.history.back();
 	}
 
-	function fn_addFile() {	// 파일 추가 버튼 
-		
+	function fn_addFile() { // 파일 추가 버튼 
+
 		$("#fileIndex")
 				.append(
 						"<div><input type='file' class='btn-default' style='float:left;' name='file_"
@@ -31,22 +31,22 @@ var fileIndex = 1;
 								+ "삭제" + "</button></div>");
 	}
 
-	$(document).on("click",".fileDelBtn", function(){	//파일 삭제 
+	$(document).on("click", ".fileDelBtn", function() { //파일 삭제 
 		$(this).parent().remove();
-		
-	});
-	
-		var fileNoArry = new Array();
-		var fileNameArry = new Array();
-		function fn_del(value, name){	//파일 삭제 
-			
-			fileNoArry.push(value);
-			fileNameArry.push(name);
-			$("#fileNoDel").attr("value", fileNoArry);
-			$("#fileNameDel").attr("value", fileNameArry);
 
-			$(this).parent().remove();
-		}
+	});
+
+	var fileNoArry = new Array();
+	var fileNameArry = new Array();
+	function fn_del(value, name) { //파일 삭제 
+
+		fileNoArry.push(value);
+		fileNameArry.push(name);
+		$("#fileNoDel").attr("value", fileNoArry);
+		$("#fileNameDel").attr("value", fileNameArry);
+
+		$(this).parent().remove();
+	}
 </script>
 
 
@@ -77,10 +77,6 @@ var fileIndex = 1;
 #community_num {
 	background-color: gray;
 }
-
-#writer_id {
-	background-color: gray;
-}
 </style>
 
 </head>
@@ -108,28 +104,24 @@ var fileIndex = 1;
 			<main class="main">
 				<h2 class="main title">게시글 수정</h2>
 
-				<form name="form" action="modify.do" id="form1" enctype="multipart/form-data"
-					method="post">
+				<form name="form" action="modify.do" id="form1"
+					enctype="multipart/form-data" method="post">
 					<input id="community_num" type="hidden" name=community_num
-						class="width-half" value="${community_num}"
-						 /> <input type="hidden" name="page"
-						value="${searchCriteria.page}"> <input type="hidden"
-						name="searchType" value="${searchCriteria.searchType}"> <input
-						type="hidden" name="keyword" value="${searchCriteria.keyword}">
-						<!-- 삭제 파일 -->
-						<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
-					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
-
+						class="width-half" value="${community_num}" /> <input
+						type="hidden" name="page" value="${searchCriteria.page}">
+					<input type="hidden" name="searchType"
+						value="${searchCriteria.searchType}"> <input type="hidden"
+						name="keyword" value="${searchCriteria.keyword}">
+					<!-- 삭제 파일 -->
+					<input type="hidden" id="fileNoDel" name="fileNoDel[]" value="">
+					<input type="hidden" id="fileNameDel" name="fileNameDel[]" value="">
+					<input id="writer_id" type="hidden" name=writer_id
+						class="width-half" required="required" value="${member.member_id}"
+						readonly />
 					<fieldset>
 						<legend class="hidden">게시글 수정</legend>
 						<table class="table margin-top first">
 							<tbody>
-								<tr>
-									<th><label>작성자 아이디</label></th>
-									<td colspan="3" class="text-align-left indent"><input
-										id="writer_id" type="text" name=writer_id class="width-half"
-										required="required" value="${member.member_id}" readonly /></td>
-								</tr>
 								<tr>
 									<th><label>제목</label></th>
 									<td colspan="3" class="text-align-left indent"><input
@@ -143,7 +135,9 @@ var fileIndex = 1;
 											name="content" rows="10" placeholder="내용을 입력하세요">${content}</textarea></td>
 								</tr>
 								<tr>
-									<td colspan="1"><button type="button" onclick="fn_addFile()" class="fileAdd_btn btn-text btn-default">파일추가</button></td>
+									<td colspan="1"><button type="button"
+											onclick="fn_addFile()"
+											class="fileAdd_btn btn-text btn-default">파일추가</button></td>
 									<td colspan="2" id="fileIndex"><c:forEach var="file"
 											items="${file}" varStatus="var">
 											<div>
