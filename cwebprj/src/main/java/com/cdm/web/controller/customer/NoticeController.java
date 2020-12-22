@@ -81,7 +81,7 @@ public class NoticeController { //공지사항 컨트롤러
 	}
 
 	@RequestMapping(value = "detail/fileDown")
-	public void fileDown(@RequestParam("fileNo") String fileNo, HttpServletResponse response) throws Exception { // 파일
+	public void fileDown(@RequestParam("FILE_NO") String fileNo, HttpServletResponse response) throws Exception { // 파일
 																													// 다운로드
 		Map<String, Object> resultMap = noticeService.selectFileInfo(fileNo);
 
