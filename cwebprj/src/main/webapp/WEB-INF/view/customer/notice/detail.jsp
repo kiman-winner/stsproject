@@ -148,7 +148,7 @@
 
 							<tr class="content">
 
-								<td>${detail.content}</td>
+								<td colspan="4">${detail.content}</td>
 							</tr>
 							<!-- 파일 목록 -->
 							<tr>
