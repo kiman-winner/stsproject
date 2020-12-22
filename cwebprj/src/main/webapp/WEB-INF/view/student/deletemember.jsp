@@ -46,7 +46,7 @@
 				<nav class="menu text-menu first margin-top">
 					<h1>마이페이지 메뉴</h1>
 					<ul>
-						<li><a class="" href="/student/mycommunity">내가 작성한 글</a></li>
+						<li><a class="" href="/student/mycommunity?searchType=w&keyword=${member.member_id}">내가 작성한 글</a></li>
 						<li><a class="" href="/student/updatemember">개인정보 수정</a></li>
 						<li><a class="" href="/student/updatepwd">비밀번호 변경</a></li>
 						<li><a class="" href="/student/deletemember">회원 탈퇴</a></li>
