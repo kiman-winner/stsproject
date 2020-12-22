@@ -59,23 +59,20 @@
 					<form class="table-form" action="list">
 						<fieldset>
 							<legend class="hidden">커뮤니티 검색 필드</legend>
-							<label class="hidden">검색분류</label> 
-							
-							<select name="searchType" >
+							<label class="hidden">검색분류</label> <select name="searchType">
 								<option value="n"
-									<c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>선택 </option>
+									<c:out value="${searchCriteria.searchType == null ? 'selected' : ''}"/>>선택
+								</option>
 								<option value="t"
 									<c:out value="${searchCriteria.searchType eq 't' ? 'selected' : ''}"/>>제목</option>
 								<option value="c"
 									<c:out value="${searchCriteria.searchType eq 'c' ? 'selected' : ''}"/>>내용</option>
 								<option value="w"
 									<c:out value="${searchCriteria.searchType eq 'w' ? 'selected' : ''}"/>>작성자</option>
-							</select>
-							 <label class="hidden">검색어</label> 
-							 <input type="text" name="keyword"
-								value="${searchCriteria.keyword}" /> 
-								<input class="btn btn-search" type="submit"
-								value="검색" placeholder="검색어"/>
+							</select> <label class="hidden">검색어</label> <input type="text"
+								name="keyword" value="${searchCriteria.keyword}" /> <input
+								class="btn btn-search" type="submit" value="검색"
+								placeholder="검색어" />
 						</fieldset>
 					</form>
 				</div>
@@ -96,12 +93,12 @@
 						<tbody>
 
 							<c:forEach var="communityDTO" items="${list}">
+								<!-- 커뮤니티 목록 -->
 								<tr>
 									<td>${communityDTO.community_num }</td>
 									<td class="title indent text-align-left"><a
 										href="detail${pageMaker.makeSearch(pageMaker.criteria.page)}&community_num=${communityDTO.community_num}">
-										${communityDTO.title}
-									</a></td>
+											${communityDTO.title} </a></td>
 									<td>${communityDTO.writer_id}</td>
 									<td><fmt:formatDate value="${communityDTO.regdate}"
 											pattern="yyyy-MM-dd" /></td>
@@ -122,9 +119,7 @@
 					</div>
 				</div>
 
-
-
-				<button id="newBtn" onclick="location.href='register'"></button>
+				<button id="newBtn" onclick="location.href='register'"></button> <!-- 등록 버튼 -->
 
 				<div class="margin-top align-center pager">
 
@@ -146,27 +141,10 @@
 								OnClick="location.href='list${pageMaker.makeSearch(pageMaker.endPage + 1)}'"></span>
 						</c:if>
 					</ul>
-
-
 				</div>
-
-
-
 			</main>
-
-
-
 		</div>
 	</div>
-
-
-
-
-
-
-
-
-
 
 	<!-- ------------------- <footer> --------------------------------------- -->
 	<%@include file="/WEB-INF/view/include/footer.jsp"%>

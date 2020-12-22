@@ -2,6 +2,7 @@ package com.cdm.web.controller.member;
 
 import java.io.PrintWriter;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -49,33 +50,31 @@ public class MemberController { // 멤버 관련 컨트롤러
 
 		// 로그인 유지를 선택할 경우
 		if (memberDTO.isUseCookie()) {
-			int amount = 60 * 60 * 24 * 7; // 7일
-			Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * amount)); // 로그인 유지기간 설정
-			memberservice.keepLogin(memberDTO.getMember_id(), httpSession.getId(), sessionLimit);
+			memberservice.keepLogin(memberDTO.getMember_id(), httpSession.getId());
 		}
 	}
 
 	// 로그아웃
 	@RequestMapping("logout")
 	public String logout(HttpServletRequest request, HttpServletResponse response, HttpSession httpSession)
-			throws Exception {
-	
-		Object object = httpSession.getAttribute("member");
-	    if (object != null) {
-	        MemberDTO memberDTO = (MemberDTO) object;
-	        httpSession.removeAttribute("member");
-	        httpSession.invalidate();
-	        
-	        Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
-	        if (loginCookie != null) {	//자동로그인 선택 시 초기화
-	            loginCookie.setPath("/");
-	            loginCookie.setMaxAge(0);
-	            response.addCookie(loginCookie);
-	            memberservice.keepLogin(memberDTO.getMember_id(),"none", new Date());
-	        }
-	    }
+			throws Exception { // 로그아웃
 
-	    return "/member/login";
+		Object object = httpSession.getAttribute("member");
+		if (object != null) {
+			MemberDTO memberDTO = (MemberDTO) object;
+			httpSession.removeAttribute("member");
+			httpSession.invalidate();
+
+			Cookie loginCookie = WebUtils.getCookie(request, "loginCookie");
+			if (loginCookie != null) { // 자동로그인 선택 했을 시 초기화
+				loginCookie.setPath("/");
+				loginCookie.setMaxAge(0);
+				response.addCookie(loginCookie);
+				memberservice.keepLogin(memberDTO.getMember_id(), "none");
+			}
+		}
+
+		return "/member/login";
 	}
 
 	/* 회원가입 */
@@ -85,15 +84,13 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/join";
 	}
 
-	@RequestMapping("idCheck") // 아이디 중복 체크
+	@RequestMapping("idCheck")
 	@ResponseBody
-	public int idCheck(@RequestParam("member_id") String member_id) throws Exception {
-
-		System.out.println(member_id);
+	public int idCheck(@RequestParam("member_id") String member_id) throws Exception { // 아이디 중복 체크
 		return memberservice.idCheck(member_id);
 	}
 
-	@RequestMapping(value = "join.do", method = RequestMethod.POST) // 회원가입 페이지
+	@RequestMapping(value = "join.do", method = RequestMethod.POST) // 회원가입 처리
 	public String joinPost(MemberDTO memberDTO) throws Exception {
 		memberservice.join(memberDTO);
 		return "redirect:/member/confirm"; // 회원가입 완료 페이지
@@ -109,12 +106,21 @@ public class MemberController { // 멤버 관련 컨트롤러
 		return "member/find-id";
 	}
 
-	@RequestMapping(value = "find-id-confirm", method = RequestMethod.POST) // 아이디 찾기 post
-	public String findid_confirm(MemberDTO memberDTO, RedirectAttributes redirectAttributes) throws Exception {
-
-		redirectAttributes.addFlashAttribute("member_idList", memberservice.findId(memberDTO));
-
-		return "redirect:find-id-confirm";
+	@RequestMapping(value = "find-id.do", method = RequestMethod.POST) // 아이디 찾기 처리
+	public String findid_confirm(MemberDTO memberDTO, RedirectAttributes redirectAttributes,HttpServletResponse response) throws Exception {
+		response.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
+		
+		List<String> member_idList = memberservice.findId(memberDTO);
+		System.out.println(member_idList.size());
+		if (member_idList.size()==0) {	//결과가 없다면 
+			System.out.println("결과 없슴");
+			out.println("<script>alert('해당 정보의 회원이 없습니다.'); " + "location.href = '/member/find-id'</script>");
+			return null;
+		}
+			redirectAttributes.addFlashAttribute("member_idList", member_idList);
+			return "redirect:/member/find-id-confirm";
 	}
 
 	@RequestMapping("find-id-confirm") // 아이디 찾기 결과 페이지
@@ -131,8 +137,8 @@ public class MemberController { // 멤버 관련 컨트롤러
 	public void findpwdPost(MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
-		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 
 		String pwdcheck = memberservice.pwdcheck(memberDTO); // 비밀번호 찾기
 

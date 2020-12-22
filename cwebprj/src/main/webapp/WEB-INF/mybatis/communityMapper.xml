@@ -4,9 +4,9 @@
 
 <mapper namespace="communityNS">
 
+	<!-- 게시글 등록 -->
 	<insert id="register" useGeneratedKeys="true"
 		keyProperty="community_num">
-		<!-- 게시글 등록 -->
 		<selectKey keyProperty="community_num" resultType="int"
 			order="BEFORE">
 			SELECT seq_COMMUNITY.NEXTVAL FROM DUAL
@@ -16,9 +16,10 @@
 		VALUES(#{community_num}, #{title}, #{content}, #{writer_id})
 	</insert>
 
-
-	<insert id="insertFile" parameterType="hashMap">	<!-- 파일 삽입 -->
-		INSERT INTO community_file(
+	<!-- 파일 삽입 -->
+	<insert id="insertFile" parameterType="hashMap">
+		INSERT INTO
+		community_file(
 		FILE_NO,
 		community_num,
 		ORG_FILE_NAME,
@@ -32,8 +33,8 @@
 		#{FILE_SIZE}
 		)
 	</insert>
-	<!-- 첨부파일 조회 -->
 
+	<!-- 첨부파일 조회 -->
 	<select id="selectFileList" parameterType="int"
 		resultType="hashMap">
 		SELECT FILE_NO,
@@ -55,7 +56,8 @@
 		WHERE FILE_NO = #{FILE_NO}
 	</select>
 
-	<select id="listSearch" resultType="Community"> <!-- 불러오기 -->
+	<!-- 불러오기 -->
+	<select id="listSearch" resultType="Community"> 
 		  <![CDATA[
 		select * FROM (
 		SELECT community_num,
@@ -78,7 +80,9 @@
 		WHERE RNUM BETWEEN ${pageStart} AND ${endPage}
 
 	</select>
-	<select id="list" resultType="Community"> <!-- 메인 홈페이지 -->
+
+	<!-- 메인 홈페이지 출력 -->
+	<select id="list" resultType="Community"> 
 			  <![CDATA[
 		select * FROM (
 		SELECT community_num,
@@ -94,8 +98,8 @@
 		WHERE RNUM BETWEEN 1 AND 5
 	</select>
 
-
-	<select id="countSearched" resultType="int">	<!-- 검색 결과 수 -->
+	<!-- 검색 결과 수 -->
+	<select id="countSearched" resultType="int">	
     <![CDATA[
     SELECT
         COUNT(community_num)
@@ -119,62 +123,76 @@
 		</if>
 	</sql>
 
-	<select id="listCount" resultType="int"><!-- 게시물 개수 구하기 -->
+	<!-- 게시물 개수 구하기 -->
+	<select id="listCount" resultType="int">
 		<![CDATA[
 		SELECT COUNT(community_num)
 		  FROM community
 		 WHERE community_num > 0
 	]]>
 	</select>
-	<select id="detail" resultType="Community"><!-- 상세보기 -->
+	<!-- 상세보기 -->
+	<select id="detail" resultType="Community">
 		select * from
-		community where community_num=#{community_num}
+		community where
+		community_num=#{community_num}
 	</select>
 
-	<delete id="delete"> <!-- 삭제 -->
-		delete from community where community_num=#{community_num}
+	<!-- 삭제 -->
+	<delete id="delete">
+		delete from community where
+		community_num=#{community_num}
 
 	</delete>
 
+	<!-- 게시글 수정 -->
 	<update id="modify">
 		update community set title=
 		#{title},content=#{content} where
 		community_num=#{community_num}
-	</update> <!-- 게시글 수정 -->
+	</update>
+
+	<!-- 조회수 증가 감소 -->
 	<update id="updateViewCount">
 		update community set viewcount = viewcount+1 where
 		community_num=#{community_num}
-	</update> <!-- 조회수 증가 -->
+	</update>
 
-<!-- 파일 삭제 업데이트 -->
+	<!-- 파일 삭제 업데이트 -->
 	<delete id="deleteFile" parameterType="hashMap">
-		delete from community_file 
+		delete from community_file
 		WHERE FILE_NO = #{FILE_NO}
 	</delete>
-	
-<!-- 게시글 파일 모두 삭제 업데이트 -->
+
+	<!-- 게시글 파일 모두 삭제 업데이트 -->
 	<delete id="deleteFileAll" parameterType="hashMap">
-		delete from community_file where
+		delete from
+		community_file where
 		community_num=#{community_num}
 	</delete>
-	
+
+	<!-- 댓글 수 업데이트 -->
 	<update id="updateReplyCount">
 		update community set
-			replycount = replycount + #{updown}
+		replycount = replycount +
+		#{updown}
 		where
 		community_num=#{community_num}
-	</update> <!-- 댓글 수 업데이트 -->
-	
-	<select id="searchDeleteFile" resultType="String"> 	<!-- 지울 파일의 저장 이름 -->
+	</update>
+
+	<!-- 지울 파일의 저장 이름 -->
+	<select id="searchDeleteFile" resultType="String">
 		SELECT STORED_FILE_NAME
 		FROM community_file
 		WHERE FILE_NO = #{FILE_NO}
 	</select>
-	
-	<select id="searchDeleteFileAll" resultType="String"> <!-- 게시글 삭제 시 모든 첨부파일 저장 이름 -->
+
+	<!-- 게시글 삭제 시 모든 첨부파일 저장 이름 -->
+	<select id="searchDeleteFileAll" resultType="String">
 		SELECT STORED_FILE_NAME
 		FROM community_file
-		WHERE community_num = #{community_num}
+		WHERE community_num =
+		#{community_num}
 
 	</select>
 

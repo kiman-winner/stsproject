@@ -6,7 +6,7 @@
                       http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
 	version="4.0" metadata-complete="true">
 
-	<!-- 나머지 2개 지정 위해, 스프링이 제공하는 리스너, 톰캣이 시작될때 끝날때 등 뭔가 이벤트를 처리할때 사용 -->
+	<!-- 컨텍스트 로더 -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
@@ -15,7 +15,6 @@
 		<param-value>
 			/WEB-INF/spring/service-context.xml
 						/WEB-INF/spring/spring-security.xml
-			
 		</param-value>
 	</context-param>
 
@@ -27,7 +26,6 @@
 			<param-value>
 			/WEB-INF/spring/servlet-context.xml
 			</param-value>
-
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 		<async-supported>true</async-supported>

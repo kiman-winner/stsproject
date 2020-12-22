@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <!DOCTYPE html>
 <html>
@@ -14,7 +15,7 @@
 <!-- css임포트 -->
 
 </head>
-  
+
 <body>
 	<!-- header 부분 -->
 
@@ -39,20 +40,22 @@
 					style="color: #00ffff;">IT EXPERT</span>
 			</div>
 		</div>
-		<!-- ----- 커뮤니티 줄 ------------------------------------------------------------------------------ -->
+		<!-- 커뮤니티 목록 -->
 		<div id="information">
 			<div class="content-container">
 				<section class="notice">
 					<h1 class="title">커뮤니티</h1>
-
 					<ul class="list margin-top">
-
+						<c:if test="${fn:length(communitylist) == 0 }">
+							<li><span class="notice-title">게시글이 없습니다.</span></li>
+						</c:if>
 						<c:forEach var="communityDTO" items="${communitylist}">
-							<li><span class="notice-title"> 
-							<a href="/main/community/detail?community_num=${communityDTO.community_num}">${communityDTO.title}</a>
+							<li><span class="notice-title"> <a
+									href="/main/community/detail?community_num=${communityDTO.community_num}">${communityDTO.title}</a>
 							</span> <span><fmt:formatDate value="${communityDTO.regdate}"
-											pattern="yyyy-MM-dd" /></span></li>
+										pattern="yyyy-MM-dd" /></span></li>
 						</c:forEach>
+
 					</ul>
 				</section>
 
@@ -62,17 +65,21 @@
 						<li>현재 강좌가 없습니다.</li>
 					</ul>
 				</section>
-				
+
+				<!-- 공지사항 목록 -->
 				<section class="notice">
 					<h1 class="title">공지사항</h1>
 
 					<ul class="list margin-top">
 
 						<c:forEach var="noticeDTO" items="${noticelist}">
-							<li><span class="notice-title"> 
-							<a href="/customer/notice/detail?notice_num=${noticeDTO.notice_num}">${noticeDTO.title}</a>
+							<c:if test="${fn:length(noticelist) == 0 }">
+								<li><span class="notice-title">공지사항이 없습니다.</span></li>
+							</c:if>
+							<li><span class="notice-title"> <a
+									href="/customer/notice/detail?notice_num=${noticeDTO.notice_num}">${noticeDTO.title}</a>
 							</span> <span><fmt:formatDate value="${noticeDTO.regdate}"
-											pattern="yyyy-MM-dd" /></span></li>
+										pattern="yyyy-MM-dd" /></span></li>
 						</c:forEach>
 					</ul>
 				</section>

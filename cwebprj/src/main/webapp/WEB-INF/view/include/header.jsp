@@ -20,7 +20,7 @@
 				<h1>메인메뉴</h1>
 				<ul>
 					<li><a href="/main/intro">홈페이지 소개</a></li>
-					<li><a href="/main/study">강좌선택</a></li>
+					<li><a href="/main/study/menu">강좌선택</a></li>
 					<li><a href="/main/community/list">커뮤니티</a></li>
 				</ul>
 			</nav>
@@ -54,11 +54,12 @@
 
 					</ul>
 				</nav>
-
+				<!-- 고객메뉴 -->
 				<nav id="member-menu" class="linear-layout">
 					<h1 class="hidden">고객메뉴</h1>
 					<ul class="linear-layout">
-						<li><a href="../../student/mycommunity?searchType=w&keyword=${member.member_id}"><img
+						<li><a
+							href="../../student/mycommunity?searchType=w&keyword=${member.member_id}"><img
 								src="/images/txt-mypage.png" alt="마이페이지" /></a></li>
 
 						<li><a href="/customer/notice/list"><img

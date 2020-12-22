@@ -85,12 +85,6 @@
 			
 				<table class="table border-top-none" style="margin-bottom:20px;">
 					<tr>
-						<td colspan="4">
-							
-							<input type="radio" name="type" value="email" style="vertical-align: middle;" checked /><label style="margin-left: 5px;">이메일 주소로 확인</label>
-						</td>
-					</tr>
-					<tr>
 						<th>아이디</th>
 						<td colspan="3" class="text-align-left indent"><input type="text" name="member_id" class="width-half" required placeholder="회원 아이디를 입력하세요" value="" /></td>
 					</tr>

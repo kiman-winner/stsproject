@@ -13,7 +13,7 @@ import com.cdm.web.dto.ReplyDTO;
 import com.cdm.web.service.ReplyService;
 
 @Service
-public class ReplyServiceImpl implements ReplyService {
+public class ReplyServiceImpl implements ReplyService { //댓글 서비스
 
 	@Autowired
 	private ReplyDAO replyDAO;
@@ -22,8 +22,7 @@ public class ReplyServiceImpl implements ReplyService {
 	
 	
 	@Override
-	public List<ReplyDTO> readReply(int community_num) throws Exception {
-		// TODO Auto-generated method stub
+	public List<ReplyDTO> readReply(int community_num) throws Exception {	//댓글 불러오기
 		return replyDAO.readReply(community_num);
 	}
 

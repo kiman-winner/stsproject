@@ -15,24 +15,24 @@ import com.cdm.web.service.NoticeService;
 @Controller
 @RequestMapping("/")
 public class HomeController {
-	
+
 	@Autowired
 	private CommunityService communityService;
 	@Autowired
 	private NoticeService noticeService;
-	
+
 	@RequestMapping("index")
-	public ModelAndView index() throws Exception {	//메인 홈페이지 
+	public ModelAndView index() throws Exception { // 메인 홈페이지
 
 		ModelAndView mv = new ModelAndView();
-		
-		List<CommunityDTO> communitylist = communityService.listSearch(); //메인에 리스트 출력 오버로딩
-		
-		mv.addObject("communitylist", communitylist); 
-		
-		List<NoticeDTO> noticelist = noticeService.listSearch(); //공지사항 출력
-		mv.addObject("noticelist",noticelist);
-		mv.setViewName("index"); 
+
+		List<CommunityDTO> communitylist = communityService.listSearch(); // 메인에 리스트 출력 오버로딩
+
+		mv.addObject("communitylist", communitylist);
+
+		List<NoticeDTO> noticelist = noticeService.listSearch(); // 공지사항 출력
+		mv.addObject("noticelist", noticelist);
+		mv.setViewName("index");
 		return mv;
 	}
 }

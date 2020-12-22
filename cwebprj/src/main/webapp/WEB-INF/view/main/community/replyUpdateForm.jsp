@@ -21,7 +21,6 @@ window.close();
 		}
 </script>
 
-
 <style>
 #visual .content-container {
 	height: inherit;
@@ -58,7 +57,7 @@ textarea {
 
 <body>
 
-	<!-- 댓글 수정 -->
+	<!-- 댓글 수정 페이지 -->
 	<label id="replylabel">답변 수정하기</label>
 
 

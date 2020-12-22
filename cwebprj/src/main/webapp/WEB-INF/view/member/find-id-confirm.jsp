@@ -83,15 +83,15 @@
 							<table class="table" style="width: 80%; margin-left: 10%;">
 								<tr>
 									<th>아이디</th>
-									<td class="text-align-left indent"><c:forEach
+									<td class="text-align-left indent">
+								<c:forEach
 											var="member_id" items="${member_idList}">
 											${member_id} <br>
-										</c:forEach></td>
+										</c:forEach>
+										</td>
 								</tr>
 							</table>
 						</div>
-
-
 
 						<!-- ---------------------------------------------------------------------------------------------------- -->
 					</div>

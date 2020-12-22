@@ -31,13 +31,11 @@
 </style>
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-	$(document).ready(
-			function() {
-				$("#newBtn").on("click", function(evt) { //공지사항 등록 버튼 클릭 시 
-					self.location = "register";
-				});
-			}); //공지사항 등록 
-
+	$(document).ready(function() {
+		$("#newBtn").on("click", function(evt) { //공지사항 등록 버튼 클릭 시 
+			self.location = "register";
+		});
+	});
 </script>
 </head>
 
@@ -68,10 +66,6 @@
 					<h1>고객센터메뉴</h1>
 					<ul>
 						<li><a class="current" href="/customer/notice/list">공지사항</a></li>
-						<!-- <li><a class="" href="/customer/faq">자주하는 질문</a></li>
-						<li><a class="" href="/customer/question">수강문의</a></li>
-						<li><a class="" href="/customer/event">이벤트</a></li> -->
-
 					</ul>
 				</nav>
 
@@ -126,7 +120,7 @@
 							</tr>
 						</thead>
 						<tbody>
-
+							<!-- 공지사항 목록 -->
 							<c:forEach var="noticeDTO" items="${list}">
 								<tr>
 									<td>${noticeDTO.notice_num }</td>
@@ -149,7 +143,7 @@
 						<span class="text-orange text-strong">${pageMaker.criteria.page}/${pageMaker.totalCount}</span>
 					</div>
 				</div>
-
+				<!-- 관리자인 경우에만 보이도록 -->
 				<c:if test="${member.member_id == 'atlas69' }">
 					<button id="newBtn"></button>
 				</c:if>
@@ -173,15 +167,8 @@
 								OnClick="location.href='list${pageMaker.makeSearch(pageMaker.endPage + 1)}'"></span>
 						</c:if>
 					</ul>
-
-
 				</div>
-
-
-
 			</main>
-
-
 		</div>
 	</div>
 

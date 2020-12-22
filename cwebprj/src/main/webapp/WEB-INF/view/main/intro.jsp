@@ -12,14 +12,6 @@
 <link href="/css/intro.css" type="text/css" rel="stylesheet" />
 <!-- css임포트 -->
 
-
-<script>
-	function hideMenu() {
-		alert("복사하면 안됩니다.");
-		return false;
-	}
-	document.oncontextmenu = hideMenu;
-</script>
 </head>
 
 <body>
@@ -65,7 +57,7 @@
 					</h4>
 					<div class="p">
 						<p>
-							강좌 선택 - 강좌를 클릭하여 공부해보세요~<br> QnA - 저에게 질문하고 싶으신 것을 무엇이든
+							강좌 선택 - 강좌를 클릭하여 공부해보세요~<br> QnA - 모두에게 질문하고 싶으신 것을 무엇이든
 							물어보세요!(로그인 필요)<br> 마이 페이지 - 개인 정보 수정 <br> 고객센터 - 공지사항 등
 							확인 <br>
 						</p>

@@ -34,7 +34,7 @@
 
 		if (member_id.length<6||member_id.length>20
 				|| /[ㄱ-ㅎ|ㅏ-ㅣ|가-힝]/.test(member_id)
-				|| /[~!@\#$%<>^&*\()\-=+_\’]/.test(member_id)) //DB조회가 필요없는 유효성 검사 
+				|| /[~!@\#$%<>^&*\()\-=+_\’]/.test(member_id)) //유효성 검사 
 		{
 			alert("아이디 형식을 다시 확인해주세요");
 			$('#member_id').val("");
@@ -48,9 +48,8 @@
 							+ member_id,
 					type : 'get',
 					success : function(data) {
-						console.log("1 = 중복o / 0 = 중복x : " + data);
 
-						if (data == 1) {
+						if (data == 1) {	//중복아이디 발견
 							$('#member_id').val("");
 							$('#member_id').focus();
 							alert("아이디가 이미 있습니다.");
@@ -79,13 +78,13 @@
 		 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
 		 if(pw.length < 10 || pw.length > 20){	//유효성 검사
-		  alert("10자리 ~ 20자리 이내로 입력해주세요.");
+		  alert("비밀번호를 10자리 ~ 20자리 이내로 입력해주세요.");
 		  return false;
 		 }else if(pw.search(/\s/) != -1){
 		  alert("비밀번호는 공백 없이 입력해주세요.");
 		  return false;
 		 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
-		  alert("영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+		  alert("비밀번호를 영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
 		  return false;
 		 }
 		 
@@ -98,7 +97,7 @@
 			return false;
 		}
 
-		if (id_checkBtn == false) {
+		if (id_checkBtn == false) {	//아이디 중복확인 클릭 확인
 			alert("아이디 중복검사를 해주세요");
 			return false;
 		}
@@ -160,8 +159,8 @@
 				</div>
 
 
-				<form onsubmit="return pwdcheck();" name="form"
-					action="join.do" id="form1" method="post">
+				<form onsubmit="return pwdcheck();" name="form" action="join.do"
+					id="form1" method="post">
 					<fieldset>
 						<legend class="hidden">회원정보</legend>
 						<table class="table margin-top first">
@@ -171,10 +170,9 @@
 									<td colspan="3" class="text-align-left indent"><input
 										id="member_id" type="text" name="member_id" class="width-half"
 										required="required" value="" placeholder="영문, 숫자 6~20자 이내 조합" />
+										<!-- 아이디 중복확인 버튼 -->
 										<button type="button" class="btn-text btn-default"
-											id="id-check-button" onclick="idCheck()">중복검사</button> <!-- <input class="btn-text btn-default" type="button" id="id-check-button" value="중복확인" />	 -->
-
-									</td>
+											id="id-check-button" onclick="idCheck()">중복검사</button></td>
 
 								</tr>
 								<tr>
@@ -182,7 +180,7 @@
 									<td colspan="3" class="text-align-left indent"><input
 										type="password" id="password" name="password" class=""
 										required placeholder="비밀번호 입력 *10~20자리 영문,숫자,특수문자 중 2가지 혼합" /></td>
-									
+
 								</tr>
 								<tr>
 									<th><label>비밀번호 확인</label></th>
@@ -218,7 +216,7 @@
 								</tr>
 
 								<tr>
-									<td colspan="4"><input type="hidden" name="" value="" />
+									<td colspan="4">
 										<input id="submit-Button" type="submit" name="btn" value="확인"
 										style="height: 30px; margin: 20px;"
 										class="btn-text btn-default" /></td>

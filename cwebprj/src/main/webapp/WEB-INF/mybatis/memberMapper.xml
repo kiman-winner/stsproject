@@ -85,10 +85,10 @@
 		#{sessionLimit}
 		WHERE member_id = #{member_id}
 	</update>
-	<select id="checkUserWithSessionKey" resultType="Member">
+	<select id="checkUserWithSessionKey" resultType="Member">	<!-- 세션 키 확인 -->
 		SELECT
 		*
 		FROM member
-		WHERE session_key = #{value}
+		WHERE session_key = #{value} 
 	</select>
 </mapper>

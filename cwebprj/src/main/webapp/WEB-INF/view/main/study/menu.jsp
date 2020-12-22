@@ -10,6 +10,8 @@
 <link href="/css/layout.css" type="text/css" rel="stylesheet" />
 <link href="/css/index.css" type="text/css" rel="stylesheet" />
 <link href="/css/intro.css" type="text/css" rel="stylesheet" />
+
+<link href="/css/study/menubar.css" type="text/css" rel="stylesheet" />
 <!-- css임포트 -->
 
 </head>
@@ -17,12 +19,16 @@
 <body>
 	<!-- header 부분 -->
 
-
 	<%@include file="/WEB-INF/view/include/header.jsp"%>
 
-	<!-- --------------------------- <body> --------------------------------------- -->
+	<div id="body">
+		<div class="content-container clearfix">
+			<!-- --------------------------- <body> --------------------------------------- -->
+			<main class="main">
 
-	강좌
+			</main>
+		</div>
+	</div>
 
 	<!-- ------------------- <footer> --------------------------------------- -->
 	<%@include file="/WEB-INF/view/include/footer.jsp"%>

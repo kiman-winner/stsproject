@@ -21,23 +21,42 @@
 	background-color: gray;
 }
 </style>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"
+	integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+	crossorigin="anonymous"></script>
 <script>
 	
-	// 비밀번호 유효성 검사 및 아이디 체크 버튼 누른지 확인 
-	function pwdcheck() {
+//비밀번호 유효성 검사
+function pwdcheck() {
 
-		if (form.newpassword.value != form.passwordcheck.value) {
-			alert("패스워드와 패스워드 확인이 일치하지 않습니다.");
-			form.newpassword.value = "";
-			form.passwordcheck.value = "";
-			form.newpassword.focus();
+	 var pw = $("#newpassword").val();	
+	 console.log(pw);
+	 var num = pw.search(/[0-9]/g);
+	 var eng = pw.search(/[a-z]/ig);
+	 var spe = pw.search(/[`~!@@#$%^&*|₩₩₩'₩";:₩/?]/gi);
 
-			return false;
-		}
-		
+	 if(pw.length < 10 || pw.length > 20){	//유효성 검사
+	  alert("비밀번호를 10자리 ~ 20자리 이내로 입력해주세요.");
+	  return false;
+	 }else if(pw.search(/\s/) != -1){
+	  alert("비밀번호는 공백 없이 입력해주세요.");
+	  return false;
+	 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
+	  alert("비밀번호를 영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+	  return false;
+	 }
+	 
+	if (form.newpassword.value != form.passwordcheck.value) {	//비밀번호 체크 확인
+		alert("패스워드와 패스워드 확인이 일치하지 않습니다.");
+		form.newpassword.value = "";
+		form.passwordcheck.value = "";
+		form.newpassword.focus();
+
+		return false;
 	}
-</script>
 
+}
+</script>
 <body>
 	<!-- header 부분 -->
 	<%@include file="/WEB-INF/view/include/header.jsp"%>
@@ -65,7 +84,7 @@
 						<li><a class="" href="/student/mycommunity">내가 작성한 글</a></li>
 						<li><a class="" href="/student/updatemember">개인정보 수정</a></li>
 						<li><a class="" href="/student/updatepwd">비밀번호 변경</a></li>
-							<li><a class="" href="/student/deletemember">회원 탈퇴</a></li>
+						<li><a class="" href="/student/deletemember">회원 탈퇴</a></li>
 					</ul>
 				</nav>
 
@@ -84,7 +103,8 @@
 			<main>
 				<h2 class="main title">개인정보 수정</h2>
 
-				<form name="form" onsubmit="return pwdcheck();" action="updatepwd.do" id="form1" method="post">
+				<form name="form" onsubmit="return pwdcheck();"
+					action="updatepwd.do" id="form1" method="post">
 					<fieldset>
 						<legend class="hidden">회원정보</legend>
 						<table class="table margin-top first">
@@ -106,7 +126,8 @@
 									<th><label>새로운 비밀번호</label></th>
 									<td colspan="3" class="text-align-left indent"><input
 										type="password" id="newpassword" name="newpassword" class=""
-										required placeholder="비밀번호 입력" /></td>
+										required
+										placeholder="새로운 비밀번호 입력 *10~20자리 영문,숫자,특수문자 중 2가지 혼합" /></td>
 								</tr>
 								<tr>
 									<th><label>비밀번호 확인</label></th>
@@ -116,20 +137,15 @@
 								</tr>
 
 								<tr>
-									<td colspan="4"><input type="hidden" name="" value="" />
-										<input id="submit-Button" type="submit" name="btn" value="확인"
-										style="height: 30px; margin: 20px;"
+									<td colspan="4"><input id="submit-Button" type="submit"
+										name="btn" value="확인" style="height: 30px; margin: 20px;"
 										class="btn-text btn-default" /></td>
 								</tr>
 							</tbody>
 						</table>
 					</fieldset>
 				</form>
-
-
 			</main>
-
-
 		</div>
 	</div>
 

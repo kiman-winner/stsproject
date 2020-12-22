@@ -50,7 +50,7 @@ var fileIndex = 1;
 	
 		var fileNoArry = new Array();
 		var fileNameArry = new Array();
-		function fn_del(value, name){	//파일 삭제 
+		function fn_del(value, name){	//파일 삭제 데이터 
 			
 			fileNoArry.push(value);
 			fileNameArry.push(name);
@@ -138,6 +138,7 @@ var fileIndex = 1;
 								</tr>
 							<tr>
 									<td colspan="1"><button type="button" onclick="fn_addFile()" class="fileAdd_btn btn-text btn-default">파일추가</button></td>
+									<!-- 파일목록 -->
 									<td colspan="2" id="fileIndex"><c:forEach var="file"
 											items="${file}" varStatus="var">
 											<div>

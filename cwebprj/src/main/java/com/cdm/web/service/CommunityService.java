@@ -1,6 +1,5 @@
 package com.cdm.web.service;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,9 +10,9 @@ import com.cdm.web.page.SearchCriteria;
 
 public interface CommunityService {
 
-	CommunityDTO detail(int community_num) throws Exception;
+	CommunityDTO detail(int community_num) throws Exception; // 커뮤니티 게시글
 
-	public void delete(int community_num) throws Exception;
+	public void delete(int community_num) throws Exception;// 상세보기
 
 	void modify(CommunityDTO communityDTO, String[] files, String[] fileNames, MultipartHttpServletRequest mpRequest)
 			throws Exception; // 게시물 수정
@@ -29,6 +28,5 @@ public interface CommunityService {
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;// 파일 다운로드
 
 	List<CommunityDTO> listSearch() throws Exception; // 메인 홈페이지 게시물
-
 
 }

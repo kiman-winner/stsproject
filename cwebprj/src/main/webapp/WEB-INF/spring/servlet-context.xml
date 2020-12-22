@@ -19,6 +19,7 @@
 	<mvc:annotation-driven />
 	<aop:aspectj-autoproxy />
 
+	<!-- 뷰 리졸버 -->
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/view/"></property>
@@ -26,7 +27,7 @@
 	</bean>
 
 	<mvc:resources location="/static/" mapping="/**"></mvc:resources>
-	<!-- **하위폴더 다 찾는다. 이미지가 마치 /에 있는 것처럼 -->
+	<!-- 자원 매핑 -->
 
 	<!-- MultipartResolver 설정 -->
 	<bean id="multipartResolver"
@@ -54,6 +55,9 @@
 			<mvc:mapping path="/main/community/register" />
 			<mvc:mapping path="/main/community/detail/replyWrite" />
 			<mvc:mapping path="/student/mycommunity" />
+			<mvc:mapping path="/student/deletemember" />
+			<mvc:mapping path="/student/updatemember" />
+			<mvc:mapping path="/student/updatepwd" />
 			<ref bean="authInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
@@ -66,7 +70,7 @@
 			<ref bean="rememberMeInterceptor" />
 		</mvc:interceptor>
 	</mvc:interceptors>
-	
+
 	<!-- 로그인 상태에서 로그인, 회원가입 서비스 이용 시 -->
 	<bean id="loginAfterInterceptor"
 		class="com.cdm.web.commons.interceptor.LoginAfterInterceptor" />

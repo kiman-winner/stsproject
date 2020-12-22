@@ -17,12 +17,11 @@ public class LogAdvice {
 	@Around("execution(* com..controller..*Controller.*(..)) " + "or execution(* com..service..*Impl.*(..))"
 			+ "or execution(* com..dao..*Impl.*(..))")
 	public Object logPrint(ProceedingJoinPoint joinPoint) throws Throwable {
-		// 이 메서드를 호출한 시간
-		long start = System.currentTimeMillis();
-		// 이 joinPoint.proceed()코드를 기준으로
-		// 이상의 코드가 실행 전
+
+		long start = System.currentTimeMillis(); // 이 메서드를 호출한 시간
+
+		// 비지니스 로직 실행 전
 		Object result = joinPoint.proceed(); // ★핵심업무 실행
-		// 이하의 코드가 핵심업무 실행 후
 
 		String type = joinPoint.getSignature().getDeclaringTypeName(); // 호출한 클레스 이름
 		String name = "";
@@ -34,18 +33,13 @@ public class LogAdvice {
 			name = "DaoImpl \t:";
 		}
 
-		
-			logger.info(name + type + "." + joinPoint.getSignature().getName() + "()"); // 호출 되는 메서드 이름
+		logger.info(name + type + "." + joinPoint.getSignature().getName() + "()"); // 호출 되는 메서드 이름
+		logger.info(Arrays.toString(joinPoint.getArgs())); // method에 전달되는 매개변수들
 
-			// method에 전달되는 매개변수들
-			logger.info(Arrays.toString(joinPoint.getArgs()));
+		long end = System.currentTimeMillis();
+		long time = end - start; // 이 메서드가 호출되고 끝나는데에 걸리는 시간
 
-			// 이 메서드를 실행이 끝나는 시간
-			long end = System.currentTimeMillis();
-			// 이 메서드가 호출되고 끝나는데에 걸리는 시간
-			long time = end - start;
-			logger.info("실행시간 : " + time);
-		
+		logger.info("실행시간 : " + time);
 		return result;
 	}
 }

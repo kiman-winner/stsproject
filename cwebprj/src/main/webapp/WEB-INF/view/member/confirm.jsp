@@ -76,7 +76,7 @@
 								alt="시디엠렉처의 회원가입이 완료되었습니다."
 								src="../images/member/txt-join-welcome.png">
 						</div>
-						<div id="confirmloginBtn">
+						<div id="confirmloginBtn"> <!-- 로그인 버튼 -->
 							<button class="btn login-btn" onclick="location.href='/member/login'"></button>
 						</div>
 					</div>

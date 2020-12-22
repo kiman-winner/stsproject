@@ -4,16 +4,18 @@
 
 <mapper namespace="noticeNS">
 
+	<!-- 게시글 등록 -->
 	<insert id="register" useGeneratedKeys="true"
 		keyProperty="notice_num">
-		<!-- 게시글 등록 -->
+
 		<selectKey keyProperty="notice_num" resultType="int"
 			order="BEFORE">
 			SELECT notice_seq.NEXTVAL FROM DUAL
 		</selectKey>
 
 		INSERT INTO notice(notice_num, title, content)
-		VALUES(#{notice_num}, #{title}, #{content})
+		VALUES(#{notice_num},
+		#{title}, #{content})
 	</insert>
 
 	<insert id="insertFile" parameterType="hashMap">	<!-- 파일 삽입 -->
@@ -32,7 +34,6 @@
 		)
 	</insert>
 	<!-- 첨부파일 조회 -->
-
 	<select id="selectFileList" parameterType="int"
 		resultType="hashMap">
 		SELECT FILE_NO,
@@ -41,7 +42,8 @@
 		FILE_SIZE
 		FROM notice_file
 		WHERE notice_num = #{notice_num}
-		order by file_no asc
+		order by
+		file_no asc
 	</select>
 
 	<!-- 첨부파일 다운 -->
@@ -51,7 +53,8 @@
 		STORED_FILE_NAME,
 		ORG_FILE_NAME
 		FROM notice_file
-		WHERE FILE_NO = #{FILE_NO}
+		WHERE
+		FILE_NO = #{FILE_NO}
 	</select>
 
 	<select id="listSearch" resultType="Notice"> <!-- 불러오기 -->
@@ -130,39 +133,42 @@
 
 	</delete>
 
-	<update id="modify">
+	<update id="modify"> <!-- 게시글 수정 -->
 		update notice set title=
-		#{title},content=#{content} where
+		#{title},content=#{content}
+		where
 		notice_num=#{notice_num}
-	</update> <!-- 게시글 수정 -->
-	
-	<update id="updateViewCount">
+	</update>
+ 
+	<update id="updateViewCount">  <!-- 조회수 증가 감소 -->
 		update notice set viewcount = viewcount+1 where
 		notice_num=#{notice_num}
-	</update> <!-- 조회수 증가 -->
+	</update>
 
-<!-- 파일 삭제 업데이트 -->
+	<!-- 파일 삭제 업데이트 -->
 	<delete id="deleteFile" parameterType="hashMap">
-		delete from notice_file 
+		delete from notice_file
 		WHERE FILE_NO = #{FILE_NO}
 	</delete>
-	
-<!-- 게시글 파일 모두 삭제 업데이트 -->
+
+	<!-- 게시글 파일 모두 삭제 업데이트 -->
 	<delete id="deleteFileAll" parameterType="hashMap">
-		delete from notice_file where
+		delete from notice_file
+		where
 		notice_num=#{notice_num}
 	</delete>
-	
+
 	<select id="searchDeleteFile" resultType="String"> 	<!-- 지울 파일의 저장 이름 -->
 		SELECT STORED_FILE_NAME
 		FROM notice_file
 		WHERE FILE_NO = #{FILE_NO}
 	</select>
-	
+
 	<select id="searchDeleteFileAll" resultType="String"> <!-- 게시글 삭제 시 모든 첨부파일 저장 이름 -->
 		SELECT STORED_FILE_NAME
 		FROM notice_file
-		WHERE notice_num = #{notice_num}
+		WHERE notice_num =
+		#{notice_num}
 
 	</select>
 

@@ -21,21 +21,7 @@
 	background-color: gray;
 }
 </style>
-<script>
-	// 비밀번호 유효성 검사 및 아이디 체크 버튼 누른지 확인 
-	function pwdcheck() {
 
-		if (form.newpassword.value != form.passwordcheck.value) {
-			alert("패스워드와 패스워드 확인이 일치하지 않습니다.");
-			form.newpassword.value = "";
-			form.passwordcheck.value = "";
-			form.newpassword.focus();
-
-			return false;
-		}
-
-	}
-</script>
 <body>
 	<!-- header 부분 -->
 	<%@include file="/WEB-INF/view/include/header.jsp"%>

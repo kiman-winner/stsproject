@@ -191,7 +191,7 @@ th {
 					</table>
 				</div>
 
-				<c:if test="${member.member_id == detail.writer_id }">
+				<c:if test="${member.member_id == detail.writer_id }">	<!-- 작성자만 보이도록 -->
 
 					<!-- 수정 삭제 버튼  -->
 					<div id="modifydeltediv">
@@ -199,7 +199,6 @@ th {
 						<button type="submit" id="deleteBtn"></button>
 
 					</div>
-					<!-- 로그인 안 했을 시에만 보이기 -->
 				</c:if>
 
 
@@ -235,10 +234,10 @@ th {
 					<c:if test="${member!=null}">
 						<div class="replybtn">
 							<input id="submit-Button" type="submit" name="btn" value=""
-								style="height: 30px; margin: 20px;" class="btn-answer" />
+								style="height: 30px; margin: 20px;" class="btn-answer" /> <!-- 댓글 등록 버튼 -->
 						</div>
 					</c:if>
-					<c:if test="${member==null}">
+					<c:if test="${member==null}">  <!-- 로그인 안했을 시 -->
 						<label>로그인한 사용자만 댓글 작성이 가능합니다.</label>
 					</c:if>
 				</form>
@@ -246,8 +245,6 @@ th {
 
 
 				<!-- 댓글 -->
-
-
 				<c:forEach items="${replyList}" var="replyList" varStatus="status">
 
 					<table class="table margin-top first">
@@ -272,7 +269,7 @@ th {
 					</table>
 
 					<!-- 댓글 수정 삭제  -->
-					<c:if test="${member.member_id ==replyList.writer_id}">
+					<c:if test="${member.member_id ==replyList.writer_id}"> <!-- 댓글 작성자만 보이도록 -->
 						<div id="reply_modifydeltediv">
 							<button id="replymodifyBtn"
 								onclick="replyUpdate(${replyList.reply_num},'${replyList.writer_id}','${replyList.content}')"></button>
@@ -293,31 +290,7 @@ th {
 					</c:if>
 
 				</c:forEach>
-
-
-
-				<!-- <div class="margin-top">
-					<table class="table border-top-default">
-						<tbody>
-							<tr>
-								<th>이전글</th>
-								<td colspan="3" class="text-align-left text-indent"><a
-									class="text-blue text-strong" href="">이전글 부분</a></td>
-							</tr>
-							<tr>
-								<th>다음글</th>
-								<td colspan="3" class="text-align-left text-indent">다음글 부분</td>
-							</tr>
-
-						</tbody>
-					</table>
-				</div> -->
-
 			</main>
-
-
-
-
 		</div>
 	</div>
 

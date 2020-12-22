@@ -10,29 +10,29 @@ import com.cdm.web.dao.ReplyDAO;
 import com.cdm.web.dto.ReplyDTO;
 
 @Repository
-public class ReplyDAOImpl implements ReplyDAO{
+public class ReplyDAOImpl implements ReplyDAO {	//´ñ±Û °ü·Ã Å×ÀÌºí Á¢±Ù
 
-	@Autowired SqlSession session;
-	
+	@Autowired
+	SqlSession session;
+
 	@Override
-	public List<ReplyDTO> readReply(int community_num) throws Exception {
-		// TODO Auto-generated method stub
-		return session.selectList("replyNS.readReply",community_num);
+	public List<ReplyDTO> readReply(int community_num) throws Exception {// ´ñ±Û ¸®½ºÆ®
+		return session.selectList("replyNS.readReply", community_num);
 	}
 
 	@Override
-	public void writeReply(ReplyDTO replyDTO) throws Exception {	//´ñ±Û ÀÛ¼º
-		session.insert("replyNS.writeReply",replyDTO);
+	public void writeReply(ReplyDTO replyDTO) throws Exception { // ´ñ±Û ÀÛ¼º
+		session.insert("replyNS.writeReply", replyDTO);
 	}
 
 	@Override
-	public void deleteReply(int reply_num) throws Exception {	//´ñ±Û »èÁ¦ 
+	public void deleteReply(int reply_num) throws Exception { // ´ñ±Û »èÁ¦
 		session.delete("replyNS.replydelete", reply_num);
 	}
 
 	@Override
-	public void modifyReply(ReplyDTO replyDTO) throws Exception {	//´ñ±Û ¼öÁ¤ 
+	public void modifyReply(ReplyDTO replyDTO) throws Exception { // ´ñ±Û ¼öÁ¤
 		session.update("replyNS.modifyReply", replyDTO);
-		
+
 	}
 }

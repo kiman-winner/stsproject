@@ -25,7 +25,7 @@ public interface NoticeService {
 	
 	public List<Map<String, Object>> selectFileList(int notice_num) throws Exception;	//파일 조회
 	
-	public Map<String, Object> selectFileInfo(Map<String, Object> map) throws Exception;//파일 다운로드
+	public Map<String, Object> selectFileInfo(String fileNo) throws Exception;//파일 다운로드
 
 	List<NoticeDTO> listSearch()throws Exception; // 메인 홈페이지 공지사항 
 

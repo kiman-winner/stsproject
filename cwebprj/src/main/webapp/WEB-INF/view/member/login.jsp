@@ -79,8 +79,6 @@
 					<form action="login.do" class="login-form" method="post">
 						<fieldset>
 							<legend class="hidden">로그인 폼</legend>
-							<!-- 로그인을 안했을 시 -->
-							<c:if test="${member == null }">
 								<h4>
 									<img src="../images/member/txt-title.png" />
 								</h4>
@@ -95,7 +93,7 @@
 									<input type="hidden" name="" value="" /> <input type="submit"
 										class="btn login-btn" />
 								</div>
-								<div class="logincookie">
+								<div class="logincookie"> <!-- 자동 로그인 -->
 									<div class="checkbox icheck">
 										<label> <input type="checkbox" name="useCookie">
 											로그인유지
@@ -111,8 +109,6 @@
 											src="../images/member/btn-join.png" />
 									</a></li>
 								</ul>
-							</c:if>
-
 						</fieldset>
 					</form>
 				</div>

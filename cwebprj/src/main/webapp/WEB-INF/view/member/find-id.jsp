@@ -18,7 +18,7 @@
 }
 </style>
 	<script>
-		window.addEventListener("load", function(event) {
+		window.addEventListener("load", function(event) {//이메일, 전화번호 찾기 교환 
 			var phoneTr = document.querySelector(".phone");
 			var emailTr = document.querySelector(".email");
 			
@@ -87,7 +87,7 @@
 			<main>
 		<h2 class="main title">아이디 간편 찾기</h2>
 		
-		<form method="post" action="find-id-confirm">
+		<form method="post" action="find-id.do">
 		<div class="margin-top first color-orange text-align-center">
 			※가입할 때 등록한 정보로 아이디를 찾습니다.
 		</div>

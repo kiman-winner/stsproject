@@ -120,7 +120,7 @@
 									</td>
 									<td colspan="2" id="fileIndex"></td>
 								</tr>
-								<tr>
+								<tr><!-- 게시물 등록, 돌아가기 버튼 -->
 									<td id="td3" colspan="3"><input type="hidden" name=""
 										value="" /> <c:if test="${member!=null}">
 											<input id="submit-Button" type="submit" name="btn"

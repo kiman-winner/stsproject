@@ -27,55 +27,46 @@
 </style>
 <script src="http://code.jquery.com/jquery-3.3.1.js"></script>
 <script>
-$(document)
-.ready(
-		function() {
+	$(document).ready(function() {
 
-			var formObj = $("form[name='readForm']");
+		var formObj = $("form[name='readForm']");
 
-			var replyformObj = $("form[name='replyForm']");
+		var replyformObj = $("form[name='replyForm']");
 
-			// 삭제 post 전송 
-			$("#deleteBtn").on("click", function() {
+		// 삭제 post 전송 
+		$("#deleteBtn").on("click", function() {
 
-				if (confirm("정말 삭제하시겠습니까??") == true) { //확인
+			if (confirm("정말 삭제하시겠습니까??") == true) { //확인
 
-					formObj.attr("action", "delete");
-					formObj.attr("method", "post");
-					formObj.submit();
+				formObj.attr("action", "delete");
+				formObj.attr("method", "post");
+				formObj.submit();
 
-				} else {
-					return false;
-				}
+			} else {
+				return false;
+			}
 
-			});
+		});
 
-			$("#modifyBtn")
-					.on(
-							"click",
-							function(evt) { //게시글 수정 버튼 클릭 시 
-								 formObj.attr("action", "modify");
-							        formObj.attr("method", "get");
-							        formObj.submit();
-								
-							});
-			$(".btn-list")
-			.on(
-					"click",
-					function(evt) { //게시글 목록 버튼 클릭 시 
-						 formObj.attr("action", "list");
-					        formObj.attr("method", "get");
-					        formObj.submit();
-						
-					});
-		}); 
-function fn_fileDown(fileNo){	//파일 다운로드 
-	var formObj = $("form[name='readForm']");
-	$("#FILE_NO").attr("value", fileNo);
-	formObj.attr("action", "detail/fileDown");
-	formObj.submit();
-}
+		$("#modifyBtn").on("click", function(evt) { //게시글 수정 버튼 클릭 시 
+			formObj.attr("action", "modify");
+			formObj.attr("method", "get");
+			formObj.submit();
 
+		});
+		$(".btn-list").on("click", function(evt) { //게시글 목록 버튼 클릭 시 
+			formObj.attr("action", "list");
+			formObj.attr("method", "get");
+			formObj.submit();
+
+		});
+	});
+	function fn_fileDown(fileNo) { //파일 다운로드 
+		var formObj = $("form[name='readForm']");
+		$("#FILE_NO").attr("value", fileNo);
+		formObj.attr("action", "detail/fileDown");
+		formObj.submit();
+	}
 </script>
 </head>
 
@@ -104,10 +95,6 @@ function fn_fileDown(fileNo){	//파일 다운로드
 					<h1>고객센터메뉴</h1>
 					<ul>
 						<li><a class="current" href="/customer/notice/list">공지사항</a></li>
-					<!-- 	<li><a class="" href="/customer/faq">자주하는 질문</a></li>
-						<li><a class="" href="/customer/question">수강문의</a></li>
-						<li><a class="" href="/customer/event">이벤트</a></li> -->
-
 					</ul>
 				</nav>
 
@@ -130,28 +117,17 @@ function fn_fileDown(fileNo){	//파일 다운로드
 			<main>
 				<h2 class="main title">공지사항</h2>
 
-				<div class="breadcrumb">
-					<h3 class="hidden">breadlet</h3>
-					<ul>
-						<li>home</li>
-						<li>고객센터</li>
-						<li>공지사항</li>
-					</ul>
-				</div>
-
 				<div class="margin-top first">
 					<h3 class="hidden">공지사항 내용</h3>
-					
+
 					<form name="readForm" role="form" method="post">
 						<input type="hidden" id="notice_num" name="notice_num"
-							value="${detail.notice_num}" /> <input type="hidden"
-							name="page" value="${searchCriteria.page}"> <input
-							type="hidden" name="searchType"
-							value="${searchCriteria.searchType}"> <input
+							value="${detail.notice_num}" /> <input type="hidden" name="page"
+							value="${searchCriteria.page}"> <input type="hidden"
+							name="searchType" value="${searchCriteria.searchType}"> <input
 							type="hidden" name="keyword" value="${searchCriteria.keyword}">
 						<input type="hidden" name="title" value="${detail.title}">
 						<input type="hidden" name="content" value="${detail.content}">
-
 						<input type="hidden" id="FILE_NO" name="FILE_NO" value="">
 
 					</form>
@@ -165,16 +141,16 @@ function fn_fileDown(fileNo){	//파일 다운로드
 							<tr>
 								<th>작성일</th>
 								<td class="text-align-left text-indent" colspan="1"><fmt:formatDate
-										value="${detail.regdate}" pattern="yyyy-MM-dd" />
-								</td>
+										value="${detail.regdate}" pattern="yyyy-MM-dd" /></td>
 								<th colspan="1">조회수</th>
 								<td>${detail.viewcount}</td>
 							</tr>
-							
+
 							<tr class="content">
-							
+
 								<td>${detail.content}</td>
 							</tr>
+							<!-- 파일 목록 -->
 							<tr>
 								<th>첨부파일</th>
 								<td colspan="2">
@@ -186,11 +162,11 @@ function fn_fileDown(fileNo){	//파일 다운로드
 									</div>
 								</td>
 							</tr>
-							
+
 						</tbody>
 					</table>
 				</div>
-				
+
 				<c:if test="${member.member_id == 'atlas69' }">
 
 					<!-- 수정 삭제 버튼  -->
@@ -201,28 +177,11 @@ function fn_fileDown(fileNo){	//파일 다운로드
 					</div>
 					<!-- 로그인 안 했을 시에만 보이기 -->
 				</c:if>
-				
+
 
 				<div class="margin-top text-align-center">
 					<a class="btn btn-list" href="list">목록</a>
 				</div>
-
-				<!-- <div class="margin-top">
-					<table class="table border-top-default">
-						<tbody>
-							<tr>
-								<th>다음글</th>
-								<td colspan="3" class="text-align-left text-indent">다음글이
-									없습니다.</td>
-							</tr>
-							<tr>
-								<th>이전글</th>
-								<td colspan="3" class="text-align-left text-indent"><a
-									class="text-blue text-strong" href="">스프링 DI 예제 코드</a></td>
-							</tr>
-						</tbody>
-					</table>
-				</div> -->
 
 			</main>
 

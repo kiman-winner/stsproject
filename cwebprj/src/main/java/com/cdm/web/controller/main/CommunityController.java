@@ -26,82 +26,70 @@ import com.cdm.web.service.CommunityService;
 import com.cdm.web.service.ReplyService;
 
 @Controller
-@RequestMapping("/main/")
-public class MainController {
+@RequestMapping("/main/community")
+public class CommunityController {//커뮤니티 컨트롤러
 
 	@Autowired
 	private CommunityService communityService;
 	@Autowired
 	private ReplyService replyService;
 
-	@RequestMapping("intro") // 홈페이지 소개
-	public String intro() {
-		return "main/intro";
-	}
-
-	@RequestMapping("study") // 강좌 선택
-	public String study() {
-		return "main/study";
-	}
-
-	@RequestMapping(value = "community/list", method = RequestMethod.GET) // 커뮤니티 게시판 리스트 불러오기
+	@RequestMapping("list") // 커뮤니티 게시판 리스트 불러오기
 	public ModelAndView communitylist(SearchCriteria searchCriteria) throws Exception {
 
 		PageMaker pageMaker = new PageMaker();
 		pageMaker.setCriteria(searchCriteria);
-		pageMaker.setTotalCount(communityService.countSearched(searchCriteria));// 전체 게시글
+		pageMaker.setTotalCount(communityService.countSearched(searchCriteria));// 검색 결과 전체 게시글 개수 등록
 
 		ModelAndView mv = new ModelAndView();
 
 		List<CommunityDTO> list = communityService.listSearch(searchCriteria);
 
-		mv.setViewName("/main/community/list"); // list뷰
-		mv.addObject("list", list); // 뷰로 보낼 데이터
-		mv.addObject("pageMaker", pageMaker);
+		mv.setViewName("/main/community/list");
+		mv.addObject("list", list); // 리스트 결과
+		mv.addObject("pageMaker", pageMaker); // 페이지 관리
 
 		return mv;
 	}
 
-	@RequestMapping("community/register") // 커뮤니티 게시판 등록
+	@RequestMapping("register") // 커뮤니티 게시판 등록 페이지
 	public String communityRegister() {
 		return "main/community/register";
 	}
 
-	@RequestMapping(value = "community/register.do", method = RequestMethod.POST) // 커뮤니티 게시판 등록
-	public void communityWrite(CommunityDTO communityDTO, HttpServletResponse response, MultipartHttpServletRequest mpRequest)
-			throws Exception {
+	@RequestMapping(value = "register.do", method = RequestMethod.POST) // 커뮤니티 게시판 등록 처리
+	public void communityWrite(CommunityDTO communityDTO, HttpServletResponse response,
+			MultipartHttpServletRequest mpRequest) throws Exception {
 
 		response.setCharacterEncoding("UTF-8");
-		response.setContentType("text/html; charset=UTF-8"); // 한글 인코딩 설정
-		PrintWriter out = response.getWriter(); // 응답을 위한 객체
+		response.setContentType("text/html; charset=UTF-8");
+		PrintWriter out = response.getWriter();
 
 		communityService.register(communityDTO, mpRequest);
-
 		out.println("<script>alert('등록 되었습니다.'); " + "location.href = '/main/community/list'</script>");
 
-		// 임시
 	}
 
-	@RequestMapping(value = "community/detail", method = RequestMethod.GET) // 커뮤니티 게시판 디테일
+	@RequestMapping("detail")
 	public ModelAndView detail(@RequestParam("community_num") int community_num,
-			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
+			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {// 커뮤니티 게시판 상세보기
 		ModelAndView mv = new ModelAndView();
-	
+
 		mv.addObject("detail", communityService.detail(community_num)); // 상세보기 서비스를 통해 해당 게시글 불러오기
 
 		List<ReplyDTO> replyList = replyService.readReply(community_num); // 댓글 불러오기
 		mv.addObject("replyList", replyList);
-		
-		List<Map<String, Object>> fileList = communityService.selectFileList(community_num);	//파일 불러오기
+
+		List<Map<String, Object>> fileList = communityService.selectFileList(community_num); // 파일 불러오기
 		mv.addObject("file", fileList);
-		
+
 		mv.setViewName("main/community/detail");
 		return mv;
 	}
 
-	@RequestMapping(value = "community/delete", method = RequestMethod.POST) // 커뮤니티 게시판 삭제 클릭 시
+	@RequestMapping(value = "delete", method = RequestMethod.POST)
 	public String delete(@RequestParam("community_num") int community_num, SearchCriteria searchCriteria,
-			RedirectAttributes redirectAttributes) throws Exception {
+			RedirectAttributes redirectAttributes) throws Exception { // 커뮤니티 게시판 삭제 처리
 
 		communityService.delete(community_num);
 
@@ -112,29 +100,28 @@ public class MainController {
 		return "redirect:/main/community/list";
 	}
 
-	@RequestMapping(value = "community/modify", method = RequestMethod.GET) // 커뮤니티 게시판 수정 페이지
+	@RequestMapping("modify")
 	public ModelAndView communityModify(@RequestParam("title") String title, @RequestParam("content") String content,
 			@RequestParam("community_num") int community_num,
-			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception {
+			@ModelAttribute("searchCriteria") SearchCriteria searchCriteria) throws Exception { // 커뮤니티 게시판 수정 페이지
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("title", title); // 제목과 컨텐츠를 수정 페이지에 넘겨준다.
 		mv.addObject("content", content);
 		mv.addObject("community_num", community_num);
-		
-		List<Map<String,Object>> fileList = communityService.selectFileList(community_num);	//파일 리스트 불러오기 
-		mv.addObject("file",fileList);
-		
+
+		List<Map<String, Object>> fileList = communityService.selectFileList(community_num); // 파일 리스트 불러오기
+		mv.addObject("file", fileList);
+
 		mv.setViewName("main/community/modify");
 
 		return mv;
 	}
 
-	@RequestMapping(value = "community/modify.do", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 클릭 시
-	public String modify(CommunityDTO communityDTO, SearchCriteria searchCriteria, RedirectAttributes redirectAttributes
-			, @RequestParam(value="fileNoDel[]") String[] files,
-			 @RequestParam(value="fileNameDel[]") String[] fileNames,
-			 MultipartHttpServletRequest mpRequest)
+	@RequestMapping(value = "modify.do", method = RequestMethod.POST) // 커뮤니티 수정 페이지에서 수정 처리
+	public String modify(CommunityDTO communityDTO, SearchCriteria searchCriteria,
+			RedirectAttributes redirectAttributes, @RequestParam(value = "fileNoDel[]") String[] files,
+			@RequestParam(value = "fileNameDel[]") String[] fileNames, MultipartHttpServletRequest mpRequest)
 			throws Exception {
 
 		communityService.modify(communityDTO, files, fileNames, mpRequest);
@@ -144,26 +131,29 @@ public class MainController {
 
 		return "redirect:/main/community/list";
 	}
-	
-	@RequestMapping(value="community/detail/fileDown")
-	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception{ //파일 다운로드
+
+	@RequestMapping(value = "detail/fileDown")
+	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception { // 파일
+																													// 다운로드
 		Map<String, Object> resultMap = communityService.selectFileInfo(map);
-		
+
 		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
 		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
-		
+
 		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("D:\\Tools\\cwebprj\\file\\"+storedFileName));
-		
-		response.setContentType("application/octet-stream");	//mime 이진 파일 기본값
-		response.setContentLength(fileByte.length); //크기 지정
-		response.setHeader("Content-Disposition",  "attachment; fileName=\""+URLEncoder.encode(originalFileName, "UTF-8")+"\";");
-		//첨부 파일 헤더 셋
-		
+		byte fileByte[] = org.apache.commons.io.FileUtils
+				.readFileToByteArray(new File("D:\\Tools\\cwebprj\\file\\" + storedFileName));
+
+		response.setContentType("application/octet-stream"); // mime 이진 파일 타입
+		response.setContentLength(fileByte.length); // 크기 지정
+		response.setHeader("Content-Disposition",
+				"attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8") + "\";");
+		// 첨부 파일 정보 헤더 셋팅
+
 		response.getOutputStream().write(fileByte);
 		response.getOutputStream().flush();
 		response.getOutputStream().close();
-		
+
 	}
 
 }

@@ -153,7 +153,7 @@
 											</div>
 										</c:forEach></td>
 								</tr>
-								<tr>
+								<tr><!-- 수정, 돌아가기 버튼 -->
 									<td id="td3" colspan="3"><input type="hidden" name=""
 										value="" /> <input id="submit-Button" type="submit"
 										name="btn" value="게시물 수정" style="height: 30px; margin: 20px;"

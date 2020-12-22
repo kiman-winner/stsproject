@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 @ControllerAdvice
-public class ExceptionAdvice {
+public class ExceptionAdvice { // 모든 컨트롤러 예외처리
 	private static final Log logger = LogFactory.getLog(ExceptionAdvice.class);
 
 	@ExceptionHandler(Exception.class)
@@ -16,7 +16,7 @@ public class ExceptionAdvice {
 		logger.info(e.toString());
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("exception", e);
-		modelAndView.setViewName("/exception/error");
+		modelAndView.setViewName("/exception/error"); // 예외 페이지
 
 		return modelAndView;
 	}
