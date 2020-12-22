@@ -37,12 +37,21 @@ function pwdcheck() {
 
 	 if(pw.length < 10 || pw.length > 20){	//유효성 검사
 	  alert("비밀번호를 10자리 ~ 20자리 이내로 입력해주세요.");
+	  form.newpassword.value = "";
+		form.passwordcheck.value = "";
+		form.newpassword.focus();
 	  return false;
 	 }else if(pw.search(/\s/) != -1){
 	  alert("비밀번호는 공백 없이 입력해주세요.");
+	  form.newpassword.value = "";
+		form.passwordcheck.value = "";
+		form.newpassword.focus();
 	  return false;
 	 }else if( (num < 0 && eng < 0) || (eng < 0 && spe < 0) || (spe < 0 && num < 0) ){
 	  alert("비밀번호를 영문,숫자, 특수문자 중 2가지 이상을 혼합하여 입력해주세요.");
+	  form.newpassword.value = "";
+		form.passwordcheck.value = "";
+		form.newpassword.focus();
 	  return false;
 	 }
 	 
@@ -81,7 +90,9 @@ function pwdcheck() {
 				<nav class="menu text-menu first margin-top">
 					<h1>마이페이지 메뉴</h1>
 					<ul>
-						<li><a class="" href="/student/mycommunity?searchType=w&keyword=${member.member_id}">내가 작성한 글</a></li>
+						<li><a class=""
+							href="/student/mycommunity?searchType=w&keyword=${member.member_id}">내가
+								작성한 글</a></li>
 						<li><a class="" href="/student/updatemember">개인정보 수정</a></li>
 						<li><a class="" href="/student/updatepwd">비밀번호 변경</a></li>
 						<li><a class="" href="/student/deletemember">회원 탈퇴</a></li>

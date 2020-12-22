@@ -57,13 +57,15 @@ public class StudentController {	//마이페이지 컨트롤러
 	}
 
 	@RequestMapping(value = "updatemember.do", method = RequestMethod.POST) // 마이페이지 개인정보 수정 처리
-	public void updatememberPost(MemberDTO memberDTO, HttpServletResponse response) throws Exception {
+	public void updatememberPost(HttpServletRequest request,MemberDTO memberDTO, HttpServletResponse response) throws Exception {
 		response.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-
+		
+		HttpSession httpSession = request.getSession();
 		memberservice.updateMember(memberDTO);
-
+		httpSession.setAttribute("member", memberDTO);	//세션 초기화 
+		
 		out.println("<script>alert('수정 되었습니다.'); " + "location.href = '/index'</script>");
 
 	}
