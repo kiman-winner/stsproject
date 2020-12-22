@@ -71,11 +71,10 @@
 					<h1 class="title">공지사항</h1>
 
 					<ul class="list margin-top">
-
+						<c:if test="${fn:length(noticelist) == 0 }">
+							<li><span class="notice-title">공지사항이 없습니다.</span></li>
+						</c:if>
 						<c:forEach var="noticeDTO" items="${noticelist}">
-							<c:if test="${fn:length(noticelist) == 0 }">
-								<li><span class="notice-title">공지사항이 없습니다.</span></li>
-							</c:if>
 							<li><span class="notice-title"> <a
 									href="/customer/notice/detail?notice_num=${noticeDTO.notice_num}">${noticeDTO.title}</a>
 							</span> <span><fmt:formatDate value="${noticeDTO.regdate}"
